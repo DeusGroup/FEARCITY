@@ -5,9 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.2] - TBD (In Planning)
+## [0.1.2] - 2025-06-28 (Released)
 
-### Planned Features - Enhanced Presentation
+### Added - Enhanced Presentation & GitHub Deployment
+- External CSS/JS architecture for better maintainability
+- Expanded product showcase from 3 to 6 motorcycles
+- Added gear/apparel preview section (3 items)
+- Mobile hamburger menu with smooth animations
+- Shopping cart functionality with localStorage persistence
+- SEO enhancements with structured data (JSON-LD)
+- GitHub Actions workflow for automatic deployment
+- Comprehensive project documentation
+- Premium typography system (Bebas Neue, Orbitron, Rajdhani)
+- CSS custom properties for consistent theming
+- Professional hover states and micro-interactions
+
+### Changed
+- Moved from inline CSS to external stylesheet
+- Updated brand slogan to "Lean Mean Built in Queens"
+- Improved proportional layout and spacing
+- Enhanced mobile responsiveness
+- Cleaned up visual effects for professional appearance
+
+### Technical
+- Added favicon support
+- Created comprehensive README for GitHub
+- Set up automated GitHub Pages deployment
+- Added .gitignore for clean repository
+- Updated meta tags and Open Graph data
 - External CSS file (`styles.css`) to replace inline styles
 - Basic JavaScript interactions (`script.js`)
 - Mobile menu toggle functionality
