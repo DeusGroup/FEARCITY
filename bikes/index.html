@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Bikes - Fear City Cycles</title>
+    <meta name="description" content="Custom motorcycle builds from Fear City Cycles. Street fighters, bobbers, and choppers built for NYC streets.">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="../main.html"><img src="../assets/images/fear-city-logo-small.png" alt="Fear City Cycles"></a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="../bikes/" class="nav-link active">BIKES</a>
+                <a href="../gear/" class="nav-link">GEAR</a>
+                <a href="../culture/" class="nav-link">CULTURE</a>
+                <a href="../garage/" class="nav-link">GARAGE</a>
+                <a href="../contact/" class="nav-link">CONTACT</a>
+            </div>
+            <div class="nav-actions">
+                <a href="../account/" class="account-link">ACCOUNT</a>
+                <a href="../cart/" class="cart-link">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
+            </div>
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>CUSTOM BUILDS</h1>
+            <p>We don't build pretty bikes for pretty people. We build machines for riders who know the difference between style and substance.</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="bike-filters">
+        <div class="container">
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">ALL BUILDS</button>
+                <button class="filter-btn" data-filter="street-fighter">STREET FIGHTERS</button>
+                <button class="filter-btn" data-filter="bobber">BOBBERS</button>
+                <button class="filter-btn" data-filter="chopper">CHOPPERS</button>
+                <button class="filter-btn" data-filter="cafe-racer">CAFÉ RACERS</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bikes Grid -->
+    <section class="bikes-grid">
+        <div class="container">
+            <div class="product-grid">
+                <div class="product-card" data-category="street-fighter">
+                    <img src="../assets/images/bike-street-reaper.jpg" alt="Street Reaper">
+                    <h3>STREET REAPER</h3>
+                    <p class="bike-specs">883cc Twin, Street Fighter, Matte Black</p>
+                    <p class="price">$24,500</p>
+                    <div class="card-actions">
+                        <a href="street-reaper.html" class="btn btn-outline">VIEW BUILD</a>
+                        <button class="btn btn-primary add-to-cart" data-product-id="bike-001" data-price="24500">INQUIRE</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="street-fighter">
+                    <img src="../assets/images/bike-borough-bruiser.jpg" alt="Borough Bruiser">
+                    <h3>BOROUGH BRUISER</h3>
+                    <p class="bike-specs">1200cc Twin, Aggressive Stance, Chrome Accents</p>
+                    <p class="price">$28,000</p>
+                    <div class="card-actions">
+                        <a href="borough-bruiser.html" class="btn btn-outline">VIEW BUILD</a>
+                        <button class="btn btn-primary add-to-cart" data-product-id="bike-002" data-price="28000">INQUIRE</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="street-fighter">
+                    <img src="../assets/images/bike-fear-fighter.jpg" alt="Fear Fighter">
+                    <h3>FEAR FIGHTER</h3>
+                    <p class="bike-specs">1000cc Twin, Track-Inspired, Carbon Details</p>
+                    <p class="price">$32,000</p>
+                    <div class="card-actions">
+                        <a href="fear-fighter.html" class="btn btn-outline">VIEW BUILD</a>
+                        <button class="btn btn-primary add-to-cart" data-product-id="bike-003" data-price="32000">INQUIRE</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="bobber">
+                    <img src="../assets/images/bike-queens-crusher.jpg" alt="Queens Crusher">
+                    <h3>QUEENS CRUSHER</h3>
+                    <p class="bike-specs">750cc Twin, Bobber Style, Vintage Inspired</p>
+                    <p class="price">$22,000</p>
+                    <div class="card-actions">
+                        <a href="queens-crusher.html" class="btn btn-outline">VIEW BUILD</a>
+                        <button class="btn btn-primary add-to-cart" data-product-id="bike-004" data-price="22000">INQUIRE</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="chopper">
+                    <img src="../assets/images/bike-death-rider.jpg" alt="Death Rider">
+                    <h3>DEATH RIDER</h3>
+                    <p class="bike-specs">1100cc Twin, Extended Fork, Classic Chopper</p>
+                    <p class="price">$26,500</p>
+                    <div class="card-actions">
+                        <a href="death-rider.html" class="btn btn-outline">VIEW BUILD</a>
+                        <button class="btn btn-primary add-to-cart" data-product-id="bike-005" data-price="26500">INQUIRE</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="cafe-racer">
+                    <img src="../assets/images/bike-midnight-racer.jpg" alt="Midnight Racer">
+                    <h3>MIDNIGHT RACER</h3>
+                    <p class="bike-specs">900cc Twin, Café Racer, Performance Tuned</p>
+                    <p class="price">$25,500</p>
+                    <div class="card-actions">
+                        <a href="midnight-racer.html" class="btn btn-outline">VIEW BUILD</a>
+                        <button class="btn btn-primary add-to-cart" data-product-id="bike-006" data-price="25500">INQUIRE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Build CTA -->
+    <section class="custom-build-cta">
+        <div class="container">
+            <h2>BUILD YOUR MACHINE</h2>
+            <p>Every rider is different. Every build should be too. Start your custom build consultation and create the perfect machine for your streets.</p>
+            <a href="../garage/" class="btn btn-primary">START CONSULTATION</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>FEAR CITY CYCLES</h4>
+                    <p>Queens, NYC - Ride or Die</p>
+                    <p>Authentic motorcycle culture since the streets demanded it.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>SHOP</h4>
+                    <a href="../bikes/">Custom Builds</a>
+                    <a href="../gear/">Apparel</a>
+                    <a href="../gear/">Protective Gear</a>
+                    <a href="../garage/">Services</a>
+                </div>
+                <div class="footer-section">
+                    <h4>CULTURE</h4>
+                    <a href="../culture/">Blog</a>
+                    <a href="../culture/">Community</a>
+                    <a href="../culture/">Events</a>
+                    <a href="../culture/">History</a>
+                </div>
+                <div class="footer-section">
+                    <h4>CONNECT</h4>
+                    <a href="#" target="_blank">Instagram</a>
+                    <a href="#" target="_blank">YouTube</a>
+                    <a href="../contact/">Contact</a>
+                    <a href="../contact/">Press</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Fear City Cycles. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/bikes.js"></script>
+</body>
+</html>

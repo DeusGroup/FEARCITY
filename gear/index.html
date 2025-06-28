@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gear & Apparel - Fear City Cycles</title>
+    <meta name="description" content="Authentic motorcycle gear and apparel from Fear City Cycles. Leather jackets, protective gear, and streetwear.">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="../main.html"><img src="../assets/images/fear-city-logo-small.png" alt="Fear City Cycles"></a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="../bikes/" class="nav-link">BIKES</a>
+                <a href="../gear/" class="nav-link active">GEAR</a>
+                <a href="../culture/" class="nav-link">CULTURE</a>
+                <a href="../garage/" class="nav-link">GARAGE</a>
+                <a href="../contact/" class="nav-link">CONTACT</a>
+            </div>
+            <div class="nav-actions">
+                <a href="../account/" class="account-link">ACCOUNT</a>
+                <a href="../cart/" class="cart-link">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
+            </div>
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>GEAR & APPAREL</h1>
+            <p>Authentic gear for authentic riders. Function first, style follows.</p>
+        </div>
+    </section>
+
+    <!-- Category Filters -->
+    <section class="gear-filters">
+        <div class="container">
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">ALL GEAR</button>
+                <button class="filter-btn" data-filter="jackets">JACKETS</button>
+                <button class="filter-btn" data-filter="protective">PROTECTIVE</button>
+                <button class="filter-btn" data-filter="apparel">APPAREL</button>
+                <button class="filter-btn" data-filter="accessories">ACCESSORIES</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gear Grid -->
+    <section class="gear-grid">
+        <div class="container">
+            <div class="product-grid">
+                <div class="product-card" data-category="jackets">
+                    <img src="../assets/images/jacket-fear-city.jpg" alt="Fear City Leather Jacket">
+                    <h3>FEAR CITY LEATHER JACKET</h3>
+                    <p class="gear-specs">Premium Cowhide, Armor Ready, Classic Cut</p>
+                    <p class="price">$450</p>
+                    <div class="size-options">
+                        <select class="size-selector">
+                            <option value="">Select Size</option>
+                            <option value="S">Small</option>
+                            <option value="M">Medium</option>
+                            <option value="L">Large</option>
+                            <option value="XL">X-Large</option>
+                            <option value="XXL">XX-Large</option>
+                        </select>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="showSizeGuide('Leather Jacket')">SIZE GUIDE</button>
+                        <button class="btn btn-primary add-to-cart" data-product-id="gear-001" data-price="450">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="apparel">
+                    <img src="../assets/images/tee-queens-skull.jpg" alt="Queens Skull Tee">
+                    <h3>QUEENS SKULL TEE</h3>
+                    <p class="gear-specs">100% Cotton, Screen Printed, Pre-Shrunk</p>
+                    <p class="price">$35</p>
+                    <div class="size-options">
+                        <select class="size-selector">
+                            <option value="">Select Size</option>
+                            <option value="S">Small</option>
+                            <option value="M">Medium</option>
+                            <option value="L">Large</option>
+                            <option value="XL">X-Large</option>
+                            <option value="XXL">XX-Large</option>
+                        </select>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="showSizeGuide('T-Shirt')">SIZE GUIDE</button>
+                        <button class="btn btn-primary add-to-cart" data-product-id="gear-002" data-price="35">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="protective">
+                    <img src="../assets/images/gloves-reaper-riding.jpg" alt="Reaper Riding Gloves">
+                    <h3>REAPER RIDING GLOVES</h3>
+                    <p class="gear-specs">Leather Palm, Kevlar Knuckles, Touchscreen Compatible</p>
+                    <p class="price">$125</p>
+                    <div class="size-options">
+                        <select class="size-selector">
+                            <option value="">Select Size</option>
+                            <option value="S">Small</option>
+                            <option value="M">Medium</option>
+                            <option value="L">Large</option>
+                            <option value="XL">X-Large</option>
+                        </select>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="showSizeGuide('Gloves')">SIZE GUIDE</button>
+                        <button class="btn btn-primary add-to-cart" data-product-id="gear-003" data-price="125">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="accessories">
+                    <img src="../assets/images/patch-fear-city.jpg" alt="Fear City Patch">
+                    <h3>FEAR CITY PATCH</h3>
+                    <p class="gear-specs">Embroidered, Iron-On, 4" Diameter</p>
+                    <p class="price">$15</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary add-to-cart" data-product-id="gear-004" data-price="15">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="jackets">
+                    <img src="../assets/images/vest-prospect.jpg" alt="Prospect Vest">
+                    <h3>PROSPECT VEST</h3>
+                    <p class="gear-specs">Heavy Denim, Reinforced, Cut Ready</p>
+                    <p class="price">$85</p>
+                    <div class="size-options">
+                        <select class="size-selector">
+                            <option value="">Select Size</option>
+                            <option value="S">Small</option>
+                            <option value="M">Medium</option>
+                            <option value="L">Large</option>
+                            <option value="XL">X-Large</option>
+                            <option value="XXL">XX-Large</option>
+                        </select>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-outline" onclick="showSizeGuide('Vest')">SIZE GUIDE</button>
+                        <button class="btn btn-primary add-to-cart" data-product-id="gear-005" data-price="85">ADD TO CART</button>
+                    </div>
+                </div>
+
+                <div class="product-card" data-category="accessories">
+                    <img src="../assets/images/keychain-skull.jpg" alt="Skull Keychain">
+                    <h3>SKULL KEYCHAIN</h3>
+                    <p class="gear-specs">Pewter Cast, Heavy Duty Ring, 2" Height</p>
+                    <p class="price">$25</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary add-to-cart" data-product-id="gear-006" data-price="25">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>FEAR CITY CYCLES</h4>
+                    <p>Queens, NYC - Ride or Die</p>
+                    <p>Authentic motorcycle culture since the streets demanded it.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>SHOP</h4>
+                    <a href="../bikes/">Custom Builds</a>
+                    <a href="../gear/">Apparel</a>
+                    <a href="../gear/">Protective Gear</a>
+                    <a href="../garage/">Services</a>
+                </div>
+                <div class="footer-section">
+                    <h4>CULTURE</h4>
+                    <a href="../culture/">Blog</a>
+                    <a href="../culture/">Community</a>
+                    <a href="../culture/">Events</a>
+                    <a href="../culture/">History</a>
+                </div>
+                <div class="footer-section">
+                    <h4>CONNECT</h4>
+                    <a href="#" target="_blank">Instagram</a>
+                    <a href="#" target="_blank">YouTube</a>
+                    <a href="../contact/">Contact</a>
+                    <a href="../contact/">Press</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Fear City Cycles. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/gear.js"></script>
+</body>
+</html>

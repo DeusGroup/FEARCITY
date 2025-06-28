@@ -1,0 +1,58 @@
+{
+  "name": "fear-city-cycles-website",
+  "version": "1.0.0",
+  "description": "Complete e-commerce website for Fear City Cycles motorcycle lifestyle brand",
+  "main": "index.html",
+  "directories": {
+    "assets": "assets",
+    "pages": ".",
+    "documentation": "."
+  },
+  "files": {
+    "entry_point": "index.html",
+    "main_site": "main.html",
+    "sections": [
+      "bikes/index.html",
+      "gear/index.html", 
+      "contact/index.html",
+      "cart/index.html"
+    ],
+    "styles": [
+      "assets/css/gateway.css",
+      "assets/css/main.css",
+      "assets/css/responsive.css",
+      "assets/css/pages.css"
+    ],
+    "scripts": [
+      "assets/js/gateway.js",
+      "assets/js/main.js",
+      "assets/js/contact.js",
+      "assets/js/cart.js"
+    ]
+  },
+  "brand": {
+    "name": "Fear City Cycles",
+    "tagline": "Queens, NYC - Ride or Die",
+    "positioning": "Underground Rebels",
+    "colors": {
+      "primary": "#000000",
+      "secondary": "#FFFFFF", 
+      "accent": "#8B0000"
+    }
+  },
+  "features": [
+    "Gateway entrance experience",
+    "E-commerce functionality", 
+    "Shopping cart",
+    "Contact forms",
+    "Mobile responsive design",
+    "Punk rock aesthetic"
+  ],
+  "requirements": {
+    "images": "See IMAGE-REQUIREMENTS.md",
+    "fonts": "Google Fonts (Orbitron, Roboto)",
+    "browser_support": "Modern browsers, mobile-first"
+  },
+  "author": "Fear City Cycles Development Team",
+  "created": "2025-06-28"
+}

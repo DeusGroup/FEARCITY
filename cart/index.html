@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Fear City Cycles</title>
+    <meta name="description" content="Review your Fear City Cycles order. Secure checkout for authentic motorcycle gear and custom builds.">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="../main.html"><img src="../assets/images/fear-city-logo-small.png" alt="Fear City Cycles"></a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="../bikes/" class="nav-link">BIKES</a>
+                <a href="../gear/" class="nav-link">GEAR</a>
+                <a href="../culture/" class="nav-link">CULTURE</a>
+                <a href="../garage/" class="nav-link">GARAGE</a>
+                <a href="../contact/" class="nav-link">CONTACT</a>
+            </div>
+            <div class="nav-actions">
+                <a href="../account/" class="account-link">ACCOUNT</a>
+                <a href="../cart/" class="cart-link active">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
+            </div>
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="container">
+            <h1>YOUR CART</h1>
+
+            <!-- Cart Items -->
+            <div class="cart-content">
+                <div class="cart-items" id="cart-items">
+                    <!-- Cart items will be populated by JavaScript -->
+                </div>
+
+                <div class="cart-summary">
+                    <h3>ORDER SUMMARY</h3>
+                    <div class="summary-line">
+                        <span>Subtotal:</span>
+                        <span id="cart-subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Shipping:</span>
+                        <span id="cart-shipping">TBD</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Tax:</span>
+                        <span id="cart-tax">TBD</span>
+                    </div>
+                    <div class="summary-line total">
+                        <span>Total:</span>
+                        <span id="cart-total">$0.00</span>
+                    </div>
+
+                    <div class="cart-actions">
+                        <button class="btn btn-primary" id="checkout-btn">PROCEED TO CHECKOUT</button>
+                        <a href="../gear/" class="btn btn-secondary">CONTINUE SHOPPING</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty Cart Message -->
+            <div class="empty-cart" id="empty-cart" style="display: none;">
+                <h2>YOUR CART IS EMPTY</h2>
+                <p>Time to gear up. Real riders need real gear.</p>
+                <a href="../gear/" class="btn btn-primary">SHOP GEAR</a>
+                <a href="../bikes/" class="btn btn-secondary">VIEW BUILDS</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkout-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" id="close-checkout">&times;</span>
+            <h2>CHECKOUT</h2>
+
+            <form class="checkout-form" id="checkout-form">
+                <div class="checkout-section">
+                    <h3>CONTACT INFORMATION</h3>
+                    <div class="form-group">
+                        <label for="checkout-email">Email Address *</label>
+                        <input type="email" id="checkout-email" name="email" required>
+                    </div>
+                </div>
+
+                <div class="checkout-section">
+                    <h3>SHIPPING ADDRESS</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first-name">First Name *</label>
+                            <input type="text" id="first-name" name="first-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last-name">Last Name *</label>
+                            <input type="text" id="last-name" name="last-name" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address *</label>
+                        <input type="text" id="address" name="address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apartment">Apartment, suite, etc.</label>
+                        <input type="text" id="apartment" name="apartment">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State *</label>
+                            <select id="state" name="state" required>
+                                <option value="">Select State</option>
+                                <option value="NY">New York</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="CT">Connecticut</option>
+                                <!-- Add more states as needed -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="zip">ZIP Code *</label>
+                            <input type="text" id="zip" name="zip" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checkout-section">
+                    <h3>PAYMENT METHOD</h3>
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="card" checked>
+                            <span>Credit/Debit Card</span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="paypal">
+                            <span>PayPal</span>
+                        </label>
+                    </div>
+
+                    <div class="card-details" id="card-details">
+                        <div class="form-group">
+                            <label for="card-number">Card Number *</label>
+                            <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiry">Expiry Date *</label>
+                                <input type="text" id="expiry" name="expiry" placeholder="MM/YY" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV *</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="123" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="card-name">Name on Card *</label>
+                            <input type="text" id="card-name" name="card-name" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">COMPLETE ORDER</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>FEAR CITY CYCLES</h4>
+                    <p>Queens, NYC - Ride or Die</p>
+                    <p>Authentic motorcycle culture since the streets demanded it.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>SHOP</h4>
+                    <a href="../bikes/">Custom Builds</a>
+                    <a href="../gear/">Apparel</a>
+                    <a href="../gear/">Protective Gear</a>
+                    <a href="../garage/">Services</a>
+                </div>
+                <div class="footer-section">
+                    <h4>CULTURE</h4>
+                    <a href="../culture/">Blog</a>
+                    <a href="../culture/">Community</a>
+                    <a href="../culture/">Events</a>
+                    <a href="../culture/">History</a>
+                </div>
+                <div class="footer-section">
+                    <h4>CONNECT</h4>
+                    <a href="#" target="_blank">Instagram</a>
+                    <a href="#" target="_blank">YouTube</a>
+                    <a href="../contact/">Contact</a>
+                    <a href="../contact/">Press</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Fear City Cycles. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/cart.js"></script>
+</body>
+</html>

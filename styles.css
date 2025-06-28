@@ -1,0 +1,456 @@
+/* Fear City Cycles - v0.1.2 Styles */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* CSS Variables for consistent theming */
+:root {
+    --primary-black: #000000;
+    --secondary-black: #0a0a0a;
+    --dark-gray: #111111;
+    --medium-gray: #222222;
+    --light-gray: #333333;
+    --accent-red: #8B0000;
+    --bright-red: #FF0000;
+    --neon-red: #FF1744;
+    --white: #FFFFFF;
+    --off-white: #F5F5F5;
+    --text-gray: #CCCCCC;
+    
+    /* Typography */
+    --font-display: 'Bebas Neue', 'Orbitron', monospace;
+    --font-headings: 'Orbitron', monospace;
+    --font-body: 'Rajdhani', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 4rem;
+    
+    /* Effects */
+    --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.5);
+    --shadow-deep: 0 8px 32px rgba(0, 0, 0, 0.8);
+}
+
+/* Gateway Page Styles */
+.gateway-body {
+    background: linear-gradient(135deg, var(--primary-black) 0%, var(--secondary-black) 50%, var(--dark-gray) 100%);
+    color: var(--white);
+    font-family: var(--font-body);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.gateway-logo {
+    max-width: 380px;
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    z-index: 2;
+}
+
+.gateway-logo img {
+    width: 100%;
+    height: auto;
+    filter: invert(1) brightness(1) contrast(1);
+    transition: all 0.3s ease;
+}
+
+.gateway-logo:hover img {
+    filter: invert(1) brightness(1.1) contrast(1.1);
+    transform: scale(1.02);
+}
+
+.gateway-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 3em;
+    font-weight: 900;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+    display: none; /* Hide text since we have logo */
+}
+
+.gateway-tagline {
+    font-family: var(--font-display);
+    color: var(--neon-red);
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.8em;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+}
+
+.enter-btn {
+    background: var(--accent-red);
+    color: var(--white);
+    padding: 16px 32px;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 1.3em;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: 2px solid var(--accent-red);
+    border-radius: 0;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-medium);
+}
+
+.enter-btn:hover {
+    background: transparent;
+    color: var(--accent-red);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-deep);
+}
+
+/* Main Site Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--primary-black);
+    color: var(--white);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    font-weight: 400;
+    position: relative;
+}
+
+
+/* Navigation */
+nav {
+    background-color: var(--primary-black);
+    padding: var(--spacing-md) var(--spacing-lg);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid var(--accent-red);
+    box-shadow: var(--shadow-medium);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.nav-logo img {
+    height: 48px;
+    filter: invert(1) brightness(1);
+    margin-right: var(--spacing-md);
+}
+
+.logo-text {
+    font-family: var(--font-display);
+    font-size: 1.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: var(--white);
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.logo-text::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-red);
+    transition: width 0.3s ease;
+}
+
+.nav-logo:hover .logo-text::after {
+    width: 100%;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-menu a {
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.nav-menu a:hover {
+    color: var(--accent-red);
+    transform: translateY(-1px);
+}
+
+.cart {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.cart:hover {
+    color: #8B0000;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
+}
+
+.hero h1 {
+    font-family: var(--font-display);
+    font-size: 4.5em;
+    font-weight: 400;
+    margin-bottom: var(--spacing-lg);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--white);
+    position: relative;
+}
+
+.hero p {
+    font-family: var(--font-body);
+    font-size: 1.4em;
+    font-weight: 400;
+    color: var(--text-gray);
+    margin-bottom: var(--spacing-lg);
+    letter-spacing: 1px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-btn {
+    display: inline-block;
+    background-color: #8B0000;
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    border: 2px solid #8B0000;
+    transition: all 0.3s;
+}
+
+.cta-btn:hover {
+    background-color: transparent;
+    color: #8B0000;
+}
+
+/* Products Section */
+.products {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.products h2 {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 2.8em;
+    font-weight: 400;
+    margin-bottom: var(--spacing-xl);
+    text-transform: uppercase;
+    color: var(--accent-red);
+    letter-spacing: 3px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+}
+
+.product-card {
+    background-color: var(--dark-gray);
+    border: 2px solid var(--light-gray);
+    padding: var(--spacing-lg);
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-subtle);
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-red);
+    box-shadow: var(--shadow-deep);
+}
+
+.product-card h3 {
+    font-family: var(--font-headings);
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.product-card p {
+    color: #ccc;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.price {
+    font-family: var(--font-headings);
+    font-size: 1.3em;
+    color: var(--accent-red);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    letter-spacing: 1px;
+}
+
+.view-btn {
+    font-family: var(--font-body);
+    background-color: transparent;
+    color: var(--accent-red);
+    border: 2px solid var(--accent-red);
+    padding: 12px 24px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.view-btn:hover {
+    background-color: var(--accent-red);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+/* Footer */
+footer {
+    background-color: #111;
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 2px solid #8B0000;
+}
+
+footer p {
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.mobile-menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        background-color: #000;
+        flex-direction: column;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+        padding: 20px 0;
+        border-top: 2px solid #8B0000;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-menu li {
+        margin: 10px 0;
+    }
+    
+    .nav-container {
+        flex-wrap: wrap;
+    }
+    
+    .hero h1 {
+        font-size: 2.5em;
+    }
+    
+    .hero p {
+        font-size: 1.2em;
+    }
+    
+    .products h2 {
+        font-size: 2em;
+    }
+    
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .gateway-logo {
+        max-width: 300px;
+    }
+    
+    .gateway-title {
+        font-size: 2em;
+    }
+}

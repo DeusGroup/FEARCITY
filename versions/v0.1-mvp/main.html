@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fear City Cycles - Custom motorcycles and gear from Queens, NYC. Street fighters, bobbers, and authentic riding gear for underground motorcycle culture.">
+    <title>Fear City Cycles - Underground Motorcycle Culture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: #000;
+            padding: 20px;
+            border-bottom: 3px solid #8B0000;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+            margin-right: 15px;
+            filter: invert(1) brightness(1);
+        }
+        
+        .logo-text {
+            font-size: 1.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            display: none; /* Hide text when we have image */
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #8B0000;
+        }
+        
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+            background-color: #000;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        .hero p {
+            font-size: 1.3em;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #8B0000;
+            color: #fff;
+            padding: 15px 40px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 1.1em;
+            border: 2px solid #8B0000;
+            transition: all 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: transparent;
+            color: #8B0000;
+        }
+        
+        .products {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .products h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: #222;
+            border: 1px solid #444;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #8B0000;
+        }
+        
+        .product-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+        
+        .product-card .price {
+            color: #8B0000;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        .product-placeholder {
+            height: 200px;
+            background-color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        footer {
+            background-color: #000;
+            color: #999;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <img src="logo.svg" alt="Fear City Cycles">
+                <span class="logo-text">Fear City Cycles</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#bikes">Bikes</a></li>
+                    <li><a href="#gear">Gear</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Born in Queens. Built for Battle.</h1>
+        <p>These aren't garage queens - they're street fighters.</p>
+        <a href="#bikes" class="cta-button">View Our Rides</a>
+    </section>
+
+    <section class="products" id="bikes">
+        <h2>Custom Motorcycles</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-placeholder">[Motorcycle Image]</div>
+                <h3>Street Reaper</h3>
+                <p class="price">$18,500</p>
+                <p>Stripped-down street fighter built for NYC streets</p>
+            </div>
+            <div class="product-card">
+                <div class="product-placeholder">[Motorcycle Image]</div>
+                <h3>Borough Bruiser</h3>
+                <p class="price">$22,000</p>
+                <p>Heavy-duty cruiser with attitude</p>
+            </div>
+            <div class="product-card">
+                <div class="product-placeholder">[Motorcycle Image]</div>
+                <h3>Fear Fighter</h3>
+                <p class="price">$19,999</p>
+                <p>Classic bobber with modern guts</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Fear City Cycles - Queens, NYC - Ride or Die</p>
+    </footer>
+</body>
+</html>

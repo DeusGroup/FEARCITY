@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fear City Cycles - Underground motorcycle culture from Queens, NYC. Custom bikes for riders who choose authenticity over mainstream appeal.">
+    <title>Fear City Cycles - Enter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .logo {
+            max-width: 400px;
+            margin-bottom: 30px;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: auto;
+            filter: invert(1) brightness(1);
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            display: none; /* Hide text since we have logo */
+        }
+        
+        .tagline {
+            color: #8B0000;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        
+        .enter-btn {
+            background-color: #8B0000;
+            color: #fff;
+            padding: 15px 40px;
+            text-decoration: none;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            border: 2px solid #8B0000;
+            transition: all 0.3s;
+        }
+        
+        .enter-btn:hover {
+            background-color: transparent;
+            color: #8B0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="logo.svg" alt="Fear City Cycles">
+    </div>
+    <h1>Fear City Cycles</h1>
+    <p class="tagline">Queens, NYC - Ride or Die</p>
+    <a href="main.html" class="enter-btn">Enter the City</a>
+</body>
+</html>
