@@ -47,7 +47,6 @@ jobs:
           mkdir -p _site
           cp index.html _site/
           cp main.html _site/
-          cp logo.svg _site/
           
           # Copy all directories with HTML files
           if [ -d "bikes" ]; then
@@ -74,26 +73,13 @@ jobs:
           # Create optimized images directory
           mkdir -p _site/assets/images
           
-          # Copy and optimize images if they exist
+          # Copy and preserve optimized images as-is (they're already optimized)
           if [ -d "assets/images" ]; then
-            # Copy images first
+            # Copy images directly without re-optimizing (they're already optimized)
             cp -r assets/images/* _site/assets/images/ 2>/dev/null || true
-            # Create WebP versions and optimize
-            find _site/assets/images -name "*.jpg" -o -name "*.jpeg" | while read img; do
-              # Create WebP version
-              imagemin "$img" --plugin=webp --plugin.webp.quality=85 > "${img%.*}.webp" 2>/dev/null || true
-              # Optimize original JPEG
-              imagemin "$img" --plugin=mozjpeg --plugin.mozjpeg.quality=85 > "$img" 2>/dev/null || true
-            done
-            find _site/assets/images -name "*.png" | while read img; do
-              # Create WebP version
-              imagemin "$img" --plugin=webp --plugin.webp.quality=85 > "${img%.*}.webp" 2>/dev/null || true
-              # Optimize original PNG
-              imagemin "$img" --plugin=pngquant --plugin.pngquant.quality=65-90 > "$img" 2>/dev/null || true
-            done
-            # Optimize SVGs
-            find _site/assets/images -name "*.svg" | xargs -I {} imagemin {} --plugin=svgo > {} 2>/dev/null || true
-            echo "Images optimized and WebP versions created"
+            echo "Pre-optimized images copied successfully"
+            echo "Images in _site/assets/images:"
+            ls -la _site/assets/images/ | head -10
           fi
           
           # Copy other assets if they exist
