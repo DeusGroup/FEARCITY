@@ -10,228 +10,349 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Target**: Experienced motorcycle riders (25-45) who value authenticity over mainstream appeal
 - **Tagline**: "Queens, NYC - Ride or Die"
 
+## Current Architecture: Full-Stack E-Commerce Platform
+
+**Version**: v0.1.6 (Production Ready with Culture/Blog Section)
+**Architecture**: Full-stack application with frontend, backend, database, and cloud services
+**Deployment**: Vercel (frontend + serverless functions) + Supabase (database + storage)
+
+### Tech Stack Overview
+- **Frontend**: HTML5, CSS3 (Grid/Flexbox), Vanilla JavaScript (ES6+)
+- **Backend**: Node.js with Express.js server
+- **Database**: PostgreSQL with Prisma ORM
+- **Storage**: Supabase Storage for assets
+- **Authentication**: Supabase Auth (implemented via RLS)
+- **Deployment**: Vercel with serverless functions
+- **Testing**: Jest with TypeScript test suite
+- **Security**: Row-Level Security (RLS) implementation
+
 ## Development Commands
 
-### Local Development Server
+### Frontend Development
 ```bash
-# Python (if available)
+# Local development server (frontend only)
+npm run dev
+# OR
 python -m http.server 8000
-
-# Node.js (if available)
-npx http-server
 
 # Access at: http://localhost:8000
 ```
 
+### Backend Development
+```bash
+# Navigate to backend directory
+cd backend/
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Database operations
+npx prisma migrate dev    # Run database migrations
+npx prisma generate      # Generate Prisma client
+npx prisma studio       # Open database browser
+```
+
 ### Testing
-- No automated tests currently implemented
-- Manual testing required across browsers (latest 2 versions of Chrome, Firefox, Safari, Edge)
-- Test responsive design at mobile (375px), tablet (768px), and desktop (1200px+) breakpoints
+```bash
+# Run full test suite
+npm test
 
-### Validation
-- HTML validation: Use W3C validator
-- CSS validation: Check for browser compatibility
-- JavaScript: No linting/build process - manual code review required
-- Security: XSS protection implemented, HTTPS required for production
+# Run specific test categories
+npm run test:rate-limit  # Rate limiting tests
+npm run test:rls        # Row-Level Security tests
+npm run test:core       # Core functionality tests
 
-## Architecture Overview
+# Test with coverage
+npm run test:coverage
+```
 
-### Two-Stage User Flow
-1. **Gateway Page** (`index.html`) - Dramatic brand entrance with "ENTER THE CITY" interaction
-2. **Main Site** (`main.html`) - Full e-commerce functionality accessed after gateway
+### Production Deployment
+```bash
+# Deploy to Vercel (automatic on git push to main)
+vercel --prod
 
-### Core JavaScript Architecture
+# Manual deployment
+vercel deploy --prod
+```
 
-**JavaScript Files**:
-- `gateway.js` - Gateway page interactions and "ENTER THE CITY" functionality
-- `main.js` - Main site functionality including shopping cart, navigation, and animations
-- `contact.js` - Contact form handling and validation
-- `cart.js` - Shopping cart page-specific functionality
+### Database Management
+```bash
+# Supabase CLI commands
+npx supabase start      # Start local Supabase
+npx supabase stop       # Stop local Supabase
+npx supabase db reset   # Reset database
 
-**Shopping Cart System** (ShoppingCart class in `assets/js/main.js`)
-- Class-based implementation using ES6+ features
-- LocalStorage persistence for cart data
-- Real-time UI updates with cart count badge
-- Toast notifications for user feedback
+# RLS verification
+npm run verify-rls      # Check RLS coverage
+```
 
-**Event-Driven Pattern**
-- DOMContentLoaded initialization (`assets/js/main.js:110`)
-- Delegated event handling for dynamic content
-- Custom events for cart updates
+## Architecture Deep Dive
 
-**Key Global Objects**
-- `window.fearCityCart` - Shopping cart instance accessible across pages
-- LocalStorage keys: `fearCityCart` (cart items), `fearCityUser` (future user data)
+### Frontend Architecture
 
-### CSS Architecture
+**Core Pages**:
+- `index.html` - Gateway page with dramatic brand entrance
+- `main.html` - Main e-commerce hub
+- `bikes/` - Custom motorcycle showcase
+- `gear/` - Apparel and gear catalog
+- `culture/` - Blog and community content (NEW in v0.1.6)
+- `contact/` - Multi-form contact system
+- `cart/` - Shopping cart and checkout
 
-**CSS Files**:
-- `gateway.css` - Gateway page specific styles
-- `main.css` - Main site styles and design system
-- `responsive.css` - Mobile/tablet responsive overrides
-- `pages.css` - Page-specific styles for bikes, gear, contact, etc.
+**JavaScript Architecture**:
+- `assets/js/main.js` - Core functionality and ShoppingCart class
+- `assets/js/gateway.js` - Gateway page interactions
+- `assets/js/contact.js` - EmailJS integration and form handling
+- `assets/js/cart.js` - Cart-specific functionality
+- `assets/js/culture.js` - Blog filtering, search, and interactions (NEW)
 
-**Design System Variables** (defined in `main.css`)
-- Primary colors: Black (#000), White (#FFF), Deep Red (#8B0000)
-- Supporting colors: Distressed grays (#666666, #999999)
-- Typography: Orbitron (headers), Roboto (body)
-- Breakpoints: 768px (tablet), 1200px (desktop)
+**CSS Architecture**:
+- `assets/css/main.css` - Core styles and design system
+- `assets/css/pages.css` - Page-specific styles (including blog styles)
+- `assets/css/responsive.css` - Mobile/tablet responsive overrides
+- `assets/css/product.css` - Product page specific styles
 
-**Component Structure**
-- BEM-like naming convention (`.product-card`, `.product-card__title`)
-- Mobile-first responsive design
-- CSS Grid for layouts, Flexbox for components
-- Distressed textures and worn effects for punk aesthetic
+### Backend Architecture
 
-### Page Templates
+**Location**: `/backend/` directory
+**Framework**: Node.js with Express.js
+**Database**: PostgreSQL via Supabase with Prisma ORM
 
-All product pages follow similar structure:
-1. Navigation header with cart
-2. Hero section with parallax effect
-3. Product grid with filtering
-4. Footer with newsletter signup
+**Key Files**:
+- `server.js` - Main Express server
+- `package.json` - Backend dependencies and scripts
+- `prisma/schema.prisma` - Database schema definition
+- `routes/` - API route handlers
+- `vercel.json` - Vercel deployment configuration
 
-### Data Flow
+**API Endpoints**:
+- `/api/products` - Product management
+- `/api/cart` - Cart operations
+- `/api/orders` - Order processing
+- `/api/contact` - Contact form submissions
+- `/api/newsletter` - Newsletter signups
+- `/api/payments` - Payment processing (Square integration)
 
-1. **Product Display**: Static HTML, no backend integration
-2. **Cart Operations**: Client-side only via LocalStorage
-3. **Forms**: Frontend validation only, no backend submission
-4. **Search**: Placeholder functionality, not implemented
+### Database Architecture
+
+**Provider**: Supabase (PostgreSQL)
+**ORM**: Prisma
+**Security**: Row-Level Security (RLS) implemented
+
+**Core Tables**:
+- `products` - Product catalog
+- `customers` - User accounts
+- `orders` - Order management
+- `order_items` - Order line items
+- `categories` - Product categorization
+- `contact_submissions` - Contact form data
+- `newsletter_subscribers` - Email list management
+
+**RLS Implementation**:
+- Comprehensive row-level security across all tables
+- User isolation and data protection
+- Automated RLS testing and verification
+- Coverage tracking via `RLS-COVERAGE-ANALYSIS.md`
+
+### Cloud Services Integration
+
+**Supabase Services**:
+- **Database**: PostgreSQL with real-time subscriptions
+- **Storage**: Image and asset management
+- **Auth**: User authentication (ready for implementation)
+- **Edge Functions**: Serverless function hosting
+
+**Vercel Integration**:
+- **Frontend Hosting**: Static site deployment
+- **Serverless Functions**: API endpoint hosting
+- **Edge Network**: Global CDN distribution
+- **Preview Deployments**: Branch-based testing
+
+### Security Implementation
+
+**Frontend Security**:
+- XSS protection implemented
+- HTTPS required for production
+- Secure headers configuration
+- Input validation and sanitization
+
+**Backend Security**:
+- Rate limiting implementation (`lib/rate-limit/`)
+- SQL injection prevention via Prisma
+- Environment variable management
+- CORS configuration for API endpoints
+
+**Database Security**:
+- Row-Level Security (RLS) across all tables
+- User-based data isolation
+- Encrypted connections
+- Backup and recovery procedures
+
+## Testing Infrastructure
+
+**Framework**: Jest with TypeScript support
+**Location**: `__tests__/` directory
+**Configuration**: `jest.config.js` and `jest.config.simple.js`
+
+**Test Categories**:
+- **Core Tests**: Basic functionality (`__tests__/basic.test.ts`)
+- **Rate Limiting**: API rate limiting (`__tests__/rate-limit/`)
+- **Security**: RLS and security features
+- **Integration**: End-to-end API testing
+
+**Test Commands**:
+```bash
+npm test                    # Full test suite
+npm run test:simple        # Basic tests only
+npm run test:rate-limit    # Rate limiting tests
+npm run verify-rls         # RLS verification
+```
+
+## Content Management
+
+### Product Management
+- Products stored in database with Prisma ORM
+- Asset management via Supabase Storage
+- Real-time inventory tracking
+- Category-based organization
+
+### Blog/Culture Section (v0.1.6)
+- Static content with dynamic features
+- RSS feed generation (`culture/rss.xml`)
+- Category filtering and search
+- SEO optimization with Schema.org markup
+
+### Contact System
+- EmailJS integration for form submissions
+- Multiple contact form types (custom, gear, press, general)
+- Database storage of all submissions
+- Automated email notifications
 
 ## Development Guidelines
 
-### Adding New Products
-1. Add product HTML to relevant page (`bikes/index.html` or `gear/index.html`)
-2. Include required data attributes: `data-product-id`, `data-price`, `data-size`
-3. Ensure image follows naming convention: `product-name.jpg`
+### Code Style
+- **ES6+ JavaScript**: Use modern JavaScript features
+- **CSS**: Mobile-first responsive design
+- **HTML**: Semantic HTML5 structure
+- **TypeScript**: Used for testing and backend types
 
-### Modifying Styles
-1. Check existing CSS variables before adding new colors
-2. Use existing utility classes when possible
-3. Maintain mobile-first approach - desktop styles in media queries
+### Database Operations
+```bash
+# Make schema changes
+npx prisma db push          # Push schema changes
+npx prisma migrate dev      # Create and apply migration
+npx prisma generate         # Regenerate Prisma client
+```
 
-### JavaScript Modifications
-1. Use existing cart instance via `window.fearCityCart`
-2. Follow event delegation pattern for dynamic content
-3. Add animations/transitions via CSS, trigger with JavaScript classes
+### Environment Variables
+```bash
+# Required environment variables (.env)
+DATABASE_URL=               # Supabase database URL
+SUPABASE_URL=              # Supabase project URL
+SUPABASE_ANON_KEY=         # Supabase anonymous key
+EMAILJS_SERVICE_ID=        # EmailJS service ID
+EMAILJS_TEMPLATE_ID=       # EmailJS template ID
+EMAILJS_PUBLIC_KEY=        # EmailJS public key
+```
 
-### Performance Considerations
-- Images should be optimized (max 200KB for products, 500KB for heroes)
-- Lazy load images below the fold
-- Minimize JavaScript execution on page load
-- Use CSS transforms for animations (GPU-accelerated)
+### Asset Management
+- **Images**: Stored in Supabase Storage
+- **Asset Mapping**: `supabase-asset-mapping.json`
+- **Optimization**: Automated image optimization
+- **CDN**: Global distribution via Supabase CDN
 
 ## Common Tasks
 
-### Update Product Pricing
-Edit HTML directly in product pages - prices are stored as `data-price` attributes
+### Adding New Products
+1. Add product data via Prisma database operations
+2. Upload product images to Supabase Storage
+3. Update product pages with new items
+4. Test cart functionality with new products
 
-### Add New Product Category
-1. Create new directory (e.g., `parts/`)
-2. Copy template from `bikes/index.html`
-3. Update navigation in all HTML files
-4. Add category-specific styles to `pages.css`
+### Blog Content Updates
+1. Create new HTML files in `/culture/` directory
+2. Update RSS feed (`culture/rss.xml`)
+3. Add to sitemap.xml for SEO
+4. Test category filtering and search
 
-### Implement Missing Features
-- **Search**: Hook up search form (`assets/js/main.js:154-162`) to filter products
-- **User Accounts**: Create login/registration in `account/` directory
-- **Payment Processing**: Integrate payment gateway in checkout flow
+### API Endpoint Development
+1. Create route handler in `/backend/routes/`
+2. Update Prisma schema if database changes needed
+3. Add TypeScript types for request/response
+4. Write tests in `__tests__/` directory
+5. Update API documentation
 
-### Debug Cart Issues
-Check LocalStorage in DevTools: `localStorage.getItem('fearCityCart')`
+### Deployment Process
+1. Test locally with `npm test`
+2. Verify RLS coverage with `npm run verify-rls`
+3. Commit changes to main branch
+4. Automatic Vercel deployment
+5. Verify production deployment
 
-## Documentation Requirements
+## Monitoring and Analytics
 
-When working on this project, maintain comprehensive documentation:
+### Performance Monitoring
+- Core Web Vitals tracking
+- Service Worker performance metrics
+- Database query optimization
+- Asset delivery monitoring
+
+### Security Monitoring
+- Rate limiting analytics
+- RLS compliance verification
+- Security header validation
+- Automated vulnerability scanning
+
+### Business Analytics
+- Contact form submission tracking
+- Cart abandonment analysis
+- Product performance metrics
+- Blog content engagement
+
+## Documentation
 
 ### Required Documentation Files
-- **PROJECT-STATUS.md** - Track overall completion percentage and feature status
-- **CHANGELOG.md** - Version history following semantic versioning
-- **TODO.md** - Detailed task lists with priority levels and categories
-- **README.md** - Project overview and setup instructions
-- **CLAUDE.md** - This file, for AI assistance guidance
+- **PROJECT-STATUS.md** - Overall completion tracking
+- **CHANGELOG.md** - Version history and features
+- **TODO.md** - Task management and priorities
+- **RLS-IMPLEMENTATION-GUIDE.md** - Security documentation
+- **DEPLOYMENT-CHECKLIST.md** - Production deployment steps
 
-### Documentation Standards
-1. **Update TODO.md** whenever:
-   - New tasks are identified
-   - Tasks are started (mark as in_progress)
-   - Tasks are completed (mark with date)
-   - Priorities change
-
-2. **Update PROJECT-STATUS.md** when:
-   - Major features are completed
-   - Overall completion percentage changes
-   - New blockers are identified
-
-3. **Update CHANGELOG.md** for:
-   - New releases or versions
-   - Significant feature additions
-   - Breaking changes
-   - Bug fixes
-
-4. **Track All Work**: Use the TodoWrite/TodoRead tools for real-time task tracking
+### API Documentation
+- RESTful API endpoints documented
+- Request/response examples
+- Authentication requirements
+- Rate limiting information
 
 ## Important Notes
 
-- This is a static site with no backend - all functionality is client-side
-- Forms don't actually submit anywhere - they show success messages only
-- Product data is hardcoded in HTML - no database or API
-- SEO: Focus on local NYC search optimization and schema markup readiness
-- The gateway page is intentionally dramatic - don't tone it down
-- Security: XSS protection is implemented, HTTPS required for production
+- **Full-Stack Application**: No longer a static site
+- **Production Ready**: v0.1.6 with 99% completion
+- **Scalable Architecture**: Designed for growth and expansion
+- **Security First**: Comprehensive security implementation
+- **Testing Coverage**: Automated testing across all components
+- **Performance Optimized**: PWA capabilities with offline support
+- **SEO Optimized**: Complete SEO implementation with structured data
 
-## Required Image Assets
+## Future Roadmap
 
-All images should be placed in `assets/images/`:
+### v0.1.7 - User System Implementation
+- User registration and authentication
+- Order history and account management
+- Payment processing integration
+- Advanced user features
 
-### Logo Assets
-- `fear-city-logo.png` - Main logo for gateway
-- `fear-city-logo-small.png` - Navigation logo
-- `favicon.ico` - Browser favicon
+### v0.1.8 - Advanced Features
+- Inventory management system
+- Admin dashboard
+- Advanced analytics
+- Mobile app considerations
 
-### Hero Images
-- `hero-bg.jpg` - Hero background
-- `hero-bike.jpg` - Featured motorcycle
-- `dark-texture.jpg` - Background texture
-- `nyc-streets.jpg` - Culture section
-
-### Product Images - Motorcycles
-- `bike-street-reaper.jpg`
-- `bike-borough-bruiser.jpg`
-- `bike-fear-fighter.jpg`
-- `bike-queens-crusher.jpg`
-- `bike-death-rider.jpg`
-- `bike-midnight-racer.jpg`
-
-### Product Images - Gear & Apparel
-- `jacket-fear-city.jpg`
-- `tee-queens-skull.jpg`
-- `gloves-reaper-riding.jpg`
-- `patch-fear-city.jpg`
-- `vest-prospect.jpg`
-- `keychain-skull.jpg`
-
-## Future Development Roadmap
-
-### TODO Directories
-- `culture/` - Blog and community features
-- `garage/` - Service offerings
-- `account/` - User authentication system
-- `admin/` - Backend administration
-
-### Phase 2 - Core E-commerce
+### v0.2.0 - Full Business Platform
+- Multi-vendor support
 - Advanced customization tools
-- User account system
-- Order management
-- Inventory integration
-
-### Phase 3 - Community Features
-- Community forum
-- Blog content management
-- Event calendar
-- Customer reviews
-
-### Phase 4 - Advanced Features
-- Mobile app consideration
-- Augmented reality product viewing
-- Advanced personalization
+- Enterprise features
+- Community platform expansion
