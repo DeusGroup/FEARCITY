@@ -1,7 +1,162 @@
-/* Fear City Cycles - Responsive Styles */
+/* Fear City Cycles - Enhanced Responsive Styles */
 
-/* Mobile Menu Styles */
+/* Enhanced Mobile Experience */
 @media (max-width: 768px) {
+    /* Touch-optimized interactions */
+    * {
+        -webkit-tap-highlight-color: rgba(139, 0, 0, 0.3);
+        -webkit-touch-callout: none;
+    }
+    
+    /* Improved touch targets */
+    button, .btn, .add-to-cart, .nav-link, a {
+        min-height: 44px;
+        padding: 12px 16px;
+        touch-action: manipulation;
+    }
+    
+    /* Mobile typography */
+    body {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+    
+    /* Mobile form improvements */
+    input, select, textarea {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 14px 16px;
+        border-radius: 8px;
+        border: 2px solid #333;
+        background: #1a1a1a;
+        color: white;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+        border-color: #8B0000;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.2);
+    }
+    
+    /* Mobile search enhancements */
+    #product-search {
+        width: 100%;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 10;
+    }
+    
+    .search-results {
+        position: fixed !important;
+        top: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        max-height: 50vh !important;
+        border-radius: 16px 16px 0 0 !important;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5) !important;
+    }
+    
+    /* Mobile product cards */
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 10px;
+    }
+    
+    .product-card {
+        margin-bottom: 20px;
+        padding: 20px;
+        border-radius: 12px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .product-card:active {
+        transform: scale(0.98);
+    }
+    
+    .product-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(139, 0, 0, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    .product-card:hover::before {
+        left: 100%;
+    }
+    
+    /* Mobile gallery improvements */
+    .product-gallery {
+        margin-bottom: 30px;
+    }
+    
+    .main-product-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    
+    .gallery-thumbs {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        overflow-x: auto;
+        padding: 10px 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .gallery-thumbs::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .gallery-thumbs img {
+        min-width: 80px;
+        height: 80px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    /* Mobile cart improvements */
+    .cart-notification {
+        bottom: 20px !important;
+        left: 20px !important;
+        right: 20px !important;
+        top: auto !important;
+        transform: translateY(100px) !important;
+        border-radius: 12px !important;
+        padding: 16px 20px !important;
+        font-size: 16px !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .cart-notification.show {
+        transform: translateY(0) !important;
+    }
+    
+    /* Mobile navigation backdrop */
+    .mobile-nav-backdrop {
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+    
+    /* Mobile menu improvements */
     .nav-menu {
         position: fixed;
         top: 70px;
