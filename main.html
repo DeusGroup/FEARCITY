@@ -8,10 +8,23 @@
     <meta property="og:title" content="Fear City Cycles - Underground Motorcycle Culture">
     <meta property="og:description" content="Custom motorcycles and gear from Queens, NYC. Born in Queens. Built for battle.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://deusgroup.github.io/FEARCITY/">
+    <meta property="og:url" content="https://fearcitycycles.com/">
+    <meta property="og:image" content="https://fearcitycycles.com/logo.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fear City Cycles - Underground Motorcycle Culture">
+    <meta name="twitter:description" content="Custom motorcycles and gear from Queens, NYC. Born in Queens. Built for battle.">
+    <meta name="twitter:image" content="https://fearcitycycles.com/logo.svg">
     <title>Fear City Cycles - Underground Motorcycle Culture</title>
     <link rel="icon" type="image/svg+xml" href="logo.svg">
     <link rel="stylesheet" href="styles.css">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -24,11 +37,60 @@
         "addressRegion": "NY",
         "addressCountry": "US"
       },
-      "url": "https://deusgroup.github.io/FEARCITY/",
+      "url": "https://fearcitycycles.com/",
       "telephone": "",
-      "priceRange": "$35-$24000",
+      "priceRange": "$35-$32000",
       "category": "Motorcycle Dealer",
-      "image": "https://deusgroup.github.io/FEARCITY/logo.svg"
+      "image": "https://fearcitycycles.com/logo.svg",
+      "sameAs": [
+        "https://www.instagram.com/fearcitycycles",
+        "https://www.youtube.com/@fearcitycycles"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Fear City Cycles Products",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Motorcycle",
+              "name": "Street Reaper",
+              "description": "Custom street fighter motorcycle built for urban warfare",
+              "offers": {
+                "@type": "Offer",
+                "price": "18500",
+                "priceCurrency": "USD"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Motorcycle", 
+              "name": "Borough Bruiser",
+              "description": "Heavy-duty custom motorcycle for NYC streets",
+              "offers": {
+                "@type": "Offer",
+                "price": "21200",
+                "priceCurrency": "USD"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Fear City Leather Jacket",
+              "description": "Premium motorcycle jacket with CE-approved armor",
+              "offers": {
+                "@type": "Offer",
+                "price": "495",
+                "priceCurrency": "USD"
+              }
+            }
+          }
+        ]
+      }
     }
     </script>
 </head>
