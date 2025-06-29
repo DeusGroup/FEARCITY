@@ -406,7 +406,7 @@ footer p {
     transform: rotate(45deg) translate(-5px, -6px);
 }
 
-/* Mobile Responsive */
+/* Mobile Responsive - Fixed Navigation Layout */
 @media (max-width: 768px) {
     .mobile-menu-toggle {
         display: flex;
