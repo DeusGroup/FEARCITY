@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.5] - 2025-06-29 (In Development) - 🚀 FUNCTIONAL E-COMMERCE
+
+### 🎯 Release Theme: "From Showcase to Business Platform"
+**Status**: Planning & Documentation Phase Complete
+**Target**: Transform Fear City Cycles into a fully functional e-commerce platform
+
+### Added - Development Planning
+- ✅ Created comprehensive v0.1.5 roadmap (V0.1.5-ROADMAP.md)
+- ✅ Sprint planning for 3-week development cycle
+- ✅ Feature prioritization with business impact analysis
+- ✅ Technical architecture decisions documented
+- ✅ Success criteria and business goals defined
+
+### In Progress - Core Business Functions (Sprint 1)
+- 🔄 Functional product search implementation
+- 🔄 Contact form backend integration via EmailJS
+- 📋 Enhanced product pages with detailed specifications
+- 📋 Advanced shopping cart improvements
+
+### Planned - User Experience & Mobile (Sprints 2-3)
+- 📋 Mobile experience optimization
+- 📋 Product image galleries with zoom
+- 📋 Product customization tools
+- 📋 Performance optimization
+
 ## [0.1.4] - 2025-06-29 (Released) - 🎉 COMPLETE
 
 ### 🚀 MAJOR MILESTONE: 100% Production Ready

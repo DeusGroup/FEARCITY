@@ -149,16 +149,293 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Search functionality
-    const searchForm = document.querySelector('.search-form');
-    if (searchForm) {
-        searchForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const query = this.querySelector('input').value;
-            // Implement search functionality
-            console.log('Searching for:', query);
+    // Search functionality - Enhanced Product Search System
+    const productDatabase = [
+        // Motorcycles
+        { id: 'bike-001', name: 'Street Reaper', category: 'street-fighter', price: 24500, specs: '1000cc Twin Engine Raw Power Minimal Aesthetics NYC Streets Built', description: 'Stripped-down street fighter built for NYC streets. Raw power, minimal aesthetics.', type: 'motorcycle', page: 'bikes/street-reaper.html' },
+        { id: 'bike-002', name: 'Borough Bruiser', category: 'street-fighter', price: 28000, specs: '1200cc Twin Aggressive Stance Chrome Accents Heavy Duty Cruiser', description: 'Heavy-duty cruiser with chrome attitude. Built to dominate the boroughs.', type: 'motorcycle', page: 'bikes/borough-bruiser.html' },
+        { id: 'bike-003', name: 'Fear Fighter', category: 'street-fighter', price: 32000, specs: '1000cc Twin Track Inspired Carbon Details Performance', description: 'Track-inspired machine with carbon details and performance engineering.', type: 'motorcycle', page: 'bikes/fear-fighter.html' },
+        { id: 'bike-004', name: 'Queens Crusher', category: 'bobber', price: 22000, specs: '750cc Twin Bobber Style Vintage Inspired Classic', description: 'Vintage-inspired bobber built for the streets of Queens.', type: 'motorcycle', page: 'bikes/queens-crusher.html' },
+        { id: 'bike-005', name: 'Death Rider', category: 'chopper', price: 26500, specs: '1100cc Twin Extended Fork Classic Chopper Style', description: 'Classic chopper with extended fork and authentic style.', type: 'motorcycle', page: 'bikes/death-rider.html' },
+        { id: 'bike-006', name: 'Midnight Racer', category: 'cafe-racer', price: 25500, specs: '900cc Twin Café Racer Performance Tuned Racing', description: 'Performance-tuned café racer for midnight runs.', type: 'motorcycle', page: 'bikes/midnight-racer.html' },
+        
+        // Gear & Apparel
+        { id: 'gear-001', name: 'Fear City Jacket', category: 'jackets', price: 175, specs: 'Leather Armor Plated Street Protection', description: 'Leather jacket with armor plating for street protection.', type: 'gear', page: 'gear/index.html' },
+        { id: 'gear-002', name: 'Queens Skull Tee', category: 'apparel', price: 35, specs: 'Cotton Queens NYC Design Skull Graphics', description: 'Premium cotton tee with Queens skull design.', type: 'gear', page: 'gear/index.html' },
+        { id: 'gear-003', name: 'Reaper Riding Gloves', category: 'gloves', price: 65, specs: 'Leather Reinforced Grip Protection', description: 'Reinforced leather gloves for maximum grip and protection.', type: 'gear', page: 'gear/index.html' },
+        { id: 'gear-004', name: 'Fear City Patch', category: 'accessories', price: 15, specs: 'Embroidered Iron On NYC Pride', description: 'Embroidered Fear City patch - show your NYC pride.', type: 'gear', page: 'gear/index.html' },
+        { id: 'gear-005', name: 'Prospect Vest', category: 'vests', price: 85, specs: 'Heavy Denim Reinforced Cut Ready', description: 'Heavy denim vest, reinforced and cut-ready.', type: 'gear', page: 'gear/index.html' },
+        { id: 'gear-006', name: 'Skull Keychain', category: 'accessories', price: 25, specs: 'Pewter Cast Heavy Duty Ring 2 inch Height', description: 'Pewter cast skull keychain with heavy-duty ring.', type: 'gear', page: 'gear/index.html' }
+    ];
+
+    // Enhanced search function with fuzzy matching
+    function searchProducts(query) {
+        if (!query || query.length < 2) return [];
+        
+        const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 0);
+        const results = [];
+        
+        productDatabase.forEach(product => {
+            let score = 0;
+            const searchableText = `${product.name} ${product.category} ${product.specs} ${product.description}`.toLowerCase();
+            
+            searchTerms.forEach(term => {
+                // Exact name match (highest score)
+                if (product.name.toLowerCase().includes(term)) score += 10;
+                
+                // Category match
+                if (product.category.toLowerCase().includes(term)) score += 8;
+                
+                // Specs match
+                if (product.specs.toLowerCase().includes(term)) score += 6;
+                
+                // Description match
+                if (product.description.toLowerCase().includes(term)) score += 4;
+                
+                // Price range matching
+                if (term.includes('$') || term.includes('k') || term.includes('thousand')) {
+                    const priceMatch = extractPriceFromQuery(term);
+                    if (priceMatch && isInPriceRange(product.price, priceMatch)) score += 5;
+                }
+                
+                // Type matching
+                if ((term === 'bike' || term === 'motorcycle') && product.type === 'motorcycle') score += 7;
+                if ((term === 'gear' || term === 'apparel' || term === 'clothing') && product.type === 'gear') score += 7;
+            });
+            
+            if (score > 0) {
+                results.push({ ...product, score });
+            }
+        });
+        
+        return results.sort((a, b) => b.score - a.score).slice(0, 8); // Top 8 results
+    }
+
+    // Helper function to extract price from search query
+    function extractPriceFromQuery(term) {
+        if (term.includes('under') || term.includes('<')) return { max: parseInt(term.replace(/\D/g, '')) };
+        if (term.includes('over') || term.includes('>')) return { min: parseInt(term.replace(/\D/g, '')) };
+        return null;
+    }
+
+    // Helper function to check if price is in range
+    function isInPriceRange(price, range) {
+        if (range.min && price < range.min) return false;
+        if (range.max && price > range.max) return false;
+        return true;
+    }
+
+    // Search input handler with debouncing
+    const searchInput = document.getElementById('product-search');
+    let searchTimeout;
+    
+    if (searchInput) {
+        // Create search results dropdown
+        const searchResults = document.createElement('div');
+        searchResults.className = 'search-results';
+        searchResults.style.cssText = `
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #222;
+            border: 1px solid #666;
+            border-top: none;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        `;
+        
+        // Position search results relative to input
+        const searchContainer = document.createElement('div');
+        searchContainer.style.position = 'relative';
+        searchContainer.style.display = 'inline-block';
+        searchInput.parentNode.insertBefore(searchContainer, searchInput);
+        searchContainer.appendChild(searchInput);
+        searchContainer.appendChild(searchResults);
+        
+        searchInput.addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            const query = e.target.value.trim();
+            
+            if (query.length < 2) {
+                searchResults.style.display = 'none';
+                return;
+            }
+            
+            searchTimeout = setTimeout(() => {
+                const results = searchProducts(query);
+                displaySearchResults(results, searchResults, query);
+            }, 300);
+        });
+        
+        // Hide results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchContainer.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+        
+        // Handle Enter key for search
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = e.target.value.trim();
+                if (query.length >= 2) {
+                    performFullSearch(query);
+                }
+            }
         });
     }
+
+    // Display search results in dropdown
+    function displaySearchResults(results, container, query) {
+        if (results.length === 0) {
+            container.innerHTML = `
+                <div style="padding: 15px; color: #ccc; text-align: center;">
+                    No products found for "${query}"
+                </div>
+            `;
+        } else {
+            container.innerHTML = results.map(product => `
+                <div class="search-result-item" style="
+                    padding: 10px 15px;
+                    border-bottom: 1px solid #333;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    transition: background-color 0.2s;
+                " onmouseover="this.style.backgroundColor='#333'" onmouseout="this.style.backgroundColor='transparent'" onclick="window.location.href='${product.page}'">
+                    <div>
+                        <div style="color: white; font-weight: bold; margin-bottom: 2px;">${highlightMatch(product.name, query)}</div>
+                        <div style="color: #ccc; font-size: 12px;">${product.category} • ${product.type}</div>
+                    </div>
+                    <div style="color: #8B0000; font-weight: bold;">$${product.price.toLocaleString()}</div>
+                </div>
+            `).join('');
+            
+            // Add "View All Results" option if there are many results
+            if (results.length >= 6) {
+                container.innerHTML += `
+                    <div class="search-result-item" style="
+                        padding: 10px 15px;
+                        cursor: pointer;
+                        text-align: center;
+                        color: #8B0000;
+                        font-weight: bold;
+                        background: #1a1a1a;
+                    " onclick="performFullSearch('${query}')">
+                        View All Results for "${query}" →
+                    </div>
+                `;
+            }
+        }
+        
+        container.style.display = 'block';
+    }
+
+    // Highlight matching text in search results
+    function highlightMatch(text, query) {
+        const regex = new RegExp(`(${query.split(' ').join('|')})`, 'gi');
+        return text.replace(regex, '<span style="background: #8B0000; color: white; padding: 0 2px;">$1</span>');
+    }
+
+    // Perform full search and redirect to results page
+    function performFullSearch(query) {
+        // Store search query and redirect to main page with search
+        sessionStorage.setItem('searchQuery', query);
+        if (window.location.pathname !== '/main.html' && !window.location.pathname.endsWith('main.html')) {
+            window.location.href = '/main.html#search';
+        } else {
+            filterProductsBySearch(query);
+        }
+    }
+
+    // Filter products on page by search query
+    function filterProductsBySearch(query) {
+        const results = searchProducts(query);
+        const productGrid = document.querySelector('.product-grid');
+        
+        if (productGrid) {
+            const productCards = productGrid.querySelectorAll('.product-card');
+            const resultsIds = results.map(r => r.id);
+            
+            productCards.forEach(card => {
+                const productId = card.querySelector('.add-to-cart')?.getAttribute('data-product-id');
+                if (resultsIds.includes(productId)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show search status
+            showSearchStatus(query, results.length);
+        }
+    }
+
+    // Show search status message
+    function showSearchStatus(query, resultCount) {
+        let statusElement = document.querySelector('.search-status');
+        if (!statusElement) {
+            statusElement = document.createElement('div');
+            statusElement.className = 'search-status';
+            statusElement.style.cssText = `
+                text-align: center;
+                margin: 20px 0;
+                padding: 10px;
+                background: #1a1a1a;
+                border: 1px solid #333;
+                color: #ccc;
+            `;
+            const productsSection = document.querySelector('.products');
+            if (productsSection) {
+                productsSection.insertBefore(statusElement, productsSection.querySelector('.product-grid'));
+            }
+        }
+        
+        statusElement.innerHTML = `
+            <span>Showing ${resultCount} result${resultCount !== 1 ? 's' : ''} for "${query}"</span>
+            <button onclick="clearSearch()" style="
+                margin-left: 10px;
+                background: #8B0000;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+                border-radius: 3px;
+            ">Clear Search</button>
+        `;
+    }
+
+    // Clear search function
+    window.clearSearch = function() {
+        const searchInput = document.getElementById('product-search');
+        if (searchInput) searchInput.value = '';
+        
+        const statusElement = document.querySelector('.search-status');
+        if (statusElement) statusElement.remove();
+        
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => card.style.display = 'block');
+        
+        sessionStorage.removeItem('searchQuery');
+    };
+
+    // Check for stored search query on page load
+    window.addEventListener('load', function() {
+        const storedQuery = sessionStorage.getItem('searchQuery');
+        if (storedQuery && window.location.hash === '#search') {
+            const searchInput = document.getElementById('product-search');
+            if (searchInput) {
+                searchInput.value = storedQuery;
+                filterProductsBySearch(storedQuery);
+            }
+            sessionStorage.removeItem('searchQuery');
+        }
+    });
 
     // Newsletter signup
     const newsletterForm = document.querySelector('.newsletter-form');
