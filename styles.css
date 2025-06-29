@@ -416,25 +416,6 @@ footer p {
     transform: rotate(45deg) translate(-5px, -6px);
 }
 
-/* Desktop - Force horizontal navbar */
-@media (min-width: 769px) {
-    .nav-menu {
-        position: static !important;
-        flex-direction: row !important;
-        background-color: transparent !important;
-        width: auto !important;
-        left: auto !important;
-        top: auto !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-        border-top: none !important;
-    }
-    
-    .mobile-menu-toggle {
-        display: none !important;
-    }
-}
-
 /* Mobile Responsive - Fixed Navigation Layout */
 @media (max-width: 768px) {
     .mobile-menu-toggle {

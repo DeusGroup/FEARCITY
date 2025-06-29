@@ -8,35 +8,10 @@
     <meta property="og:title" content="Fear City Cycles - Underground Motorcycle Culture">
     <meta property="og:description" content="Custom motorcycles and gear from Queens, NYC. Born in Queens. Built for battle.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fearcitycycles.com/">
-    <meta property="og:image" content="https://fearcitycycles.com/logo.svg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Fear City Cycles - Underground Motorcycle Culture">
-    <meta name="twitter:description" content="Custom motorcycles and gear from Queens, NYC. Born in Queens. Built for battle.">
-    <meta name="twitter:image" content="https://fearcitycycles.com/logo.svg">
+    <meta property="og:url" content="">
     <title>Fear City Cycles - Underground Motorcycle Culture</title>
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="assets/css/cart-animations.css">
-    <link rel="stylesheet" href="assets/css/optimized-images.css">
-    <!-- EmailJS Integration -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script>
-        // Initialize EmailJS with your public key
-        window.EMAILJS_PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY'; // Replace with actual key
-        if (window.EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-            emailjs.init(window.EMAILJS_PUBLIC_KEY);
-        }
-    </script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6S25C1TTY"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-P6S25C1TTY');
-    </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -49,67 +24,13 @@
         "addressRegion": "NY",
         "addressCountry": "US"
       },
-      "url": "https://fearcitycycles.com/",
+      "url": "",
       "telephone": "",
-      "priceRange": "$35-$32000",
+      "priceRange": "$35-$24000",
       "category": "Motorcycle Dealer",
-      "image": "https://fearcitycycles.com/logo.svg",
-      "sameAs": [
-        "https://www.instagram.com/fearcitycycles",
-        "https://www.youtube.com/@fearcitycycles"
-      ],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Fear City Cycles Products",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Motorcycle",
-              "name": "Street Reaper",
-              "description": "Custom street fighter motorcycle built for urban warfare",
-              "offers": {
-                "@type": "Offer",
-                "price": "18500",
-                "priceCurrency": "USD"
-              }
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Motorcycle", 
-              "name": "Borough Bruiser",
-              "description": "Heavy-duty custom motorcycle for NYC streets",
-              "offers": {
-                "@type": "Offer",
-                "price": "21200",
-                "priceCurrency": "USD"
-              }
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Fear City Leather Jacket",
-              "description": "Premium motorcycle jacket with CE-approved armor",
-              "offers": {
-                "@type": "Offer",
-                "price": "495",
-                "priceCurrency": "USD"
-              }
-            }
-          }
-        ]
-      }
+      "image": "logo.svg"
     }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="public-config.js"></script>
-    <script src="supabase-config.js"></script>
-    <script src="supabase-storage-config.js"></script>
-    <script src="asset-manager.js"></script>
 </head>
 <body>
     <nav>
@@ -144,63 +65,48 @@
 
     <section class="products" id="bikes">
         <h2>Custom Motorcycles</h2>
-        <div class="filter-controls" style="margin-bottom: 20px; text-align: center;">
-            <select id="price-filter" style="padding: 8px; margin: 0 10px; background: #222; color: white; border: 1px solid #666; border-radius: 3px;">
-                <option value="">All Prices</option>
-                <option value="0-20000">Under $20,000</option>
-                <option value="20000-25000">$20,000 - $25,000</option>
-                <option value="25000-30000">$25,000+</option>
-            </select>
-            <select id="category-filter" style="padding: 8px; margin: 0 10px; background: #222; color: white; border: 1px solid #666; border-radius: 3px;">
-                <option value="">All Categories</option>
-                <option value="street-fighter">Street Fighter</option>
-                <option value="chopper">Chopper</option>
-                <option value="bobber">Bobber</option>
-                <option value="cafe-racer">Café Racer</option>
-            </select>
-        </div>
         <div class="product-grid">
-            <div class="product-card" data-category="street-fighter" data-price="18500">
+            <div class="product-card">
                 <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/bikes/bike-street-reaper.jpg" alt="Street Reaper Custom Motorcycle" class="product-image">
                 <h3>Street Reaper</h3>
                 <p class="price">$18,500</p>
                 <p>Stripped-down street fighter built for NYC streets. Raw power, minimal aesthetics.</p>
-                <a href="bikes/street-reaper.html" class="view-btn">View Details</a>
+                <a href="#" class="view-btn">View Details</a>
             </div>
-            <div class="product-card" data-category="street-fighter" data-price="21200">
+            <div class="product-card">
                 <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/bikes/bike-borough-bruiser.jpg" alt="Borough Bruiser Custom Motorcycle" class="product-image">
                 <h3>Borough Bruiser</h3>
-                <p class="price">$21,200</p>
+                <p class="price">$22,000</p>
                 <p>Heavy-duty cruiser with chrome attitude. Built to dominate the boroughs.</p>
-                <a href="bikes/borough-bruiser.html" class="view-btn">View Details</a>
+                <a href="#" class="view-btn">View Details</a>
             </div>
-            <div class="product-card" data-category="street-fighter" data-price="24800">
+            <div class="product-card">
                 <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/bikes/bike-fear-fighter.jpg" alt="Fear Fighter Custom Motorcycle" class="product-image">
                 <h3>Fear Fighter</h3>
-                <p class="price">$24,800</p>
-                <p>Track-inspired build with carbon details. Performance meets authenticity.</p>
-                <a href="bikes/fear-fighter.html" class="view-btn">View Details</a>
+                <p class="price">$19,999</p>
+                <p>Classic bobber with modern guts. Vintage soul, contemporary performance.</p>
+                <a href="#" class="view-btn">View Details</a>
             </div>
-            <div class="product-card" data-category="bobber" data-price="16900">
+            <div class="product-card">
                 <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/bikes/bike-queens-crusher.jpg" alt="Queens Crusher Custom Motorcycle" class="product-image">
                 <h3>Queens Crusher</h3>
-                <p class="price">$16,900</p>
+                <p class="price">$21,500</p>
                 <p>Vintage bobber style with aggressive stance. Built in Queens, for Queens.</p>
-                <a href="bikes/queens-crusher.html" class="view-btn">View Details</a>
+                <a href="#" class="view-btn">View Details</a>
             </div>
-            <div class="product-card" data-category="chopper" data-price="19700">
+            <div class="product-card">
                 <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/bikes/bike-death-rider.jpg" alt="Death Rider Custom Motorcycle" class="product-image">
                 <h3>Death Rider</h3>
-                <p class="price">$19,700</p>
+                <p class="price">$24,000</p>
                 <p>Classic chopper with extended fork. Extended reach, deadly presence.</p>
-                <a href="bikes/death-rider.html" class="view-btn">View Details</a>
+                <a href="#" class="view-btn">View Details</a>
             </div>
-            <div class="product-card" data-category="cafe-racer" data-price="22400">
+            <div class="product-card">
                 <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/bikes/bike-midnight-racer.jpg" alt="Midnight Racer Custom Motorcycle" class="product-image">
                 <h3>Midnight Racer</h3>
-                <p class="price">$22,400</p>
+                <p class="price">$23,500</p>
                 <p>Café racer performance build. Speed and style for the night streets.</p>
-                <a href="bikes/midnight-racer.html" class="view-btn">View Details</a>
+                <a href="#" class="view-btn">View Details</a>
             </div>
         </div>
     </section>
@@ -211,23 +117,44 @@
             <div class="product-card">
                 <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/jacket-fear-city.jpg" alt="Fear City Leather Jacket" class="product-image">
                 <h3>Fear City Jacket</h3>
-                <p class="price">$495</p>
+                <p class="price">$299</p>
                 <p>Black leather motorcycle jacket with Fear City patches. Built for protection and style.</p>
-                <a href="gear/fear-city-jacket.html" class="view-btn">View Details</a>
+                <a href="#" class="view-btn">View Details</a>
             </div>
             <div class="product-card">
                 <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/tee-queens-skull.jpg" alt="Queens Skull Tee" class="product-image">
                 <h3>Queens Skull Tee</h3>
-                <p class="price">$45</p>
+                <p class="price">$35</p>
                 <p>Black t-shirt with skull design. Queens pride, underground attitude.</p>
-                <a href="gear/queens-skull-tee.html" class="view-btn">View Details</a>
+                <a href="#" class="view-btn">View Details</a>
             </div>
             <div class="product-card">
                 <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/gloves-reaper-riding.jpg" alt="Reaper Riding Gloves" class="product-image">
                 <h3>Reaper Riding Gloves</h3>
-                <p class="price">$125</p>
+                <p class="price">$89</p>
                 <p>Black riding gloves with reinforced palms. Grip the streets with confidence.</p>
-                <a href="gear/reaper-riding-gloves.html" class="view-btn">View Details</a>
+                <a href="#" class="view-btn">View Details</a>
+            </div>
+            <div class="product-card">
+                <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/patch-fear-city.jpg" alt="Fear City Patch" class="product-image">
+                <h3>Fear City Patch</h3>
+                <p class="price">$15</p>
+                <p>Embroidered Fear City patch. Rep the underground wherever you ride.</p>
+                <a href="#" class="view-btn">View Details</a>
+            </div>
+            <div class="product-card">
+                <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/vest-prospect.jpg" alt="Prospect Vest" class="product-image">
+                <h3>Prospect Vest</h3>
+                <p class="price">$180</p>
+                <p>Black leather vest with Fear City branding. Earn your place in the underground.</p>
+                <a href="#" class="view-btn">View Details</a>
+            </div>
+            <div class="product-card">
+                <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/keychain-skull.jpg" alt="Skull Keychain" class="product-image">
+                <h3>Skull Keychain</h3>
+                <p class="price">$25</p>
+                <p>Metal skull keychain with Fear City logo. Small details, big attitude.</p>
+                <a href="#" class="view-btn">View Details</a>
             </div>
         </div>
     </section>
@@ -236,10 +163,5 @@
         <p>&copy; 2025 Fear City Cycles - Lean Mean Built in Queens</p>
     </footer>
     <script src="script.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/mobile-enhancements.js"></script>
-    <script src="assets/js/image-lazy-loader.js"></script>
-    <script src="assets/js/performance-optimizer.js"></script>
-    <script src="assets/js/performance-test.js"></script>
 </body>
 </html>
