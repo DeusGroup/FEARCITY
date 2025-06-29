@@ -54,14 +54,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Basic shopping cart functionality
+    // Enhanced shopping cart functionality
     let cart = JSON.parse(localStorage.getItem('fearCityCart')) || [];
     
     function updateCartCount() {
-        const cartLink = document.querySelector('.cart');
-        if (cartLink) {
+        const cartCount = document.getElementById('cart-count');
+        if (cartCount) {
             const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
-            cartLink.textContent = `Cart (${itemCount})`;
+            cartCount.textContent = itemCount;
+        }
+    }
+    
+    function saveCart() {
+        localStorage.setItem('fearCityCart', JSON.stringify(cart));
+        updateCartCount();
+    }
+    
+    function removeFromCart(productId) {
+        cart = cart.filter(item => item.id !== productId);
+        saveCart();
+        showNotification('Item removed from cart');
+        if (typeof renderCartItems === 'function') {
+            renderCartItems();
+        }
+    }
+    
+    function updateQuantity(productId, newQuantity) {
+        const item = cart.find(item => item.id === productId);
+        if (item) {
+            if (newQuantity <= 0) {
+                removeFromCart(productId);
+            } else {
+                item.quantity = newQuantity;
+                saveCart();
+                if (typeof renderCartItems === 'function') {
+                    renderCartItems();
+                }
+            }
         }
     }
     
@@ -79,8 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        localStorage.setItem('fearCityCart', JSON.stringify(cart));
-        updateCartCount();
+        saveCart();
         
         // Show confirmation
         showNotification(`${productName} added to cart!`);
@@ -115,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize cart count on page load
     updateCartCount();
     
-    // Add click handlers for view buttons (simulate add to cart)
+    // Add click handlers for view buttons (simulate add to cart for main page)
     const viewButtons = document.querySelectorAll('.view-btn');
     viewButtons.forEach((button, index) => {
         button.addEventListener('click', function(e) {
@@ -131,7 +159,380 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Add click handlers for product page add-to-cart buttons
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const productId = this.getAttribute('data-product');
+            const price = parseInt(this.getAttribute('data-price'));
+            const productTitle = document.querySelector('.product-title').textContent;
+            
+            // Get selected options if any
+            const sizeSelect = document.getElementById('size');
+            const colorSelect = document.getElementById('color');
+            
+            let productName = productTitle;
+            if (sizeSelect && sizeSelect.value) {
+                productName += ` (${sizeSelect.value})`;
+            }
+            if (colorSelect && colorSelect.value) {
+                productName += ` - ${colorSelect.value}`;
+            }
+            
+            addToCart(productId, productName, price);
+        });
+    });
+    
+    // Cart page functionality
+    function renderCartItems() {
+        const cartItemsContainer = document.getElementById('cart-items');
+        const emptyCart = document.getElementById('empty-cart');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartTotal = document.getElementById('cart-total');
+        
+        if (!cartItemsContainer) return;
+        
+        if (cart.length === 0) {
+            cartItemsContainer.style.display = 'none';
+            if (emptyCart) emptyCart.style.display = 'block';
+            return;
+        }
+        
+        cartItemsContainer.style.display = 'block';
+        if (emptyCart) emptyCart.style.display = 'none';
+        
+        cartItemsContainer.innerHTML = '';
+        let subtotal = 0;
+        
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            subtotal += itemTotal;
+            
+            const cartItem = document.createElement('div');
+            cartItem.className = 'cart-item';
+            cartItem.innerHTML = `
+                <div class="item-info">
+                    <h4>${item.name}</h4>
+                    <p class="item-price">$${item.price.toLocaleString()}</p>
+                </div>
+                <div class="item-controls">
+                    <div class="quantity-controls">
+                        <button class="qty-btn minus" data-id="${item.id}">-</button>
+                        <span class="quantity">${item.quantity}</span>
+                        <button class="qty-btn plus" data-id="${item.id}">+</button>
+                    </div>
+                    <button class="remove-btn" data-id="${item.id}">Remove</button>
+                </div>
+                <div class="item-total">$${itemTotal.toLocaleString()}</div>
+            `;
+            
+            cartItemsContainer.appendChild(cartItem);
+        });
+        
+        // Update totals
+        if (cartSubtotal) cartSubtotal.textContent = `$${subtotal.toLocaleString()}`;
+        if (cartTotal) cartTotal.textContent = `$${subtotal.toLocaleString()}`;
+        
+        // Add event listeners for quantity controls
+        document.querySelectorAll('.qty-btn.minus').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const itemId = this.getAttribute('data-id');
+                const item = cart.find(item => item.id === itemId);
+                if (item) {
+                    updateQuantity(itemId, item.quantity - 1);
+                }
+            });
+        });
+        
+        document.querySelectorAll('.qty-btn.plus').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const itemId = this.getAttribute('data-id');
+                const item = cart.find(item => item.id === itemId);
+                if (item) {
+                    updateQuantity(itemId, item.quantity + 1);
+                }
+            });
+        });
+        
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const itemId = this.getAttribute('data-id');
+                removeFromCart(itemId);
+            });
+        });
+    }
+    
+    // Initialize cart page if we're on it
+    if (document.getElementById('cart-items')) {
+        renderCartItems();
+    }
+    
+    // Product gallery functionality
+    function initProductGallery() {
+        const mainImage = document.querySelector('.main-product-image');
+        const thumbnails = document.querySelectorAll('.gallery-thumbs img');
+        
+        if (mainImage && thumbnails.length > 0) {
+            thumbnails.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    // Remove active class from all thumbnails
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked thumbnail
+                    this.classList.add('active');
+                    // Update main image
+                    mainImage.src = this.src;
+                    mainImage.alt = this.alt;
+                });
+            });
+            
+            // Set first thumbnail as active
+            if (thumbnails[0]) {
+                thumbnails[0].classList.add('active');
+            }
+            
+            // Add click-to-zoom functionality
+            mainImage.addEventListener('click', function() {
+                const overlay = document.createElement('div');
+                overlay.className = 'image-overlay';
+                overlay.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.8);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
+                    cursor: pointer;
+                `;
+                
+                const zoomedImage = document.createElement('img');
+                zoomedImage.src = this.src;
+                zoomedImage.alt = this.alt;
+                zoomedImage.style.cssText = `
+                    max-width: 90%;
+                    max-height: 90%;
+                    object-fit: contain;
+                `;
+                
+                overlay.appendChild(zoomedImage);
+                document.body.appendChild(overlay);
+                
+                overlay.addEventListener('click', function() {
+                    document.body.removeChild(overlay);
+                });
+            });
+        }
+    }
+    
+    // Initialize gallery if we're on a product page
+    if (document.querySelector('.product-gallery')) {
+        initProductGallery();
+    }
+    
+    // Lazy loading for images
+    function initLazyLoading() {
+        const images = document.querySelectorAll('img[data-src]');
+        
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+            
+            images.forEach(img => imageObserver.observe(img));
+        } else {
+            // Fallback for older browsers
+            images.forEach(img => {
+                img.src = img.dataset.src;
+                img.classList.remove('lazy');
+            });
+        }
+    }
+    
+    // Initialize lazy loading
+    initLazyLoading();
+    
+    // Product search functionality
+    function initProductSearch() {
+        const searchInput = document.getElementById('product-search');
+        const productCards = document.querySelectorAll('.product-card');
+        
+        if (searchInput && productCards.length > 0) {
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                productCards.forEach(card => {
+                    const productName = card.querySelector('h3').textContent.toLowerCase();
+                    const productDescription = card.querySelector('p:not(.price)').textContent.toLowerCase();
+                    const productPrice = card.querySelector('.price').textContent.toLowerCase();
+                    
+                    const isMatch = productName.includes(searchTerm) || 
+                                  productDescription.includes(searchTerm) || 
+                                  productPrice.includes(searchTerm);
+                    
+                    if (searchTerm === '' || isMatch) {
+                        card.style.display = 'block';
+                        card.style.opacity = '1';
+                    } else {
+                        card.style.display = 'none';
+                        card.style.opacity = '0';
+                    }
+                });
+                
+                // Show "no results" message if no products match
+                const visibleCards = Array.from(productCards).filter(card => 
+                    card.style.display !== 'none'
+                );
+                
+                // Remove existing "no results" message
+                const existingMessage = document.querySelector('.no-results-message');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+                
+                if (searchTerm !== '' && visibleCards.length === 0) {
+                    const noResultsMessage = document.createElement('div');
+                    noResultsMessage.className = 'no-results-message';
+                    noResultsMessage.style.cssText = `
+                        text-align: center;
+                        color: #666;
+                        font-size: 18px;
+                        margin: 40px 0;
+                        grid-column: 1 / -1;
+                    `;
+                    noResultsMessage.innerHTML = `
+                        <p>No products found matching "${searchTerm}"</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Try searching for bikes, gear, or specific product names.</p>
+                    `;
+                    
+                    // Add to the first product grid found
+                    const productGrid = document.querySelector('.product-grid');
+                    if (productGrid) {
+                        productGrid.appendChild(noResultsMessage);
+                    }
+                }
+            });
+            
+            // Clear search on escape key
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    this.value = '';
+                    this.dispatchEvent(new Event('input'));
+                }
+            });
+        }
+    }
+    
+    // Initialize search functionality
+    initProductSearch();
+    
+    // Product filtering functionality
+    function initProductFilters() {
+        const priceFilter = document.getElementById('price-filter');
+        const categoryFilter = document.getElementById('category-filter');
+        const productCards = document.querySelectorAll('.product-card');
+        
+        if ((priceFilter || categoryFilter) && productCards.length > 0) {
+            function applyFilters() {
+                const selectedPrice = priceFilter ? priceFilter.value : '';
+                const selectedCategory = categoryFilter ? categoryFilter.value : '';
+                
+                productCards.forEach(card => {
+                    const cardPrice = parseInt(card.getAttribute('data-price') || '0');
+                    const cardCategory = card.getAttribute('data-category') || '';
+                    
+                    let showCard = true;
+                    
+                    // Price filtering
+                    if (selectedPrice) {
+                        const [minPrice, maxPrice] = selectedPrice.split('-').map(p => parseInt(p));
+                        if (maxPrice) {
+                            showCard = showCard && (cardPrice >= minPrice && cardPrice <= maxPrice);
+                        } else {
+                            showCard = showCard && (cardPrice >= minPrice);
+                        }
+                    }
+                    
+                    // Category filtering
+                    if (selectedCategory) {
+                        showCard = showCard && (cardCategory === selectedCategory);
+                    }
+                    
+                    if (showCard) {
+                        card.style.display = 'block';
+                        card.style.opacity = '1';
+                    } else {
+                        card.style.display = 'none';
+                        card.style.opacity = '0';
+                    }
+                });
+                
+                // Show "no results" message if no products match
+                const visibleCards = Array.from(productCards).filter(card => 
+                    card.style.display !== 'none'
+                );
+                
+                // Remove existing "no results" message
+                const existingMessage = document.querySelector('.no-filter-results');
+                if (existingMessage) {
+                    existingMessage.remove();
+                }
+                
+                if ((selectedPrice || selectedCategory) && visibleCards.length === 0) {
+                    const noResultsMessage = document.createElement('div');
+                    noResultsMessage.className = 'no-filter-results';
+                    noResultsMessage.style.cssText = `
+                        text-align: center;
+                        color: #666;
+                        font-size: 18px;
+                        margin: 40px 0;
+                        grid-column: 1 / -1;
+                    `;
+                    noResultsMessage.innerHTML = `
+                        <p>No products match the selected filters</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Try adjusting your price range or category selection.</p>
+                    `;
+                    
+                    // Add to the first product grid found
+                    const productGrid = document.querySelector('.product-grid');
+                    if (productGrid) {
+                        productGrid.appendChild(noResultsMessage);
+                    }
+                }
+            }
+            
+            if (priceFilter) {
+                priceFilter.addEventListener('change', applyFilters);
+            }
+            
+            if (categoryFilter) {
+                categoryFilter.addEventListener('change', applyFilters);
+            }
+        }
+    }
+    
+    // Initialize filtering functionality
+    initProductFilters();
+    
+    // Make functions globally available
+    window.cart = cart;
+    window.addToCart = addToCart;
+    window.removeFromCart = removeFromCart;
+    window.updateQuantity = updateQuantity;
+    window.renderCartItems = renderCartItems;
+    
     // Console welcome message
-    console.log('%cFear City Cycles - v0.1.2', 'color: #8B0000; font-size: 20px; font-weight: bold;');
-    console.log('Queens, NYC - Ride or Die');
+    console.log('%cFear City Cycles - v0.1.3', 'color: #8B0000; font-size: 20px; font-weight: bold;');
+    console.log('Lean Mean Built in Queens');
 });

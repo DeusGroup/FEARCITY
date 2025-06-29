@@ -1,6 +1,6 @@
 {
   "name": "fear-city-cycles-website",
-  "version": "1.0.0",
+  "version": "0.1.3",
   "description": "Complete e-commerce website for Fear City Cycles motorcycle lifestyle brand",
   "main": "index.html",
   "directories": {
@@ -32,7 +32,7 @@
   },
   "brand": {
     "name": "Fear City Cycles",
-    "tagline": "Queens, NYC - Ride or Die",
+    "tagline": "Lean Mean Built in Queens",
     "positioning": "Underground Rebels",
     "colors": {
       "primary": "#000000",

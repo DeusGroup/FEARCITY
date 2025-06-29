@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.3] - 2025-06-29 (Released)
+
+### Added - Complete E-Commerce Functionality
+**Priority 1: Product Content & Navigation**
+- ✅ Individual product pages for all 6 motorcycles with detailed specifications
+- ✅ Individual product pages for all 3 gear items with size/variant options  
+- ✅ Functional contact forms with Netlify Forms integration and validation
+- ✅ Enhanced shopping cart with localStorage persistence and quantity management
+- ✅ Updated main product listings to link to individual detail pages
+- ✅ Breadcrumb navigation on all product pages
+
+**Priority 2: Technical Improvements**
+- ✅ Image optimization workflow with WebP conversion in GitHub Actions
+- ✅ CSS/JS minification pipeline for improved performance
+- ✅ Product galleries with click-to-zoom functionality and thumbnails
+- ✅ Comprehensive product specifications and technical details
+- ✅ Lazy loading for improved image performance
+
+**Priority 3: User Experience**  
+- ✅ Full cart management (update quantities, remove items)
+- ✅ Product filtering by category and price range
+- ✅ Real-time search functionality across all products
+- ✅ Enhanced mobile navigation and touch interactions
+- ✅ Form validation with success/error messaging
+
+### Architecture Changes
+- ✅ Individual product page templates with consistent branding
+- ✅ Enhanced cart management system with localStorage persistence
+- ✅ Netlify Forms integration for contact functionality  
+- ✅ Automated build optimizations with minification and image compression
+- ✅ Modular JavaScript architecture with gallery, search, and filter components
+
 ## [0.1.2] - 2025-06-28 (Released)
 
 ### Added - Enhanced Presentation & GitHub Deployment

@@ -44,7 +44,10 @@
                 <li><a href="#gear">Gear</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="#cart" class="cart">Cart (0)</a></li>
+                <li>
+                    <input type="text" id="product-search" placeholder="Search products..." style="padding: 5px; background: #222; color: white; border: 1px solid #666; border-radius: 3px;">
+                </li>
+                <li><a href="cart/" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
             </ul>
             <button class="mobile-menu-toggle">
                 <span></span>
@@ -62,48 +65,63 @@
 
     <section class="products" id="bikes">
         <h2>Custom Motorcycles</h2>
+        <div class="filter-controls" style="margin-bottom: 20px; text-align: center;">
+            <select id="price-filter" style="padding: 8px; margin: 0 10px; background: #222; color: white; border: 1px solid #666; border-radius: 3px;">
+                <option value="">All Prices</option>
+                <option value="0-20000">Under $20,000</option>
+                <option value="20000-25000">$20,000 - $25,000</option>
+                <option value="25000-30000">$25,000+</option>
+            </select>
+            <select id="category-filter" style="padding: 8px; margin: 0 10px; background: #222; color: white; border: 1px solid #666; border-radius: 3px;">
+                <option value="">All Categories</option>
+                <option value="street-fighter">Street Fighter</option>
+                <option value="chopper">Chopper</option>
+                <option value="bobber">Bobber</option>
+                <option value="cafe-racer">Café Racer</option>
+            </select>
+        </div>
         <div class="product-grid">
-            <div class="product-card">
+            <div class="product-card" data-category="street-fighter" data-price="18500">
                 <div class="product-placeholder">[Motorcycle Image]</div>
                 <h3>Street Reaper</h3>
                 <p class="price">$18,500</p>
                 <p>Stripped-down street fighter built for NYC streets. Raw power, minimal aesthetics.</p>
-                <a href="#" class="view-btn">View Details</a>
+                <a href="bikes/street-reaper.html" class="view-btn">View Details</a>
             </div>
-            <div class="product-card">
+            <div class="product-card" data-category="street-fighter" data-price="21200">
                 <div class="product-placeholder">[Motorcycle Image]</div>
                 <h3>Borough Bruiser</h3>
-                <p class="price">$22,000</p>
+                <p class="price">$21,200</p>
                 <p>Heavy-duty cruiser with chrome attitude. Built to dominate the boroughs.</p>
-                <a href="#" class="view-btn">View Details</a>
+                <a href="bikes/borough-bruiser.html" class="view-btn">View Details</a>
             </div>
-            <div class="product-card">
+            <div class="product-card" data-category="street-fighter" data-price="24800">
                 <div class="product-placeholder">[Motorcycle Image]</div>
                 <h3>Fear Fighter</h3>
-                <p class="price">$19,999</p>
-                <p>Classic bobber with modern guts. Vintage soul, contemporary performance.</p>
-                <a href="#" class="view-btn">View Details</a>
+                <p class="price">$24,800</p>
+                <p>Track-inspired build with carbon details. Performance meets authenticity.</p>
+                <a href="bikes/fear-fighter.html" class="view-btn">View Details</a>
             </div>
-            <div class="product-card">
+            <div class="product-card" data-category="bobber" data-price="16900">
                 <div class="product-placeholder">[Motorcycle Image]</div>
                 <h3>Queens Crusher</h3>
-                <p class="price">$21,500</p>
+                <p class="price">$16,900</p>
                 <p>Vintage bobber style with aggressive stance. Built in Queens, for Queens.</p>
-                <a href="#" class="view-btn">View Details</a>
+                <a href="bikes/queens-crusher.html" class="view-btn">View Details</a>
             </div>
-            <div class="product-card">
+            <div class="product-card" data-category="chopper" data-price="19700">
                 <div class="product-placeholder">[Motorcycle Image]</div>
                 <h3>Death Rider</h3>
-                <p class="price">$24,000</p>
+                <p class="price">$19,700</p>
                 <p>Classic chopper with extended fork. Extended reach, deadly presence.</p>
-                <a href="#" class="view-btn">View Details</a>
+                <a href="bikes/death-rider.html" class="view-btn">View Details</a>
             </div>
-            <div class="product-card">
+            <div class="product-card" data-category="cafe-racer" data-price="22400">
                 <div class="product-placeholder">[Motorcycle Image]</div>
                 <h3>Midnight Racer</h3>
-                <p class="price">$23,500</p>
+                <p class="price">$22,400</p>
                 <p>Café racer performance build. Speed and style for the night streets.</p>
-                <a href="#" class="view-btn">View Details</a>
+                <a href="bikes/midnight-racer.html" class="view-btn">View Details</a>
             </div>
         </div>
     </section>
@@ -114,23 +132,23 @@
             <div class="product-card">
                 <div class="product-placeholder">[Jacket Image]</div>
                 <h3>Fear City Jacket</h3>
-                <p class="price">$299</p>
+                <p class="price">$495</p>
                 <p>Black leather motorcycle jacket with Fear City patches. Built for protection and style.</p>
-                <a href="#" class="view-btn">View Details</a>
+                <a href="gear/fear-city-jacket.html" class="view-btn">View Details</a>
             </div>
             <div class="product-card">
                 <div class="product-placeholder">[T-Shirt Image]</div>
                 <h3>Queens Skull Tee</h3>
-                <p class="price">$35</p>
+                <p class="price">$45</p>
                 <p>Black t-shirt with skull design. Queens pride, underground attitude.</p>
-                <a href="#" class="view-btn">View Details</a>
+                <a href="gear/queens-skull-tee.html" class="view-btn">View Details</a>
             </div>
             <div class="product-card">
                 <div class="product-placeholder">[Gloves Image]</div>
                 <h3>Reaper Riding Gloves</h3>
-                <p class="price">$89</p>
+                <p class="price">$125</p>
                 <p>Black riding gloves with reinforced palms. Grip the streets with confidence.</p>
-                <a href="#" class="view-btn">View Details</a>
+                <a href="gear/reaper-riding-gloves.html" class="view-btn">View Details</a>
             </div>
         </div>
     </section>

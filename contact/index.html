@@ -91,7 +91,8 @@
                     </div>
 
                     <!-- Custom Build Form -->
-                    <form class="contact-form active" id="custom-form">
+                    <form class="contact-form active" id="custom-form" name="custom-build" method="POST" data-netlify="true">
+                        <input type="hidden" name="form-name" value="custom-build">
                         <h3>CUSTOM BUILD CONSULTATION</h3>
                         <div class="form-group">
                             <label for="custom-name">Name *</label>
@@ -140,7 +141,8 @@
                     </form>
 
                     <!-- Gear Form -->
-                    <form class="contact-form" id="gear-form">
+                    <form class="contact-form" id="gear-form" name="gear-inquiry" method="POST" data-netlify="true">
+                        <input type="hidden" name="form-name" value="gear-inquiry">
                         <h3>APPAREL & GEAR INQUIRY</h3>
                         <div class="form-group">
                             <label for="gear-name">Name *</label>
@@ -173,7 +175,8 @@
                     </form>
 
                     <!-- Press Form -->
-                    <form class="contact-form" id="press-form">
+                    <form class="contact-form" id="press-form" name="press-inquiry" method="POST" data-netlify="true">
+                        <input type="hidden" name="form-name" value="press-inquiry">
                         <h3>PRESS INQUIRY</h3>
                         <div class="form-group">
                             <label for="press-name">Name *</label>
@@ -204,7 +207,8 @@
                     </form>
 
                     <!-- General Form -->
-                    <form class="contact-form" id="general-form">
+                    <form class="contact-form" id="general-form" name="general-inquiry" method="POST" data-netlify="true">
+                        <input type="hidden" name="form-name" value="general-inquiry">
                         <h3>GENERAL INQUIRY</h3>
                         <div class="form-group">
                             <label for="general-name">Name *</label>
@@ -239,7 +243,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>FEAR CITY CYCLES</h4>
-                    <p>Queens, NYC - Ride or Die</p>
+                    <p>Lean Mean Built in Queens</p>
                     <p>Authentic motorcycle culture since the streets demanded it.</p>
                 </div>
                 <div class="footer-section">
@@ -270,7 +274,69 @@
         </div>
     </footer>
 
-    <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/contact.js"></script>
+    <script src="../script.js"></script>
+    <script>
+        // Contact form enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form[data-netlify="true"]');
+            
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    // Basic validation
+                    const requiredFields = form.querySelectorAll('[required]');
+                    let isValid = true;
+                    
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            field.style.borderColor = '#8B0000';
+                            field.style.boxShadow = '0 0 5px rgba(139, 0, 0, 0.5)';
+                        } else {
+                            field.style.borderColor = '';
+                            field.style.boxShadow = '';
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        e.preventDefault();
+                        showFormMessage('Please fill in all required fields.', 'error');
+                        return;
+                    }
+                    
+                    // Show success message
+                    showFormMessage('Message sent! We\'ll get back to you within 24 hours.', 'success');
+                });
+            });
+            
+            function showFormMessage(message, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `form-message ${type}`;
+                messageDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 15px 20px;
+                    border-radius: 5px;
+                    color: white;
+                    font-weight: bold;
+                    z-index: 10000;
+                    max-width: 300px;
+                    ${type === 'success' ? 'background-color: #2d5a27;' : 'background-color: #8B0000;'}
+                `;
+                messageDiv.textContent = message;
+                
+                document.body.appendChild(messageDiv);
+                
+                setTimeout(() => {
+                    messageDiv.style.opacity = '0';
+                    setTimeout(() => {
+                        if (messageDiv.parentNode) {
+                            messageDiv.parentNode.removeChild(messageDiv);
+                        }
+                    }, 300);
+                }, 4000);
+            }
+        });
+    </script>
 </body>
 </html>
