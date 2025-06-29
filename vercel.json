@@ -3,11 +3,6 @@
   "outputDirectory": ".",
   "installCommand": null,
   "framework": null,
-  "functions": {
-    "assets/js/*.js": {
-      "maxDuration": 10
-    }
-  },
   "env": {
     "SUPABASE_URL": "@supabase-url",
     "SUPABASE_ANON_KEY": "@supabase-anon-key",

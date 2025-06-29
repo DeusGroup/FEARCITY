@@ -112,10 +112,8 @@ jobs:
           
       - name: Push changes
         if: steps.detect-changes.outputs.has_changes == 'true' && steps.check-html-changes.outputs.html_changed == 'true'
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+        run: |
+          git push origin HEAD:${{ github.ref_name }}
           
       - name: Create deployment summary
         if: steps.detect-changes.outputs.has_changes == 'true'
@@ -134,7 +132,7 @@ jobs:
           echo "**Vercel Deployment:** 🚀 Will trigger automatically" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "All images are now available at:" >> $GITHUB_STEP_SUMMARY
-          echo "\`https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/\`" >> $GITHUB_STEP_SUMMARY
+          echo "\`${{ secrets.SUPABASE_URL }}/storage/v1/object/public/fear-city-assets/\`" >> $GITHUB_STEP_SUMMARY
           
       - name: No changes detected
         if: steps.detect-changes.outputs.has_changes == 'false'

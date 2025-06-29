@@ -4,19 +4,10 @@
 // Check if we're in a browser environment
 const isBrowser = typeof window !== 'undefined';
 
-// Supabase configuration
-const supabaseConfig = {
-    url: isBrowser ? 
-        (window.location.hostname === 'localhost' ? 
-            process.env.SUPABASE_URL || 'https://qmjauzmtznndsysnaxzo.supabase.co' : 
-            'https://qmjauzmtznndsysnaxzo.supabase.co') : 
-        'https://qmjauzmtznndsysnaxzo.supabase.co',
-    
-    anonKey: isBrowser ? 
-        (window.location.hostname === 'localhost' ? 
-            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'REMOVED_OLD_ANON_KEY' : 
-            'REMOVED_OLD_ANON_KEY') : 
-        'REMOVED_OLD_ANON_KEY'
+// Get configuration from public-config.js or fallback values
+const supabaseConfig = isBrowser && window.SUPABASE_CONFIG ? window.SUPABASE_CONFIG : {
+    url: 'https://qmjauzmtznndsysnaxzo.supabase.co',
+    anonKey: 'REMOVED_OLD_ANON_KEY'
 };
 
 // Initialize Supabase client (will be loaded when supabase-js is available)
