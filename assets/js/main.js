@@ -437,18 +437,51 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Newsletter signup
+    // Newsletter signup with EmailJS integration
     const newsletterForm = document.querySelector('.newsletter-form');
     if (newsletterForm) {
         newsletterForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const email = this.querySelector('input[type="email"]').value;
 
-            // Simulate API call
-            setTimeout(() => {
-                alert('Thank you for joining the Fear City family!');
+            // Check if EmailJS is available and configured
+            if (typeof emailjs !== 'undefined' && window.EMAILJS_PUBLIC_KEY && window.EMAILJS_PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
+                const params = {
+                    email: email,
+                    timestamp: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+                    source: 'Newsletter Signup',
+                    page_url: window.location.href
+                };
+                
+                emailjs.send(
+                    'fear_city_service',
+                    'template_newsletter', // You'll need to create this template
+                    params
+                ).then(
+                    function(response) {
+                        showToast('Welcome to the Fear City family! Check your email for confirmation.');
+                        // Track newsletter signup
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'newsletter_signup', {
+                                'event_category': 'Engagement',
+                                'event_label': 'Footer Newsletter',
+                                'value': 1
+                            });
+                        }
+                    },
+                    function(error) {
+                        console.error('Newsletter signup error:', error);
+                        showToast('Failed to subscribe. Please try again or email us directly.');
+                    }
+                );
                 this.reset();
-            }, 1000);
+            } else {
+                // Demo mode fallback
+                setTimeout(() => {
+                    showToast('Thank you for joining the Fear City family!');
+                    this.reset();
+                }, 1000);
+            }
         });
     }
 
