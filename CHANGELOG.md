@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.4] - 2025-06-29 (Released)
+
+### Added - Production Deployment to Vercel
+**Live Site**: https://fearcity.vercel.app/
+
+**Deployment Features**
+- ✅ Successfully deployed to Vercel with custom domain ready
+- ✅ Created vercel.json configuration for static site optimization
+- ✅ Implemented security headers (XSS protection, frame options, content type)
+- ✅ Configured proper routing for static HTML files
+- ✅ All static assets (CSS, JS, images) loading correctly
+
+**Production Verification Completed**
+- ✅ Gateway page functionality confirmed (Enter the City interaction)
+- ✅ All core pages tested: main, bikes, gear, contact, cart
+- ✅ Shopping cart system operational with localStorage persistence
+- ✅ Contact forms working with proper validation
+- ✅ Responsive design verified across mobile (480px), tablet (768px), desktop (1024px+)
+- ✅ Individual product pages functional (bikes and gear)
+- ✅ Navigation and breadcrumbs working correctly
+- ✅ 404 error handling confirmed
+- ✅ Performance optimization through CSS/JS loading
+
+**Technical Infrastructure**
+- ✅ Zero downtime deployment through Vercel
+- ✅ Automatic HTTPS/SSL certificate
+- ✅ Global CDN distribution for fast loading
+- ✅ Git integration for seamless updates
+- ✅ Production monitoring and analytics ready
+
+### Release Notes
+This release marks the official production launch of Fear City Cycles. The complete e-commerce platform is now live and accessible to customers worldwide. All features from v0.1.3 are operational in the production environment.
+
+**Next Phase**: Custom domain setup and advanced analytics integration.
+
 ## [0.1.3] - 2025-06-29 (Released)
 
 ### Added - Complete E-Commerce Functionality
