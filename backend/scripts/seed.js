@@ -1,6 +1,19 @@
 const { PrismaClient } = require('@prisma/client');
+const crypto = require('crypto');
 
 const prisma = new PrismaClient();
+
+// Generate a secure random password
+function generateSecurePassword() {
+  const length = 16;
+  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
+  let password = '';
+  const randomBytes = crypto.randomBytes(length);
+  for (let i = 0; i < length; i++) {
+    password += charset[randomBytes[i] % charset.length];
+  }
+  return password;
+}
 
 async function main() {
   console.log('🌱 Seeding Fear City Cycles database...');
@@ -326,7 +339,13 @@ async function main() {
 
   // Create admin user
   const bcrypt = require('bcryptjs');
-  const hashedPassword = await bcrypt.hash('FearCity2025!', 12);
+  const adminPassword = process.env.ADMIN_PASSWORD || generateSecurePassword();
+  const hashedPassword = await bcrypt.hash(adminPassword, 12);
+  
+  if (!process.env.ADMIN_PASSWORD) {
+    console.log('⚠️  No ADMIN_PASSWORD env var set. Generated password:', adminPassword);
+    console.log('⚠️  Please save this password securely and set ADMIN_PASSWORD env var');
+  }
 
   await prisma.adminUser.upsert({
     where: { email: 'admin@fearcitycycles.com' },

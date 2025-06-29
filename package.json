@@ -19,5 +19,8 @@
   "homepage": "https://github.com/DeusGroup/FEARCITY#readme",
   "dependencies": {
     "@supabase/supabase-js": "^2.50.2"
+  },
+  "devDependencies": {
+    "supabase": "^2.26.9"
   }
 }

@@ -203,7 +203,7 @@ The seed script creates:
 - 6 motorcycles with specifications
 - 3 gear items
 - Product categories
-- Admin user (`admin@fearcitycycles.com` / `FearCity2025!`)
+- Admin user (`admin@fearcitycycles.com` - password will be generated or use ADMIN_PASSWORD env var)
 - Site settings
 
 ### Testing Payments

@@ -4,10 +4,10 @@
 // Check if we're in a browser environment
 const isBrowser = typeof window !== 'undefined';
 
-// Get configuration from public-config.js or fallback values
+// Get configuration from environment variables or public-config.js
 const supabaseConfig = isBrowser && window.SUPABASE_CONFIG ? window.SUPABASE_CONFIG : {
-    url: 'https://qmjauzmtznndsysnaxzo.supabase.co',
-    anonKey: 'REMOVED_OLD_ANON_KEY'
+    url: import.meta?.env?.VITE_SUPABASE_URL || process.env?.VITE_SUPABASE_URL || '',
+    anonKey: import.meta?.env?.VITE_SUPABASE_ANON_KEY || process.env?.VITE_SUPABASE_ANON_KEY || ''
 };
 
 // Initialize Supabase client (will be loaded when supabase-js is available)

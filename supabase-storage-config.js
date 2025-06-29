@@ -4,7 +4,7 @@
 class FearCityStorage {
     constructor() {
         this.bucketName = 'fear-city-assets';
-        this.supabaseUrl = 'https://qmjauzmtznndsysnaxzo.supabase.co';
+        this.supabaseUrl = window.SUPABASE_CONFIG?.url || import.meta?.env?.VITE_SUPABASE_URL || '';
         this.client = null;
         this.baseStorageUrl = `${this.supabaseUrl}/storage/v1/object/public/${this.bucketName}`;
     }

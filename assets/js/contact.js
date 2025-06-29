@@ -9,7 +9,7 @@ const EMAILJS_CONFIG = {
         press: 'template_press_request',
         general: 'template_general_contact'
     },
-    PUBLIC_KEY: 'YOUR_EMAILJS_PUBLIC_KEY' // This should match the key in HTML
+    PUBLIC_KEY: import.meta?.env?.VITE_EMAILJS_PUBLIC_KEY || '' // Loaded from environment
 };
 
 document.addEventListener('DOMContentLoaded', function() {
