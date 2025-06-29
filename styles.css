@@ -61,12 +61,10 @@
 .gateway-logo img {
     width: 100%;
     height: auto;
-    filter: invert(1) brightness(1) contrast(1);
     transition: all 0.3s ease;
 }
 
 .gateway-logo:hover img {
-    filter: invert(1) brightness(1.1) contrast(1.1);
     transform: scale(1.02);
 }
 
