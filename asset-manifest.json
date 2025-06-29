@@ -1,0 +1,193 @@
+{
+  "version": "1.5.0",
+  "buildTime": "2025-06-29T11:16:30.667Z",
+  "assets": {
+    "css": {
+      "cart-animations.css": {
+        "size": 5414,
+        "lastModified": "2025-06-29T11:04:55.699Z",
+        "minified": true
+      },
+      "cart-animations.min.css": {
+        "size": 3426,
+        "lastModified": "2025-06-29T11:16:30.654Z",
+        "minified": false
+      },
+      "gateway.css": {
+        "size": 3252,
+        "lastModified": "2025-06-28T23:23:24.000Z",
+        "minified": true
+      },
+      "gateway.min.css": {
+        "size": 2360,
+        "lastModified": "2025-06-29T11:16:30.654Z",
+        "minified": false
+      },
+      "main.css": {
+        "size": 6920,
+        "lastModified": "2025-06-28T23:23:24.000Z",
+        "minified": true
+      },
+      "main.min.css": {
+        "size": 5012,
+        "lastModified": "2025-06-29T11:16:30.650Z",
+        "minified": false
+      },
+      "pages.css": {
+        "size": 7723,
+        "lastModified": "2025-06-28T23:28:18.000Z",
+        "minified": true
+      },
+      "pages.min.css": {
+        "size": 5509,
+        "lastModified": "2025-06-29T11:16:30.654Z",
+        "minified": false
+      },
+      "product.css": {
+        "size": 7400,
+        "lastModified": "2025-06-29T10:58:20.162Z",
+        "minified": true
+      },
+      "product.min.css": {
+        "size": 5085,
+        "lastModified": "2025-06-29T11:16:30.654Z",
+        "minified": false
+      },
+      "responsive.css": {
+        "size": 7469,
+        "lastModified": "2025-06-29T11:09:26.655Z",
+        "minified": true
+      },
+      "responsive.min.css": {
+        "size": 4565,
+        "lastModified": "2025-06-29T11:16:30.654Z",
+        "minified": false
+      }
+    },
+    "js": {
+      "cart.js": {
+        "size": 12163,
+        "lastModified": "2025-06-29T11:06:19.796Z",
+        "minified": true
+      },
+      "cart.min.js": {
+        "size": 8689,
+        "lastModified": "2025-06-29T11:16:30.662Z",
+        "minified": false
+      },
+      "contact.js": {
+        "size": 7485,
+        "lastModified": "2025-06-29T10:43:27.206Z",
+        "minified": true
+      },
+      "contact.min.js": {
+        "size": 4837,
+        "lastModified": "2025-06-29T11:16:30.658Z",
+        "minified": false
+      },
+      "gateway.js": {
+        "size": 1941,
+        "lastModified": "2025-06-28T23:24:28.000Z",
+        "minified": true
+      },
+      "gateway.min.js": {
+        "size": 1252,
+        "lastModified": "2025-06-29T11:16:30.662Z",
+        "minified": false
+      },
+      "main.js": {
+        "size": 39461,
+        "lastModified": "2025-06-29T11:04:26.083Z",
+        "minified": true
+      },
+      "main.min.js": {
+        "size": 24685,
+        "lastModified": "2025-06-29T11:16:30.658Z",
+        "minified": false
+      },
+      "mobile-enhancements.js": {
+        "size": 29390,
+        "lastModified": "2025-06-29T11:09:01.111Z",
+        "minified": true
+      },
+      "mobile-enhancements.min.js": {
+        "size": 16929,
+        "lastModified": "2025-06-29T11:16:30.662Z",
+        "minified": false
+      },
+      "performance-optimizer.js": {
+        "size": 13875,
+        "lastModified": "2025-06-29T11:11:36.788Z",
+        "minified": true
+      },
+      "performance-optimizer.min.js": {
+        "size": 7484,
+        "lastModified": "2025-06-29T11:16:30.662Z",
+        "minified": false
+      },
+      "performance-test.js": {
+        "size": 17515,
+        "lastModified": "2025-06-29T11:15:32.078Z",
+        "minified": false
+      },
+      "product.js": {
+        "size": 17931,
+        "lastModified": "2025-06-29T10:57:34.712Z",
+        "minified": true
+      },
+      "product.min.js": {
+        "size": 11489,
+        "lastModified": "2025-06-29T11:16:30.662Z",
+        "minified": false
+      }
+    },
+    "images": {
+      "bike-borough-bruiser.svg": {
+        "size": 2460,
+        "lastModified": "2025-06-29T05:28:09.716Z"
+      },
+      "bike-death-rider.svg": {
+        "size": 2751,
+        "lastModified": "2025-06-29T05:32:18.457Z"
+      },
+      "bike-fear-fighter.svg": {
+        "size": 2611,
+        "lastModified": "2025-06-29T05:28:27.083Z"
+      },
+      "bike-midnight-racer.svg": {
+        "size": 3182,
+        "lastModified": "2025-06-29T05:32:46.260Z"
+      },
+      "bike-queens-crusher.svg": {
+        "size": 2832,
+        "lastModified": "2025-06-29T05:29:19.554Z"
+      },
+      "bike-street-reaper.svg": {
+        "size": 2242,
+        "lastModified": "2025-06-29T05:27:53.084Z"
+      },
+      "gloves-reaper-riding.svg": {
+        "size": 4032,
+        "lastModified": "2025-06-29T05:29:40.846Z"
+      },
+      "hero-bg.svg": {
+        "size": 4403,
+        "lastModified": "2025-06-29T05:30:05.851Z"
+      },
+      "jacket-fear-city.svg": {
+        "size": 2660,
+        "lastModified": "2025-06-29T05:28:43.751Z"
+      },
+      "tee-queens-skull.svg": {
+        "size": 2330,
+        "lastModified": "2025-06-29T05:28:59.964Z"
+      }
+    }
+  },
+  "optimization": {
+    "cssMinified": 6,
+    "jsMinified": 7,
+    "imagesOptimized": 10,
+    "totalSavings": 59102
+  }
+}
