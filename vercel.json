@@ -1,7 +1,16 @@
 {
-  "public": true,
-  "cleanUrls": true,
   "trailingSlash": false,
+  "cleanUrls": false,
+  "rewrites": [
+    {
+      "source": "/culture",
+      "destination": "/culture/index.html"
+    },
+    {
+      "source": "/culture/",
+      "destination": "/culture/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
