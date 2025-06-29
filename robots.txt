@@ -14,6 +14,7 @@ Crawl-delay: 1
 # Allow important pages
 Allow: /bikes/
 Allow: /gear/
+Allow: /culture/
 Allow: /contact/
 Allow: /cart/
 Allow: /*.css

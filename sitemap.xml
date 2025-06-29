@@ -117,4 +117,28 @@
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
+  
+  <!-- Culture/Blog Section -->
+  <url>
+    <loc>https://fearcitycycles.com/culture/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Featured Blog Posts -->
+  <url>
+    <loc>https://fearcitycycles.com/culture/surviving-the-streets.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Blog RSS Feed -->
+  <url>
+    <loc>https://fearcitycycles.com/culture/rss.xml</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
 </urlset>
