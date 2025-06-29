@@ -1,45 +1,106 @@
 // Fear City Cycles - Main Site JavaScript
 
-// Shopping cart functionality
+// Enhanced Shopping Cart with Advanced Features
 class ShoppingCart {
     constructor() {
-        this.items = JSON.parse(localStorage.getItem('fearCityCart')) || [];
+        this.items = this.loadCart();
+        this.abandonmentTimer = null;
+        this.sessionStartTime = Date.now();
         this.updateCartDisplay();
+        this.initializeCartPersistence();
+        this.setupAbandonmentPrevention();
+        // Make cart globally accessible
+        window.fearCityCart = this;
     }
 
     addItem(product) {
-        const existingItem = this.items.find(item => item.id === product.id);
+        const existingItem = this.items.find(item => 
+            item.id === product.id && 
+            (item.size || 'Standard') === (product.size || 'Standard') &&
+            JSON.stringify(item.customOptions || []) === JSON.stringify(product.customOptions || [])
+        );
 
         if (existingItem) {
             existingItem.quantity += 1;
+            this.showQuantityAnimation(existingItem);
         } else {
-            this.items.push({
+            const newItem = {
                 ...product,
-                quantity: 1
-            });
+                quantity: 1,
+                size: product.size || 'Standard',
+                addedAt: Date.now(),
+                customOptions: product.customOptions || []
+            };
+            this.items.push(newItem);
         }
 
         this.saveCart();
         this.updateCartDisplay();
-        this.showNotification('Item added to cart');
+        this.showEnhancedNotification(`Added ${product.name} to cart`, 'success');
+        this.trackCartEvent('add_to_cart', product);
+        this.resetAbandonmentTimer();
     }
 
-    removeItem(productId) {
-        this.items = this.items.filter(item => item.id !== productId);
-        this.saveCart();
-        this.updateCartDisplay();
+    removeItem(productId, size = 'Standard', customOptions = []) {
+        const itemIndex = this.items.findIndex(item => 
+            item.id === productId && 
+            (item.size || 'Standard') === size &&
+            JSON.stringify(item.customOptions || []) === JSON.stringify(customOptions)
+        );
+        
+        if (itemIndex !== -1) {
+            const removedItem = this.items[itemIndex];
+            this.items.splice(itemIndex, 1);
+            this.saveCart();
+            this.updateCartDisplay();
+            this.showEnhancedNotification(`Removed ${removedItem.name} from cart`, 'remove');
+            this.trackCartEvent('remove_from_cart', removedItem);
+        }
     }
 
-    updateQuantity(productId, quantity) {
-        const item = this.items.find(item => item.id === productId);
+    updateQuantity(productId, size, quantity, customOptions = []) {
+        const item = this.items.find(item => 
+            item.id === productId && 
+            (item.size || 'Standard') === size &&
+            JSON.stringify(item.customOptions || []) === JSON.stringify(customOptions)
+        );
+        
         if (item) {
-            item.quantity = quantity;
-            if (quantity <= 0) {
-                this.removeItem(productId);
+            const oldQuantity = item.quantity;
+            item.quantity = Math.max(0, quantity);
+            
+            if (item.quantity === 0) {
+                this.removeItem(productId, size, customOptions);
             } else {
                 this.saveCart();
                 this.updateCartDisplay();
+                this.showQuantityUpdateAnimation(item, oldQuantity);
+                this.trackCartEvent('update_quantity', item);
             }
+        }
+    }
+
+    clearCart() {
+        if (this.items.length > 0) {
+            this.items = [];
+            this.saveCart();
+            this.updateCartDisplay();
+            this.showEnhancedNotification('Cart cleared', 'info');
+            this.trackCartEvent('clear_cart');
+        }
+    }
+
+    loadCart() {
+        try {
+            const saved = localStorage.getItem('fearCityCart');
+            const backup = sessionStorage.getItem('fearCityCartBackup');
+            
+            // Try localStorage first, fallback to sessionStorage
+            const cartData = saved || backup;
+            return cartData ? JSON.parse(cartData) : [];
+        } catch (error) {
+            console.error('Error loading cart:', error);
+            return [];
         }
     }
 
@@ -51,27 +112,260 @@ class ShoppingCart {
         return this.items.reduce((count, item) => count + item.quantity, 0);
     }
 
+    getCartSummary() {
+        return {
+            itemCount: this.getItemCount(),
+            total: this.getTotal(),
+            items: this.items.length,
+            sessionDuration: Date.now() - this.sessionStartTime
+        };
+    }
+
     saveCart() {
-        localStorage.setItem('fearCityCart', JSON.stringify(this.items));
+        try {
+            const cartData = JSON.stringify(this.items);
+            
+            // Save to both localStorage and sessionStorage for redundancy
+            localStorage.setItem('fearCityCart', cartData);
+            sessionStorage.setItem('fearCityCartBackup', cartData);
+            
+            // Save cart metadata
+            const metadata = {
+                lastSaved: Date.now(),
+                itemCount: this.getItemCount(),
+                total: this.getTotal()
+            };
+            localStorage.setItem('fearCityCartMeta', JSON.stringify(metadata));
+            
+        } catch (error) {
+            console.error('Error saving cart:', error);
+            // Try session storage if localStorage fails
+            try {
+                sessionStorage.setItem('fearCityCartBackup', JSON.stringify(this.items));
+            } catch (sessionError) {
+                console.error('Error saving to session storage:', sessionError);
+            }
+        }
+    }
+
+    initializeCartPersistence() {
+        // Periodic cart backup
+        setInterval(() => {
+            if (this.items.length > 0) {
+                this.saveCart();
+            }
+        }, 30000); // Save every 30 seconds
+
+        // Save cart before page unload
+        window.addEventListener('beforeunload', () => {
+            this.saveCart();
+        });
+
+        // Restore cart on visibility change (e.g., returning to tab)
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                const currentItems = this.loadCart();
+                if (JSON.stringify(currentItems) !== JSON.stringify(this.items)) {
+                    this.items = currentItems;
+                    this.updateCartDisplay();
+                }
+            }
+        });
+    }
+
+    setupAbandonmentPrevention() {
+        // Track user activity for abandonment prevention
+        const activityEvents = ['click', 'scroll', 'keypress', 'mousemove'];
+        
+        activityEvents.forEach(event => {
+            document.addEventListener(event, () => {
+                this.resetAbandonmentTimer();
+            }, { passive: true });
+        });
+
+        // Check for cart abandonment on page focus
+        window.addEventListener('focus', () => {
+            if (this.items.length > 0) {
+                this.checkCartAge();
+            }
+        });
+    }
+
+    resetAbandonmentTimer() {
+        clearTimeout(this.abandonmentTimer);
+        
+        if (this.items.length > 0) {
+            // Show abandonment prevention after 5 minutes of inactivity
+            this.abandonmentTimer = setTimeout(() => {
+                this.showAbandonmentPrevention();
+            }, 300000); // 5 minutes
+        }
+    }
+
+    showAbandonmentPrevention() {
+        if (this.items.length === 0) return;
+
+        const modal = document.createElement('div');
+        modal.className = 'abandonment-modal';
+        modal.innerHTML = `
+            <div class="abandonment-content">
+                <h3>Don't Leave Your Ride Behind!</h3>
+                <p>You have ${this.getItemCount()} item${this.getItemCount() > 1 ? 's' : ''} waiting in your cart.</p>
+                <div class="abandonment-actions">
+                    <button class="btn-complete-order">Complete Order</button>
+                    <button class="btn-save-later">Save for Later</button>
+                    <button class="btn-dismiss">Dismiss</button>
+                </div>
+            </div>
+        `;
+
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        `;
+
+        const content = modal.querySelector('.abandonment-content');
+        content.style.cssText = `
+            background: #000;
+            border: 2px solid #8B0000;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            margin: 20px;
+        `;
+
+        document.body.appendChild(modal);
+
+        // Event listeners
+        modal.querySelector('.btn-complete-order').addEventListener('click', () => {
+            window.location.href = '/cart/';
+            modal.remove();
+        });
+
+        modal.querySelector('.btn-save-later').addEventListener('click', () => {
+            this.saveCartForLater();
+            modal.remove();
+        });
+
+        modal.querySelector('.btn-dismiss').addEventListener('click', () => {
+            modal.remove();
+        });
+
+        // Auto-remove after 30 seconds
+        setTimeout(() => {
+            if (document.body.contains(modal)) {
+                modal.remove();
+            }
+        }, 30000);
+    }
+
+    saveCartForLater() {
+        const laterCart = {
+            items: this.items,
+            savedAt: Date.now(),
+            sessionId: this.generateSessionId()
+        };
+        
+        localStorage.setItem('fearCityCartSavedForLater', JSON.stringify(laterCart));
+        this.showEnhancedNotification('Cart saved for later', 'info');
+        this.trackCartEvent('save_for_later');
+    }
+
+    restoreSavedCart() {
+        const saved = localStorage.getItem('fearCityCartSavedForLater');
+        if (saved) {
+            const laterCart = JSON.parse(saved);
+            this.items = [...this.items, ...laterCart.items];
+            this.saveCart();
+            this.updateCartDisplay();
+            localStorage.removeItem('fearCityCartSavedForLater');
+            this.showEnhancedNotification('Saved cart restored', 'success');
+        }
+    }
+
+    checkCartAge() {
+        const metadata = localStorage.getItem('fearCityCartMeta');
+        if (metadata) {
+            const meta = JSON.parse(metadata);
+            const ageInHours = (Date.now() - meta.lastSaved) / (1000 * 60 * 60);
+            
+            if (ageInHours > 24 && this.items.length > 0) {
+                this.showCartAgeWarning();
+            }
+        }
+    }
+
+    showCartAgeWarning() {
+        this.showEnhancedNotification('Your cart items are over 24 hours old. Complete your order soon!', 'warning', 5000);
     }
 
     updateCartDisplay() {
         const cartCount = document.getElementById('cart-count');
-        if (cartCount) {
-            cartCount.textContent = this.getItemCount();
-        }
+        const cartCountElements = document.querySelectorAll('.cart-count, #cart-count');
+        
+        cartCountElements.forEach(element => {
+            const newCount = this.getItemCount();
+            const oldCount = parseInt(element.textContent) || 0;
+            
+            element.textContent = newCount;
+            
+            // Add bounce animation for count changes
+            if (newCount !== oldCount && newCount > 0) {
+                element.style.animation = 'cartBounce 0.6s ease';
+                setTimeout(() => {
+                    element.style.animation = '';
+                }, 600);
+            }
+        });
+
+        // Update cart icon with visual feedback
+        const cartLinks = document.querySelectorAll('.cart-link');
+        cartLinks.forEach(link => {
+            if (this.getItemCount() > 0) {
+                link.classList.add('has-items');
+            } else {
+                link.classList.remove('has-items');
+            }
+        });
     }
 
-    showNotification(message) {
-        // Create notification element
+    showEnhancedNotification(message, type = 'success', duration = 3000) {
         const notification = document.createElement('div');
-        notification.className = 'cart-notification';
-        notification.textContent = message;
+        notification.className = `cart-notification cart-notification--${type}`;
+        
+        const icons = {
+            success: '✓',
+            remove: '✗',
+            warning: '⚠',
+            info: 'ℹ'
+        };
+
+        notification.innerHTML = `
+            <span class="notification-icon">${icons[type] || icons.success}</span>
+            <span class="notification-message">${message}</span>
+        `;
+
+        const colors = {
+            success: '#8B0000',
+            remove: '#dc3545',
+            warning: '#ffc107',
+            info: '#17a2b8'
+        };
+
         notification.style.cssText = `
             position: fixed;
             top: 100px;
             right: 20px;
-            background: #8B0000;
+            background: ${colors[type] || colors.success};
             color: white;
             padding: 15px 20px;
             border-radius: 5px;
@@ -81,6 +375,11 @@ class ShoppingCart {
             opacity: 0;
             transform: translateX(100%);
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 250px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         `;
 
         document.body.appendChild(notification);
@@ -91,14 +390,83 @@ class ShoppingCart {
             notification.style.transform = 'translateX(0)';
         }, 10);
 
-        // Remove after 3 seconds
+        // Remove after duration
         setTimeout(() => {
             notification.style.opacity = '0';
             notification.style.transform = 'translateX(100%)';
             setTimeout(() => {
-                document.body.removeChild(notification);
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
             }, 300);
-        }, 3000);
+        }, duration);
+    }
+
+    showQuantityAnimation(item) {
+        // Find the product card and show quantity update animation
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+            const addButton = card.querySelector('.add-to-cart');
+            if (addButton && addButton.dataset.productId === item.id) {
+                const quantityBadge = document.createElement('div');
+                quantityBadge.textContent = `Qty: ${item.quantity}`;
+                quantityBadge.style.cssText = `
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    background: #8B0000;
+                    color: white;
+                    padding: 5px 10px;
+                    border-radius: 15px;
+                    font-size: 12px;
+                    font-weight: bold;
+                    animation: quantityPulse 1s ease;
+                `;
+                
+                card.style.position = 'relative';
+                card.appendChild(quantityBadge);
+                
+                setTimeout(() => {
+                    if (card.contains(quantityBadge)) {
+                        card.removeChild(quantityBadge);
+                    }
+                }, 2000);
+            }
+        });
+    }
+
+    showQuantityUpdateAnimation(item, oldQuantity) {
+        const change = item.quantity - oldQuantity;
+        const message = change > 0 ? `+${change}` : `${change}`;
+        this.showEnhancedNotification(`${item.name} quantity updated (${message})`, 'info', 2000);
+    }
+
+    trackCartEvent(action, item = null) {
+        if (typeof gtag !== 'undefined') {
+            const eventData = {
+                event_category: 'Cart',
+                event_label: action,
+                value: this.getTotal()
+            };
+
+            if (item) {
+                eventData.item_id = item.id;
+                eventData.item_name = item.name;
+                eventData.item_category = item.category || 'unknown';
+                eventData.price = item.price;
+            }
+
+            gtag('event', action, eventData);
+        }
+    }
+
+    generateSessionId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+    // Legacy method name for backward compatibility
+    showNotification(message) {
+        this.showEnhancedNotification(message, 'success');
     }
 }
 

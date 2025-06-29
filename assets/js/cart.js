@@ -130,17 +130,31 @@ function createCartItemElement(item) {
     return itemElement;
 }
 
-function updateItemQuantity(itemId, newQuantity) {
+function updateItemQuantity(itemId, newQuantity, size = 'Standard', customOptions = []) {
     if (window.fearCityCart) {
-        window.fearCityCart.updateQuantity(itemId, parseInt(newQuantity));
-        loadCartPage();
+        window.fearCityCart.updateQuantity(itemId, size, parseInt(newQuantity), customOptions);
+        setTimeout(() => loadCartPage(), 100); // Small delay for animation
     }
 }
 
-function removeCartItem(itemId) {
+function removeCartItem(itemId, size = 'Standard', customOptions = []) {
     if (window.fearCityCart) {
-        window.fearCityCart.removeItem(itemId);
-        loadCartPage();
+        // Show confirmation for expensive items
+        const item = window.fearCityCart.items.find(item => 
+            item.id === itemId && 
+            (item.size || 'Standard') === size &&
+            JSON.stringify(item.customOptions || []) === JSON.stringify(customOptions)
+        );
+        
+        if (item && item.price > 1000) {
+            showRemoveConfirmation(item, () => {
+                window.fearCityCart.removeItem(itemId, size, customOptions);
+                setTimeout(() => loadCartPage(), 100);
+            });
+        } else {
+            window.fearCityCart.removeItem(itemId, size, customOptions);
+            setTimeout(() => loadCartPage(), 100);
+        }
     }
 }
 
@@ -181,4 +195,178 @@ function processCheckout() {
         document.getElementById('checkout-modal').style.display = 'none';
         window.location.href = '../main.html';
     }, 3000);
+}
+
+// Enhanced cart page functions
+function showRemoveConfirmation(item, callback) {
+    const modal = document.createElement('div');
+    modal.className = 'remove-confirmation-modal';
+    modal.innerHTML = `
+        <div class="remove-confirmation-content">
+            <h3>Remove ${item.name}?</h3>
+            <p>This item costs $${item.price.toLocaleString()}. Are you sure you want to remove it from your cart?</p>
+            <div class="confirmation-actions">
+                <button class="btn-confirm-remove">Yes, Remove</button>
+                <button class="btn-cancel-remove">Cancel</button>
+            </div>
+        </div>
+    `;
+
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 2000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+    `;
+
+    const content = modal.querySelector('.remove-confirmation-content');
+    content.style.cssText = `
+        background: #000;
+        border: 2px solid #8B0000;
+        padding: 30px;
+        text-align: center;
+        max-width: 400px;
+        margin: 20px;
+    `;
+
+    document.body.appendChild(modal);
+
+    modal.querySelector('.btn-confirm-remove').addEventListener('click', () => {
+        callback();
+        modal.remove();
+    });
+
+    modal.querySelector('.btn-cancel-remove').addEventListener('click', () => {
+        modal.remove();
+    });
+}
+
+function clearCartWithConfirmation() {
+    if (!window.fearCityCart || window.fearCityCart.getItemCount() === 0) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'clear-cart-modal';
+    modal.innerHTML = `
+        <div class="clear-cart-content">
+            <h3>Clear Entire Cart?</h3>
+            <p>You have ${window.fearCityCart.getItemCount()} items worth $${window.fearCityCart.getTotal().toLocaleString()}. This action cannot be undone.</p>
+            <div class="clear-cart-actions">
+                <button class="btn-confirm-clear">Yes, Clear Cart</button>
+                <button class="btn-cancel-clear">Cancel</button>
+            </div>
+        </div>
+    `;
+
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 2000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+    `;
+
+    const content = modal.querySelector('.clear-cart-content');
+    content.style.cssText = `
+        background: #000;
+        border: 2px solid #dc3545;
+        padding: 30px;
+        text-align: center;
+        max-width: 400px;
+        margin: 20px;
+    `;
+
+    document.body.appendChild(modal);
+
+    modal.querySelector('.btn-confirm-clear').addEventListener('click', () => {
+        window.fearCityCart.clearCart();
+        loadCartPage();
+        modal.remove();
+    });
+
+    modal.querySelector('.btn-cancel-clear').addEventListener('click', () => {
+        modal.remove();
+    });
+}
+
+// Save cart for later functionality
+function saveCartForLater() {
+    if (window.fearCityCart) {
+        window.fearCityCart.saveCartForLater();
+    }
+}
+
+function restoreSavedCart() {
+    if (window.fearCityCart) {
+        window.fearCityCart.restoreSavedCart();
+        loadCartPage();
+    }
+}
+
+// Check for saved cart on page load
+window.addEventListener('load', function() {
+    const savedCart = localStorage.getItem('fearCityCartSavedForLater');
+    if (savedCart) {
+        const cartData = JSON.parse(savedCart);
+        const ageInHours = (Date.now() - cartData.savedAt) / (1000 * 60 * 60);
+        
+        if (ageInHours < 168) { // 1 week
+            showSavedCartNotification();
+        }
+    }
+});
+
+function showSavedCartNotification() {
+    const notification = document.createElement('div');
+    notification.className = 'saved-cart-notification';
+    notification.innerHTML = `
+        <div class="saved-cart-content">
+            <p>You have a saved cart from a previous session.</p>
+            <div class="saved-cart-actions">
+                <button onclick="restoreSavedCart()">Restore Cart</button>
+                <button onclick="dismissSavedCart()">Dismiss</button>
+            </div>
+        </div>
+    `;
+
+    notification.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #1a1a1a;
+        border: 2px solid #8B0000;
+        padding: 20px;
+        z-index: 1000;
+        max-width: 300px;
+        animation: slideUp 0.3s ease;
+    `;
+
+    document.body.appendChild(notification);
+
+    // Auto-dismiss after 30 seconds
+    setTimeout(() => {
+        if (document.body.contains(notification)) {
+            notification.remove();
+        }
+    }, 30000);
+}
+
+function dismissSavedCart() {
+    localStorage.removeItem('fearCityCartSavedForLater');
+    const notification = document.querySelector('.saved-cart-notification');
+    if (notification) {
+        notification.remove();
+    }
 }
