@@ -1,6 +1,6 @@
 {
   "name": "fear-city-cycles-backend",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "Fear City Cycles E-commerce Backend with Square API Integration",
   "main": "server.js",
   "scripts": {

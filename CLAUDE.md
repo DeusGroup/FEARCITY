@@ -17,8 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Deployment**: Vercel (frontend + serverless functions) + Supabase (database + storage)
 
 ### Tech Stack Overview
-- **Frontend**: HTML5, CSS3 (Grid/Flexbox), Vanilla JavaScript (ES6+)
-- **Backend**: Node.js with Express.js server
+- **Frontend**: HTML5, CSS3 (Grid/Flexbox), Vanilla JavaScript (ES6+) - Static site architecture
+- **API Layer**: Next.js 14 App Router (for serverless API routes only, not React frontend)
+- **Backend**: Node.js with Express.js server (separate from Next.js)
 - **Database**: PostgreSQL with Prisma ORM
 - **Storage**: Supabase Storage for assets
 - **Authentication**: Supabase Auth (implemented via RLS)
@@ -30,12 +31,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Frontend Development
 ```bash
-# Local development server (frontend only)
-npm run dev
-# OR
+# Static file server for HTML/CSS/JS development
 python -m http.server 8000
+# OR
+npx http-server
 
-# Access at: http://localhost:8000
+# For API routes testing (Next.js serverless functions)
+npm run dev  # Starts Next.js dev server
+
+# Access at: http://localhost:8000 (static) or http://localhost:3000 (Next.js)
 ```
 
 ### Backend Development
@@ -62,11 +66,15 @@ npm test
 
 # Run specific test categories
 npm run test:rate-limit  # Rate limiting tests
-npm run test:rls        # Row-Level Security tests
-npm run test:core       # Core functionality tests
+npm run rls:test        # Row-Level Security tests (note: rls:test not test:rls)
+npm run rls:coverage    # RLS coverage analysis
 
 # Test with coverage
 npm run test:coverage
+
+# RLS verification commands
+npm run rls:audit       # Audit RLS policies
+npm run rls:validate    # Validate RLS implementation
 ```
 
 ### Production Deployment
@@ -90,6 +98,22 @@ npm run verify-rls      # Check RLS coverage
 ```
 
 ## Architecture Deep Dive
+
+### Hybrid Architecture Explanation
+
+Fear City Cycles uses a **hybrid architecture** combining the best of static sites and modern serverless:
+
+1. **Static Frontend**: Traditional HTML/CSS/JavaScript files for fast loading and SEO
+2. **Next.js API Routes**: Modern serverless functions in `/app/api/` for dynamic features
+3. **Separate Express Backend**: Full backend server in `/backend/` for complex operations
+4. **Supabase Integration**: Database, storage, and auth services
+
+**Why This Architecture?**
+- **Performance**: Static HTML loads instantly
+- **SEO**: Perfect search engine optimization
+- **Scalability**: Serverless functions scale automatically  
+- **Flexibility**: Can add React components when needed
+- **Cost-Effective**: Minimal server costs
 
 ### Frontend Architecture
 
