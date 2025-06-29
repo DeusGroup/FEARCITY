@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- Homepage / Gateway -->
+  <url>
+    <loc>https://fearcitycycles.com/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://fearcitycycles.com/logo.svg</image:loc>
+      <image:title>Fear City Cycles Logo</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Main Site -->
+  <url>
+    <loc>https://fearcitycycles.com/main.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Bikes Section -->
+  <url>
+    <loc>https://fearcitycycles.com/bikes/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Individual Motorcycle Pages -->
+  <url>
+    <loc>https://fearcitycycles.com/bikes/street-reaper.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://fearcitycycles.com/bikes/borough-bruiser.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://fearcitycycles.com/bikes/fear-fighter.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://fearcitycycles.com/bikes/queens-crusher.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://fearcitycycles.com/bikes/death-rider.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://fearcitycycles.com/bikes/midnight-racer.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Gear Section -->
+  <url>
+    <loc>https://fearcitycycles.com/gear/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Individual Gear Pages -->
+  <url>
+    <loc>https://fearcitycycles.com/gear/fear-city-jacket.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://fearcitycycles.com/gear/queens-skull-tee.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://fearcitycycles.com/gear/reaper-riding-gloves.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Contact Page -->
+  <url>
+    <loc>https://fearcitycycles.com/contact/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Cart Page -->
+  <url>
+    <loc>https://fearcitycycles.com/cart/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Culture/Blog Section -->
+  <url>
+    <loc>https://fearcitycycles.com/culture/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Featured Blog Posts -->
+  <url>
+    <loc>https://fearcitycycles.com/culture/surviving-the-streets.html</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Blog RSS Feed -->
+  <url>
+    <loc>https://fearcitycycles.com/culture/rss.xml</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>
