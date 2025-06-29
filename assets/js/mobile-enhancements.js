@@ -167,13 +167,21 @@ class MobileEnhancements {
     }
 
     addSwipeToElement(element, callback) {
-        let startX, startY, distX, distY;
+        let startX, startY, distX, distY, startTime;
         const threshold = this.swipeThreshold;
+        const minSwipeTime = 100; // Minimum time for a swipe (ms)
+        const maxTapTime = 200; // Maximum time for a tap (ms)
         
         element.addEventListener('touchstart', (e) => {
+            // Don't interfere with clicks on buttons or links
+            if (e.target.closest('a, button, .btn')) {
+                return;
+            }
+            
             const touch = e.touches[0];
             startX = touch.clientX;
             startY = touch.clientY;
+            startTime = Date.now();
         }, { passive: true });
 
         element.addEventListener('touchmove', (e) => {
@@ -183,8 +191,8 @@ class MobileEnhancements {
             distX = touch.clientX - startX;
             distY = touch.clientY - startY;
             
-            // Prevent scrolling if horizontal swipe is detected
-            if (Math.abs(distX) > Math.abs(distY) && Math.abs(distX) > 20) {
+            // Only prevent scrolling for significant horizontal movement
+            if (Math.abs(distX) > Math.abs(distY) && Math.abs(distX) > 50) {
                 e.preventDefault();
             }
         }, { passive: false });
@@ -192,13 +200,19 @@ class MobileEnhancements {
         element.addEventListener('touchend', (e) => {
             if (!startX || !startY) return;
             
-            if (Math.abs(distX) > threshold && Math.abs(distX) > Math.abs(distY)) {
+            const touchTime = Date.now() - startTime;
+            const isSwipe = Math.abs(distX) > threshold && 
+                           Math.abs(distX) > Math.abs(distY) && 
+                           touchTime > minSwipeTime;
+            
+            // Only trigger swipe if it's a clear swipe gesture, not a tap
+            if (isSwipe && !e.target.closest('a, button, .btn')) {
                 const direction = distX > 0 ? 'right' : 'left';
                 callback(direction);
                 this.triggerHapticFeedback('light');
             }
             
-            startX = startY = distX = distY = 0;
+            startX = startY = distX = distY = startTime = 0;
         }, { passive: true });
     }
 
