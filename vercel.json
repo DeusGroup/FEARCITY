@@ -3,8 +3,14 @@
   "outputDirectory": ".",
   "installCommand": null,
   "framework": null,
-  "cleanUrls": true,
+  "cleanUrls": false,
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/culture/(.*)",
+      "destination": "/culture/$1"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
