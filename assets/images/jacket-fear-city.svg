@@ -1,0 +1,54 @@
+<svg width="600" height="600" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="leatherGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a2a2a"/>
+      <stop offset="50%" style="stop-color:#1a1a1a"/>
+      <stop offset="100%" style="stop-color:#0d0d0d"/>
+    </linearGradient>
+    <filter id="leatherTexture">
+      <feTurbulence baseFrequency="0.9" numOctaves="4" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="discrete" tableValues="0.5"/>
+      </feComponentTransfer>
+      <feComposite operator="over" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="600" fill="#1a1a1a"/>
+  
+  <!-- Jacket outline -->
+  <g transform="translate(150, 50)">
+    <!-- Main jacket body -->
+    <path d="M150 100 Q100 80 100 150 L100 450 Q100 480 130 480 L270 480 Q300 480 300 450 L300 150 Q300 80 250 100 Z" 
+          fill="url(#leatherGrad)" stroke="#8B0000" stroke-width="3" filter="url(#leatherTexture)"/>
+    
+    <!-- Sleeves -->
+    <ellipse cx="80" cy="200" rx="40" ry="100" fill="url(#leatherGrad)" stroke="#8B0000" stroke-width="2"/>
+    <ellipse cx="320" cy="200" rx="40" ry="100" fill="url(#leatherGrad)" stroke="#8B0000" stroke-width="2"/>
+    
+    <!-- Collar -->
+    <path d="M150 100 Q170 80 200 100 Q230 80 250 100" fill="none" stroke="#666" stroke-width="4"/>
+    
+    <!-- Zipper -->
+    <line x1="200" y1="120" x2="200" y2="450" stroke="#999" stroke-width="6"/>
+    <line x1="200" y1="120" x2="200" y2="450" stroke="#666" stroke-width="2"/>
+    
+    <!-- Pockets -->
+    <rect x="130" y="300" width="60" height="40" rx="5" fill="none" stroke="#8B0000" stroke-width="2"/>
+    <rect x="210" y="300" width="60" height="40" rx="5" fill="none" stroke="#8B0000" stroke-width="2"/>
+    
+    <!-- Armor panels -->
+    <rect x="120" y="180" width="30" height="50" rx="10" fill="#333" stroke="#666" stroke-width="1"/>
+    <rect x="250" y="180" width="30" height="50" rx="10" fill="#333" stroke="#666" stroke-width="1"/>
+    
+    <!-- Fear City logo area -->
+    <circle cx="200" cy="200" r="25" fill="none" stroke="#8B0000" stroke-width="2"/>
+    <text x="200" y="205" text-anchor="middle" fill="#8B0000" font-family="Arial Black" font-size="12">FC</text>
+  </g>
+  
+  <!-- Product text -->
+  <text x="300" y="550" text-anchor="middle" fill="#8B0000" font-family="Arial Black" font-size="24" font-weight="bold">FEAR CITY JACKET</text>
+  <text x="300" y="575" text-anchor="middle" fill="#666" font-family="Arial" font-size="14">CE-APPROVED ARMOR</text>
+</svg>

@@ -1,0 +1,61 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bikeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a"/>
+      <stop offset="100%" style="stop-color:#0d0d0d"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bikeGradient)"/>
+  
+  <!-- Motorcycle silhouette - Extended chopper style -->
+  <g transform="translate(100, 200)">
+    <!-- Extended main frame -->
+    <path d="M50 150 L500 150 L550 120 L600 120" stroke="#8B0000" stroke-width="8" fill="none"/>
+    <path d="M100 150 L150 100 L400 100 L450 150" stroke="#333" stroke-width="6" fill="none"/>
+    
+    <!-- Extended front fork -->
+    <path d="M500 150 L580 80" stroke="#666" stroke-width="6" fill="none"/>
+    <path d="M480 140 L560 70" stroke="#666" stroke-width="4" fill="none"/>
+    
+    <!-- Wheels -->
+    <circle cx="100" cy="180" r="60" stroke="#666" stroke-width="8" fill="#1a1a1a"/>
+    <circle cx="580" cy="180" r="50" stroke="#666" stroke-width="6" fill="#1a1a1a"/>
+    
+    <!-- Wheel rims -->
+    <circle cx="100" cy="180" r="40" stroke="#999" stroke-width="2" fill="none"/>
+    <circle cx="580" cy="180" r="35" stroke="#999" stroke-width="2" fill="none"/>
+    
+    <!-- Extended handlebars -->
+    <path d="M580 80 L600 60 M580 80 L600 100" stroke="#8B0000" stroke-width="6"/>
+    <path d="M550 70 L570 50 M550 70 L570 90" stroke="#8B0000" stroke-width="4"/>
+    
+    <!-- Tank -->
+    <ellipse cx="250" cy="120" rx="90" ry="35" fill="#1a1a1a" stroke="#8B0000" stroke-width="3"/>
+    
+    <!-- Seat -->
+    <ellipse cx="350" cy="110" rx="60" ry="18" fill="#2a2a2a" stroke="#666" stroke-width="2"/>
+    
+    <!-- Engine -->
+    <rect x="180" y="140" width="90" height="45" rx="12" fill="#0d0d0d" stroke="#333" stroke-width="2"/>
+    
+    <!-- Exhaust pipes -->
+    <path d="M270 160 L320 180 L380 185" stroke="#444" stroke-width="6" fill="none"/>
+    <path d="M270 170 L320 190 L380 195" stroke="#444" stroke-width="6" fill="none"/>
+  </g>
+  
+  <!-- Brand text -->
+  <text x="400" y="450" text-anchor="middle" fill="#8B0000" font-family="Arial Black" font-size="32" font-weight="bold" filter="url(#glow)">DEATH RIDER</text>
+  <text x="400" y="480" text-anchor="middle" fill="#666" font-family="Arial" font-size="16">CLASSIC CHOPPER</text>
+  
+  <!-- Fear City branding -->
+  <text x="400" y="520" text-anchor="middle" fill="#333" font-family="Arial" font-size="14">FEAR CITY CYCLES</text>
+</svg>

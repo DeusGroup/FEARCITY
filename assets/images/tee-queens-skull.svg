@@ -1,0 +1,55 @@
+<svg width="600" height="600" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shirtGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a"/>
+      <stop offset="100%" style="stop-color:#0d0d0d"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="600" fill="#2a2a2a"/>
+  
+  <!-- T-shirt outline -->
+  <g transform="translate(150, 80)">
+    <!-- Main shirt body -->
+    <path d="M100 80 Q100 60 120 60 L180 60 Q200 60 200 80 L200 400 Q200 420 180 420 L120 420 Q100 420 100 400 Z" 
+          fill="url(#shirtGrad)" stroke="#333" stroke-width="2"/>
+    
+    <!-- Sleeves -->
+    <ellipse cx="80" cy="120" rx="25" ry="60" fill="url(#shirtGrad)" stroke="#333" stroke-width="2"/>
+    <ellipse cx="220" cy="120" rx="25" ry="60" fill="url(#shirtGrad)" stroke="#333" stroke-width="2"/>
+    
+    <!-- Neck -->
+    <ellipse cx="150" cy="80" rx="25" ry="15" fill="#2a2a2a" stroke="#333" stroke-width="2"/>
+  </g>
+  
+  <!-- Skull design -->
+  <g transform="translate(300, 250)">
+    <!-- Skull outline -->
+    <ellipse cx="0" cy="-20" rx="40" ry="50" fill="none" stroke="#8B0000" stroke-width="4"/>
+    
+    <!-- Eye sockets -->
+    <circle cx="-15" cy="-30" r="8" fill="#8B0000"/>
+    <circle cx="15" cy="-30" r="8" fill="#8B0000"/>
+    
+    <!-- Nasal cavity -->
+    <path d="M0 -15 L-5 0 L0 5 L5 0 Z" fill="#8B0000"/>
+    
+    <!-- Jaw -->
+    <path d="M-25 10 Q0 25 25 10" fill="none" stroke="#8B0000" stroke-width="3"/>
+    
+    <!-- Teeth -->
+    <rect x="-15" y="15" width="4" height="8" fill="#8B0000"/>
+    <rect x="-8" y="15" width="4" height="10" fill="#8B0000"/>
+    <rect x="-1" y="15" width="4" height="8" fill="#8B0000"/>
+    <rect x="6" y="15" width="4" height="10" fill="#8B0000"/>
+    <rect x="13" y="15" width="4" height="8" fill="#8B0000"/>
+    
+    <!-- Queens text -->
+    <text x="0" y="50" text-anchor="middle" fill="#8B0000" font-family="Arial Black" font-size="16" font-weight="bold">QUEENS</text>
+  </g>
+  
+  <!-- Product text -->
+  <text x="300" y="550" text-anchor="middle" fill="#8B0000" font-family="Arial Black" font-size="24" font-weight="bold">QUEENS SKULL TEE</text>
+  <text x="300" y="575" text-anchor="middle" fill="#666" font-family="Arial" font-size="14">UNDERGROUND ATTITUDE</text>
+</svg>
