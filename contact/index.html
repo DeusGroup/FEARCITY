@@ -31,23 +31,20 @@
     <!-- Navigation -->
     <nav class="main-nav">
         <div class="nav-container">
-            <div class="logo">
-                <a href="../main.html"><img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/logo/fear-city-logo-small.jpg" alt="Fear City Cycles"></a>
-            </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="../bikes/" class="nav-link">BIKES</a>
-                <a href="../gear/" class="nav-link">GEAR</a>
-                <a href="../culture/" class="nav-link">CULTURE</a>
-                <a href="../garage/" class="nav-link">GARAGE</a>
-                <a href="../contact/" class="nav-link active">CONTACT</a>
-            </div>
-            <div class="nav-actions">
-                <a href="../account/" class="account-link">ACCOUNT</a>
-                <a href="../cart/" class="cart-link">
-                    <span class="cart-icon">🛒</span>
-                    <span class="cart-count" id="cart-count">0</span>
-                </a>
-            </div>
+            <a href="../main.html" class="nav-logo">
+                <img src="../assets/images/fear-city-logo-small.jpg" alt="Fear City Cycles" class="nav-logo-img">
+                <span class="logo-text">Fear City Cycles</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="../bikes/">Bikes</a></li>
+                <li><a href="../gear/">Gear</a></li>
+                <li><a href="../culture/">Culture</a></li>
+                <li><a href="../contact/" class="active">Contact</a></li>
+                <li>
+                    <input type="text" id="product-search" placeholder="Search..." class="nav-search">
+                </li>
+                <li><a href="../cart/" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
+            </ul>
             <div class="mobile-menu-toggle" id="mobile-menu-toggle">
                 <span></span>
                 <span></span>

@@ -6,6 +6,7 @@
     <title>Shopping Cart - Fear City Cycles</title>
     <meta name="description" content="Review your Fear City Cycles order. Secure checkout for authentic motorcycle gear and custom builds.">
     <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/pages.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
     <!-- Google tag (gtag.js) -->
@@ -22,28 +23,25 @@
     <!-- Navigation -->
     <nav class="main-nav">
         <div class="nav-container">
-            <div class="logo">
-                <a href="../main.html"><img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/logo/fear-city-logo-small.jpg" alt="Fear City Cycles"></a>
-            </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="../bikes/" class="nav-link">BIKES</a>
-                <a href="../gear/" class="nav-link">GEAR</a>
-                <a href="../culture/" class="nav-link">CULTURE</a>
-                <a href="../garage/" class="nav-link">GARAGE</a>
-                <a href="../contact/" class="nav-link">CONTACT</a>
-            </div>
-            <div class="nav-actions">
-                <a href="../account/" class="account-link">ACCOUNT</a>
-                <a href="../cart/" class="cart-link active">
-                    <span class="cart-icon">🛒</span>
-                    <span class="cart-count" id="cart-count">0</span>
-                </a>
-            </div>
-            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+            <a href="../main.html" class="nav-logo">
+                <img src="../assets/images/fear-city-logo-small.jpg" alt="Fear City Cycles" class="nav-logo-img">
+                <span class="logo-text">Fear City Cycles</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="../bikes/">Bikes</a></li>
+                <li><a href="../gear/">Gear</a></li>
+                <li><a href="../culture/">Culture</a></li>
+                <li><a href="../contact/">Contact</a></li>
+                <li>
+                    <input type="text" id="product-search" placeholder="Search..." class="nav-search">
+                </li>
+                <li><a href="../cart/" class="cart-link active">Cart (<span id="cart-count">0</span>)</a></li>
+            </ul>
+            <button class="mobile-menu-toggle">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -196,34 +194,30 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4>FEAR CITY CYCLES</h4>
-                    <p>Lean Mean Built in Queens</p>
-                    <p>Authentic motorcycle culture since the streets demanded it.</p>
+                    <h3>Fear City Cycles</h3>
+                    <p>Born in Queens. Built for Battle.</p>
+                    <p>Real bikes for real riders who don't compromise.</p>
                 </div>
                 <div class="footer-section">
-                    <h4>SHOP</h4>
-                    <a href="../bikes/">Custom Builds</a>
-                    <a href="../gear/">Apparel</a>
-                    <a href="../gear/">Protective Gear</a>
-                    <a href="../garage/">Services</a>
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../bikes/">Motorcycles</a></li>
+                        <li><a href="../gear/">Gear & Apparel</a></li>
+                        <li><a href="../culture/">Culture</a></li>
+                        <li><a href="../contact/">Contact</a></li>
+                    </ul>
                 </div>
                 <div class="footer-section">
-                    <h4>CULTURE</h4>
-                    <a href="../culture/">Blog</a>
-                    <a href="../culture/">Community</a>
-                    <a href="../culture/">Events</a>
-                    <a href="../culture/">History</a>
-                </div>
-                <div class="footer-section">
-                    <h4>CONNECT</h4>
-                    <a href="#" target="_blank">Instagram</a>
-                    <a href="#" target="_blank">YouTube</a>
-                    <a href="../contact/">Contact</a>
-                    <a href="../contact/">Press</a>
+                    <h3>Follow the Underground</h3>
+                    <p>Queens, NYC - Ride or Die</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Instagram</a>
+                        <a href="#" class="social-link">Facebook</a>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Fear City Cycles. All rights reserved. | Privacy Policy | Terms of Service</p>
+                <p>&copy; 2025 Fear City Cycles - Lean Mean Built in Queens</p>
             </div>
         </div>
     </footer>
