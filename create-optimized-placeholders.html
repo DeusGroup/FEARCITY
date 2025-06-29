@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Optimized Fear City Images</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #000; color: #fff; }
+        canvas { border: 1px solid #666; margin: 10px; }
+        button { background: #8B0000; color: white; border: none; padding: 10px 20px; margin: 5px; border-radius: 5px; cursor: pointer; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .image-card { border: 1px solid #666; padding: 15px; border-radius: 8px; text-align: center; }
+    </style>
+</head>
+<body>
+    <h1>🎨 Fear City Cycles - Optimized Image Generator</h1>
+    <p>This tool creates lightweight, optimized images for immediate deployment.</p>
+    
+    <button onclick="generateAllImages()">🚀 Generate All Optimized Images</button>
+    <button onclick="downloadAll()">⬇️ Download All</button>
+    
+    <div id="imageGrid" class="grid"></div>
+
+    <script>
+        const images = [];
+        
+        const imageSpecs = [
+            // Motorcycles
+            { name: 'bike-street-reaper', width: 800, height: 600, type: 'bike', title: 'STREET REAPER' },
+            { name: 'bike-borough-bruiser', width: 800, height: 600, type: 'bike', title: 'BOROUGH BRUISER' },
+            { name: 'bike-fear-fighter', width: 800, height: 600, type: 'bike', title: 'FEAR FIGHTER' },
+            { name: 'bike-queens-crusher', width: 800, height: 600, type: 'bike', title: 'QUEENS CRUSHER' },
+            { name: 'bike-death-rider', width: 800, height: 600, type: 'bike', title: 'DEATH RIDER' },
+            { name: 'bike-midnight-racer', width: 800, height: 600, type: 'bike', title: 'MIDNIGHT RACER' },
+            
+            // Gear
+            { name: 'jacket-fear-city', width: 600, height: 600, type: 'gear', title: 'FEAR CITY JACKET' },
+            { name: 'tee-queens-skull', width: 600, height: 600, type: 'gear', title: 'QUEENS SKULL TEE' },
+            { name: 'gloves-reaper-riding', width: 600, height: 600, type: 'gear', title: 'REAPER GLOVES' },
+            { name: 'patch-fear-city', width: 600, height: 600, type: 'gear', title: 'FEAR CITY PATCH' },
+            { name: 'vest-prospect', width: 600, height: 600, type: 'gear', title: 'PROSPECT VEST' },
+            { name: 'keychain-skull', width: 600, height: 600, type: 'gear', title: 'SKULL KEYCHAIN' },
+            
+            // Logos
+            { name: 'fear-city-logo-small', width: 400, height: 200, type: 'logo', title: 'FEAR CITY LOGO' },
+            { name: 'Fear-city-image-Hi-Rez', width: 800, height: 400, type: 'logo', title: 'MAIN LOGO' },
+            
+            // Heroes
+            { name: 'hero-bg', width: 1920, height: 1080, type: 'hero', title: 'HERO BACKGROUND' },
+            { name: 'hero-bike', width: 1200, height: 800, type: 'hero', title: 'HERO BIKE' },
+            { name: 'nyc-streets', width: 1200, height: 800, type: 'hero', title: 'NYC STREETS' },
+            { name: 'dark-texture', width: 512, height: 512, type: 'texture', title: 'DARK TEXTURE' }
+        ];
+
+        function generateAllImages() {
+            const grid = document.getElementById('imageGrid');
+            grid.innerHTML = '';
+            images.length = 0;
+
+            imageSpecs.forEach(spec => {
+                const canvas = createOptimizedImage(spec);
+                const card = createImageCard(spec, canvas);
+                grid.appendChild(card);
+                
+                // Store for download
+                canvas.toBlob(blob => {
+                    images.push({
+                        name: spec.name + '.jpg',
+                        blob: blob,
+                        canvas: canvas
+                    });
+                }, 'image/jpeg', 0.8);
+            });
+        }
+
+        function createOptimizedImage(spec) {
+            const canvas = document.createElement('canvas');
+            canvas.width = spec.width;
+            canvas.height = spec.height;
+            const ctx = canvas.getContext('2d');
+
+            // Base styling
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, spec.width, spec.height);
+
+            if (spec.type === 'bike') {
+                createBikeImage(ctx, spec);
+            } else if (spec.type === 'gear') {
+                createGearImage(ctx, spec);
+            } else if (spec.type === 'logo') {
+                createLogoImage(ctx, spec);
+            } else if (spec.type === 'hero') {
+                createHeroImage(ctx, spec);
+            } else if (spec.type === 'texture') {
+                createTextureImage(ctx, spec);
+            }
+
+            return canvas;
+        }
+
+        function createBikeImage(ctx, spec) {
+            const w = spec.width;
+            const h = spec.height;
+
+            // Dark background with gradient
+            const gradient = ctx.createLinearGradient(0, 0, w, h);
+            gradient.addColorStop(0, '#111');
+            gradient.addColorStop(1, '#000');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, w, h);
+
+            // Red accent border
+            ctx.strokeStyle = '#8B0000';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(2, 2, w-4, h-4);
+
+            // Motorcycle silhouette (simplified)
+            ctx.fillStyle = '#333';
+            ctx.beginPath();
+            // Bike body
+            ctx.ellipse(w*0.5, h*0.6, w*0.25, h*0.15, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Wheels
+            ctx.beginPath();
+            ctx.arc(w*0.25, h*0.75, w*0.08, 0, 2 * Math.PI);
+            ctx.arc(w*0.75, h*0.75, w*0.08, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Title
+            ctx.fillStyle = '#FFF';
+            ctx.font = `bold ${Math.floor(w/20)}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.fillText(spec.title, w/2, h*0.2);
+
+            // Subtitle
+            ctx.fillStyle = '#8B0000';
+            ctx.font = `${Math.floor(w/30)}px Arial`;
+            ctx.fillText('FEAR CITY CYCLES', w/2, h*0.9);
+        }
+
+        function createGearImage(ctx, spec) {
+            const w = spec.width;
+            const h = spec.height;
+
+            // Background
+            const gradient = ctx.createRadialGradient(w/2, h/2, 0, w/2, h/2, w/2);
+            gradient.addColorStop(0, '#222');
+            gradient.addColorStop(1, '#000');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, w, h);
+
+            // Product outline
+            ctx.strokeStyle = '#8B0000';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(w*0.1, h*0.1, w*0.8, h*0.8);
+
+            // Gear icon
+            ctx.fillStyle = '#444';
+            ctx.fillRect(w*0.3, h*0.3, w*0.4, h*0.4);
+
+            // Title
+            ctx.fillStyle = '#FFF';
+            ctx.font = `bold ${Math.floor(w/15)}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.fillText(spec.title.split(' ')[0], w/2, h*0.15);
+            
+            if (spec.title.split(' ').length > 1) {
+                ctx.fillText(spec.title.split(' ').slice(1).join(' '), w/2, h*0.85);
+            }
+        }
+
+        function createLogoImage(ctx, spec) {
+            const w = spec.width;
+            const h = spec.height;
+
+            // Black background
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, w, h);
+
+            // Main title
+            ctx.fillStyle = '#FFF';
+            ctx.font = `bold ${Math.floor(w/8)}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.fillText('FEAR CITY', w/2, h*0.4);
+
+            // Subtitle
+            ctx.fillStyle = '#8B0000';
+            ctx.font = `bold ${Math.floor(w/10)}px Arial`;
+            ctx.fillText('CYCLES', w/2, h*0.65);
+
+            // Tagline
+            ctx.fillStyle = '#666';
+            ctx.font = `${Math.floor(w/20)}px Arial`;
+            ctx.fillText('QUEENS, NYC - RIDE OR DIE', w/2, h*0.8);
+        }
+
+        function createHeroImage(ctx, spec) {
+            const w = spec.width;
+            const h = spec.height;
+
+            // Dark NYC atmosphere
+            const gradient = ctx.createLinearGradient(0, 0, w, h);
+            gradient.addColorStop(0, '#111');
+            gradient.addColorStop(0.5, '#000');
+            gradient.addColorStop(1, '#8B0000');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, w, h);
+
+            // City silhouette
+            ctx.fillStyle = '#000';
+            for (let i = 0; i < 20; i++) {
+                const x = (w / 20) * i;
+                const buildingHeight = Math.random() * h * 0.3 + h * 0.1;
+                ctx.fillRect(x, h - buildingHeight, w/20, buildingHeight);
+            }
+
+            // Main text
+            ctx.fillStyle = '#FFF';
+            ctx.font = `bold ${Math.floor(w/15)}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.fillText('BORN IN QUEENS', w/2, h*0.3);
+            
+            ctx.fillStyle = '#8B0000';
+            ctx.fillText('BUILT FOR BATTLE', w/2, h*0.4);
+        }
+
+        function createTextureImage(ctx, spec) {
+            const w = spec.width;
+            const h = spec.height;
+
+            // Dark texture pattern
+            ctx.fillStyle = '#111';
+            ctx.fillRect(0, 0, w, h);
+
+            // Add noise/texture
+            for (let i = 0; i < 1000; i++) {
+                const x = Math.random() * w;
+                const y = Math.random() * h;
+                const size = Math.random() * 3;
+                
+                ctx.fillStyle = Math.random() > 0.5 ? '#222' : '#000';
+                ctx.fillRect(x, y, size, size);
+            }
+        }
+
+        function createImageCard(spec, canvas) {
+            const card = document.createElement('div');
+            card.className = 'image-card';
+            
+            const title = document.createElement('h3');
+            title.textContent = spec.title;
+            
+            const info = document.createElement('p');
+            info.textContent = `${spec.width}x${spec.height} - ${spec.type}`;
+            
+            const downloadBtn = document.createElement('button');
+            downloadBtn.textContent = '⬇️ Download';
+            downloadBtn.onclick = () => downloadImage(canvas, spec.name + '.jpg');
+            
+            // Scale canvas for display
+            const displayCanvas = canvas.cloneNode();
+            const displayCtx = displayCanvas.getContext('2d');
+            displayCanvas.width = 200;
+            displayCanvas.height = (200 * spec.height) / spec.width;
+            displayCtx.drawImage(canvas, 0, 0, displayCanvas.width, displayCanvas.height);
+            
+            card.appendChild(title);
+            card.appendChild(displayCanvas);
+            card.appendChild(info);
+            card.appendChild(downloadBtn);
+            
+            return card;
+        }
+
+        function downloadImage(canvas, filename) {
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.click();
+                URL.revokeObjectURL(url);
+            }, 'image/jpeg', 0.8);
+        }
+
+        function downloadAll() {
+            if (images.length === 0) {
+                alert('Generate images first!');
+                return;
+            }
+
+            images.forEach((img, index) => {
+                setTimeout(() => {
+                    const url = URL.createObjectURL(img.blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = img.name;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                }, index * 200);
+            });
+        }
+
+        // Auto-generate on load
+        window.onload = () => {
+            setTimeout(generateAllImages, 500);
+        };
+    </script>
+</body>
+</html>
