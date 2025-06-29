@@ -1,0 +1,199 @@
+name: RLS Security Audit
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'supabase/migrations/**'
+      - 'lib/rls/**'
+      - 'scripts/rls-cli.ts'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'supabase/migrations/**'
+      - 'lib/rls/**'
+      - 'scripts/rls-cli.ts'
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  rls-audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Setup Supabase CLI
+      uses: supabase/setup-cli@v1
+      with:
+        version: latest
+
+    - name: Start Supabase local development
+      run: |
+        npx supabase start
+        npx supabase db reset --db-url postgresql://postgres:postgres@localhost:54322/postgres
+
+    - name: Run RLS coverage check
+      run: |
+        npm run rls:coverage
+      env:
+        VITE_SUPABASE_URL: http://localhost:54321
+        SUPABASE_SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
+
+    - name: Run RLS test suite
+      run: |
+        npm run rls:test
+      env:
+        VITE_SUPABASE_URL: http://localhost:54321
+        SUPABASE_SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
+
+    - name: Run vulnerability tests
+      run: |
+        npm run rls:test -- --vulnerabilities
+      env:
+        VITE_SUPABASE_URL: http://localhost:54321
+        SUPABASE_SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
+
+    - name: Generate security report
+      run: |
+        npm run rls:audit -- --format html --output rls-security-report.html
+      env:
+        VITE_SUPABASE_URL: http://localhost:54321
+        SUPABASE_SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
+
+    - name: Upload security report
+      uses: actions/upload-artifact@v3
+      with:
+        name: rls-security-report
+        path: rls-security-report.html
+        retention-days: 30
+
+    - name: Comment PR with results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          
+          // Read coverage results
+          const { exec } = require('child_process');
+          exec('npm run rls:coverage', (error, stdout, stderr) => {
+            const coverageComment = `
+          ## 🛡️ RLS Security Audit Results
+          
+          ### Coverage Summary
+          \`\`\`
+          ${stdout}
+          \`\`\`
+          
+          ### Security Status
+          - ✅ All RLS tests passed
+          - ✅ No vulnerabilities detected
+          - ✅ Full coverage report generated
+          
+          [Download detailed report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          `;
+          
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: coverageComment
+            });
+          });
+
+    - name: Fail on security issues
+      run: |
+        # Check if any vulnerabilities were found
+        if npm run rls:test -- --vulnerabilities 2>&1 | grep -q "VULNERABLE.*YES"; then
+          echo "❌ Security vulnerabilities detected!"
+          exit 1
+        fi
+        
+        # Check if coverage is below threshold
+        COVERAGE=$(npm run rls:coverage --silent | grep -o '[0-9]\+\.[0-9]\+%' | head -1 | sed 's/%//')
+        if (( $(echo "$COVERAGE < 95.0" | bc -l) )); then
+          echo "❌ RLS coverage below 95%: $COVERAGE%"
+          exit 1
+        fi
+        
+        echo "✅ All security checks passed!"
+
+  rls-monitoring:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run production RLS monitoring
+      run: |
+        npm run rls:monitor -- --days 7
+      env:
+        VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+    - name: Generate weekly security report
+      run: |
+        npm run rls:audit -- --format html --output weekly-security-report.html
+      env:
+        VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+    - name: Upload weekly report
+      uses: actions/upload-artifact@v3
+      with:
+        name: weekly-security-report
+        path: weekly-security-report.html
+        retention-days: 90
+
+    - name: Notify on security issues
+      if: failure()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: '🚨 RLS Security Alert - Weekly Audit Failed',
+            body: `
+          ## Security Monitoring Alert
+          
+          The weekly RLS security audit has detected issues that require attention.
+          
+          **Run ID**: ${{ github.run_id }}
+          **Timestamp**: ${new Date().toISOString()}
+          
+          Please review the audit results and take appropriate action.
+          
+          ### Quick Actions
+          - Review the [audit logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          - Run local audit: \`npm run rls:audit\`
+          - Check coverage: \`npm run rls:coverage\`
+          
+          /cc @security-team
+          `,
+            labels: ['security', 'rls', 'urgent']
+          });

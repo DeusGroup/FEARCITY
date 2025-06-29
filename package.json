@@ -4,7 +4,23 @@
   "description": "![Fear City Cycles](logo.svg)",
   "main": "migrate-assets.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --config jest.config.simple.js",
+    "test:watch": "jest --config jest.config.simple.js --watch",
+    "test:coverage": "jest --config jest.config.simple.js --coverage",
+    "test:rate-limit": "jest --config jest.config.simple.js __tests__/rate-limit",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "rls:audit": "tsx scripts/rls-cli.ts audit",
+    "rls:test": "tsx scripts/rls-cli.ts test",
+    "rls:validate": "tsx scripts/rls-cli.ts validate",
+    "rls:coverage": "tsx scripts/rls-cli.ts coverage",
+    "rls:monitor": "tsx scripts/rls-cli.ts monitor",
+    "rls:deploy": "npx supabase db push",
+    "rls:init": "tsx scripts/rls-cli.ts init",
+    "rls:check": "npm run rls:coverage && npm run rls:test",
+    "setup:rls": "chmod +x scripts/rls-cli.ts && npm run rls:init"
   },
   "repository": {
     "type": "git",
@@ -18,9 +34,27 @@
   },
   "homepage": "https://github.com/DeusGroup/FEARCITY#readme",
   "dependencies": {
-    "@supabase/supabase-js": "^2.50.2"
+    "@supabase/supabase-js": "^2.50.2",
+    "ioredis": "^5.3.2",
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "commander": "^11.0.0",
+    "dotenv": "^16.0.0"
   },
   "devDependencies": {
-    "supabase": "^2.26.9"
+    "@jest/globals": "^29.5.0",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "jest": "^29.5.0",
+    "jest-environment-node": "^29.5.0",
+    "supabase": "^2.26.9",
+    "ts-jest": "^29.4.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
   }
 }
