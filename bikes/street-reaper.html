@@ -7,6 +7,7 @@
     <title>Street Reaper | Fear City Cycles</title>
     <link rel="icon" type="image/svg+xml" href="../logo.svg">
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../assets/css/product.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6S25C1TTY"></script>
     <script>
@@ -55,7 +56,7 @@
             <div class="product-info">
                 <h1 class="product-title">Street Reaper</h1>
                 <p class="product-category">Street Fighter</p>
-                <p class="product-price">$18,500</p>
+                <p class="product-price">$24,500</p>
                 
                 <div class="product-description">
                     <p>The Street Reaper embodies the raw aggression of Queens street culture. This matte black beast features a stripped-down aesthetic that prioritizes performance over comfort. Built for riders who understand that respect is earned, not given.</p>
@@ -69,8 +70,8 @@
                     </select>
                 </div>
 
-                <button class="add-to-cart-btn" data-product="street-reaper" data-price="18500">
-                    Add to Cart - $18,500
+                <button class="add-to-cart-btn" data-product-id="bike-001" data-product="street-reaper" data-price="24500">
+                    Add to Cart - $24,500
                 </button>
 
                 <div class="product-features">
@@ -130,6 +131,11 @@
                 <p>Built in the shadows of Queens, the Street Reaper doesn't ask for permission. Every line, every angle screams defiance against the mainstream. This isn't transportation—it's a statement that you choose your own path through the concrete jungle.</p>
                 <p>The matte black finish isn't just paint—it's armor against a world that tries to make you conform. When you ride the Reaper, you're not just another commuter. You're part of something deeper, something real.</p>
             </div>
+
+            <!-- Enhanced Specifications (Added by JavaScript) -->
+            <div class="product-specifications">
+                <!-- Detailed specs will be loaded here by product.js -->
+            </div>
         </div>
 
         <div class="related-products">
@@ -154,6 +160,21 @@
         </div>
     </main>
 
-    <script src="../script.js"></script>
+    <script>
+        // Make product database available globally for related products
+        window.productDatabase = [
+            { id: 'bike-001', name: 'Street Reaper', category: 'street-fighter', price: 24500, page: '../bikes/street-reaper.html' },
+            { id: 'bike-002', name: 'Borough Bruiser', category: 'street-fighter', price: 28000, page: '../bikes/borough-bruiser.html' },
+            { id: 'bike-003', name: 'Fear Fighter', category: 'street-fighter', price: 32000, page: '../bikes/fear-fighter.html' },
+            { id: 'bike-004', name: 'Queens Crusher', category: 'bobber', price: 22000, page: '../bikes/queens-crusher.html' },
+            { id: 'bike-005', name: 'Death Rider', category: 'chopper', price: 26500, page: '../bikes/death-rider.html' },
+            { id: 'bike-006', name: 'Midnight Racer', category: 'cafe-racer', price: 25500, page: '../bikes/midnight-racer.html' },
+            { id: 'gear-001', name: 'Fear City Jacket', category: 'jackets', price: 175, page: '../gear/index.html' },
+            { id: 'gear-002', name: 'Queens Skull Tee', category: 'apparel', price: 35, page: '../gear/index.html' },
+            { id: 'gear-003', name: 'Reaper Riding Gloves', category: 'gloves', price: 65, page: '../gear/index.html' }
+        ];
+    </script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/product.js"></script>
 </body>
 </html>
