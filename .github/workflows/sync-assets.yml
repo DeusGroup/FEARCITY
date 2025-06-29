@@ -1,0 +1,145 @@
+name: Sync Assets to Supabase Storage
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'assets/images/**'
+      - 'assets/images/optimized/**'
+      - 'assets/images/originals/**'
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-assets:
+    runs-on: ubuntu-latest
+    name: Upload New Assets to Supabase
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # Fetch last 2 commits to compare changes
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          npm install
+          
+      - name: Detect changed images
+        id: detect-changes
+        run: |
+          echo "Detecting image changes..."
+          
+          # Get list of changed image files
+          CHANGED_IMAGES=$(git diff --name-only HEAD~1 HEAD | grep -E '\.(jpg|jpeg|png|webp|svg)$' | grep 'assets/images' || true)
+          
+          if [ -z "$CHANGED_IMAGES" ]; then
+            echo "No image changes detected"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "Image changes detected:"
+            echo "$CHANGED_IMAGES"
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            
+            # Save changed files for next step
+            echo "$CHANGED_IMAGES" > changed_images.txt
+          fi
+          
+      - name: Upload new/changed assets to Supabase
+        if: steps.detect-changes.outputs.has_changes == 'true'
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        run: |
+          echo "🚀 Starting asset sync to Supabase Storage..."
+          
+          # Run the migration script to upload new/changed assets
+          node migrate-assets.js migrate
+          
+          echo "✅ Asset sync completed"
+          
+      - name: Update HTML files with new asset URLs
+        if: steps.detect-changes.outputs.has_changes == 'true'
+        run: |
+          echo "🔄 Updating HTML files with Supabase URLs..."
+          
+          # Update all HTML files with new asset URLs
+          node update-asset-urls.js update
+          
+          echo "✅ HTML files updated"
+          
+      - name: Check for HTML changes
+        if: steps.detect-changes.outputs.has_changes == 'true'
+        id: check-html-changes
+        run: |
+          # Check if HTML files were modified
+          if git diff --quiet; then
+            echo "No HTML changes needed"
+            echo "html_changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "HTML files were updated with new asset URLs"
+            echo "html_changed=true" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Commit updated HTML files
+        if: steps.detect-changes.outputs.has_changes == 'true' && steps.check-html-changes.outputs.html_changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Add any updated files
+          git add *.html
+          git add */*.html
+          git add supabase-asset-mapping.json
+          
+          # Commit the changes
+          git commit -m "🔄 Auto-update HTML files with new Supabase asset URLs
+
+          - Uploaded new/changed images to Supabase Storage
+          - Updated HTML files to reference Supabase URLs
+          - Regenerated asset mapping
+
+          🤖 Automated by GitHub Actions" || exit 0
+          
+      - name: Push changes
+        if: steps.detect-changes.outputs.has_changes == 'true' && steps.check-html-changes.outputs.html_changed == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          
+      - name: Create deployment summary
+        if: steps.detect-changes.outputs.has_changes == 'true'
+        run: |
+          echo "## 🚀 Asset Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Assets processed:** $(cat changed_images.txt | wc -l)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Changed files:**" >> $GITHUB_STEP_SUMMARY
+          while IFS= read -r file; do
+            echo "- \`$file\`" >> $GITHUB_STEP_SUMMARY
+          done < changed_images.txt
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Supabase Storage:** ✅ Updated" >> $GITHUB_STEP_SUMMARY
+          echo "**HTML Files:** ✅ Updated with new URLs" >> $GITHUB_STEP_SUMMARY
+          echo "**Vercel Deployment:** 🚀 Will trigger automatically" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All images are now available at:" >> $GITHUB_STEP_SUMMARY
+          echo "\`https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/\`" >> $GITHUB_STEP_SUMMARY
+          
+      - name: No changes detected
+        if: steps.detect-changes.outputs.has_changes == 'false'
+        run: |
+          echo "## ℹ️ No Asset Changes" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "No new or modified images detected in this push." >> $GITHUB_STEP_SUMMARY
+          echo "Asset sync skipped." >> $GITHUB_STEP_SUMMARY
