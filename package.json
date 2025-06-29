@@ -1,0 +1,23 @@
+{
+  "name": "fear-city-cycles-website",
+  "version": "1.0.0",
+  "description": "![Fear City Cycles](logo.svg)",
+  "main": "migrate-assets.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeusGroup/FEARCITY.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DeusGroup/FEARCITY/issues"
+  },
+  "homepage": "https://github.com/DeusGroup/FEARCITY#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.50.2"
+  }
+}
