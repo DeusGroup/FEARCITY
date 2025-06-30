@@ -6,7 +6,40 @@
     <title>Fear City Cycles - Queens NYC Custom Motorcycles</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Nuclear inline styles */
+        /* Nuclear mobile-first styles */
+        .product-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-details {
+            display: none;
+            background: #000;
+            border: 2px solid #8B0000;
+            padding: 20px;
+            margin-top: 10px;
+        }
+        
+        .product-details.active {
+            display: block;
+        }
+        
+        .product-details h4 {
+            color: #8B0000;
+            margin: 0 0 10px 0;
+        }
+        
+        .product-details ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        
+        .product-details li {
+            padding: 5px 0;
+            border-bottom: 1px solid #333;
+        }
+        
         .view-btn {
             background: #8B0000;
             color: white;
@@ -16,6 +49,7 @@
             font-weight: bold;
             text-transform: uppercase;
             transition: background 0.3s;
+            width: 48%;
         }
         .view-btn:hover {
             background: #a00;
@@ -28,16 +62,26 @@
             cursor: pointer;
             font-weight: bold;
             text-transform: uppercase;
-            margin-left: 10px;
             transition: background 0.3s;
+            width: 48%;
         }
         .add-btn:hover {
             background: #555;
         }
         .product-buttons {
             display: flex;
-            gap: 10px;
+            gap: 4%;
             margin-top: 15px;
+        }
+        
+        @media (max-width: 600px) {
+            .product-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .view-btn, .add-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -74,8 +118,22 @@
                 <p class="price">$18,500</p>
                 <p>Stripped-down street fighter built for NYC streets. Raw power, minimal aesthetics.</p>
                 <div class="product-buttons">
-                    <button class="view-btn" onclick="window.location.href='bikes/street-reaper.html'">View Details</button>
+                    <button class="view-btn" onclick="toggleDetails(this)">View Details</button>
                     <button class="add-btn" onclick="addToCart('Street Reaper', 18500)">Add to Cart</button>
+                </div>
+                <div class="product-details">
+                    <h4>SPECIFICATIONS</h4>
+                    <ul>
+                        <li>Engine: 883cc V-Twin</li>
+                        <li>Power: 52HP / 54 lb-ft torque</li>
+                        <li>Weight: 485 lbs</li>
+                        <li>Transmission: 5-speed manual</li>
+                        <li>Fuel: 3.3 gallon tank</li>
+                        <li>Seat Height: 28 inches</li>
+                        <li>Custom exhaust system</li>
+                        <li>Stripped front fairing</li>
+                        <li>Blacked-out components</li>
+                    </ul>
                 </div>
             </div>
             
@@ -85,8 +143,22 @@
                 <p class="price">$22,000</p>
                 <p>Heavy-duty cruiser with chrome attitude. Built to dominate the boroughs.</p>
                 <div class="product-buttons">
-                    <button class="view-btn" onclick="window.location.href='bikes/borough-bruiser.html'">View Details</button>
+                    <button class="view-btn" onclick="toggleDetails(this)">View Details</button>
                     <button class="add-btn" onclick="addToCart('Borough Bruiser', 22000)">Add to Cart</button>
+                </div>
+                <div class="product-details">
+                    <h4>SPECIFICATIONS</h4>
+                    <ul>
+                        <li>Engine: 1200cc V-Twin</li>
+                        <li>Power: 68HP / 73 lb-ft torque</li>
+                        <li>Weight: 670 lbs</li>
+                        <li>Transmission: 6-speed manual</li>
+                        <li>Fuel: 4.7 gallon tank</li>
+                        <li>Seat Height: 26 inches</li>
+                        <li>Chrome forward controls</li>
+                        <li>Ape hanger handlebars</li>
+                        <li>Sissy bar and luggage rack</li>
+                    </ul>
                 </div>
             </div>
             
@@ -96,8 +168,22 @@
                 <p class="price">$19,999</p>
                 <p>Classic bobber with modern guts. Vintage soul, contemporary performance.</p>
                 <div class="product-buttons">
-                    <button class="view-btn" onclick="window.location.href='bikes/fear-fighter.html'">View Details</button>
+                    <button class="view-btn" onclick="toggleDetails(this)">View Details</button>
                     <button class="add-btn" onclick="addToCart('Fear Fighter', 19999)">Add to Cart</button>
+                </div>
+                <div class="product-details">
+                    <h4>SPECIFICATIONS</h4>
+                    <ul>
+                        <li>Engine: 1000cc V-Twin</li>
+                        <li>Power: 61HP / 65 lb-ft torque</li>
+                        <li>Weight: 520 lbs</li>
+                        <li>Transmission: 5-speed manual</li>
+                        <li>Fuel: 3.5 gallon tank</li>
+                        <li>Seat Height: 27 inches</li>
+                        <li>Bobber-style rear fender</li>
+                        <li>Vintage leather seat</li>
+                        <li>Springer front suspension</li>
+                    </ul>
                 </div>
             </div>
             
@@ -107,8 +193,22 @@
                 <p class="price">$21,500</p>
                 <p>Vintage bobber style with aggressive stance. Built in Queens, for Queens.</p>
                 <div class="product-buttons">
-                    <button class="view-btn" onclick="window.location.href='bikes/queens-crusher.html'">View Details</button>
+                    <button class="view-btn" onclick="toggleDetails(this)">View Details</button>
                     <button class="add-btn" onclick="addToCart('Queens Crusher', 21500)">Add to Cart</button>
+                </div>
+                <div class="product-details">
+                    <h4>SPECIFICATIONS</h4>
+                    <ul>
+                        <li>Engine: 1100cc V-Twin</li>
+                        <li>Power: 64HP / 69 lb-ft torque</li>
+                        <li>Weight: 550 lbs</li>
+                        <li>Transmission: 5-speed manual</li>
+                        <li>Fuel: 3.8 gallon tank</li>
+                        <li>Seat Height: 26 inches</li>
+                        <li>Hardtail rear suspension</li>
+                        <li>Drag-style handlebars</li>
+                        <li>Queens custom graphics</li>
+                    </ul>
                 </div>
             </div>
             
@@ -118,8 +218,22 @@
                 <p class="price">$24,000</p>
                 <p>Classic chopper with extended fork. Extended reach, deadly presence.</p>
                 <div class="product-buttons">
-                    <button class="view-btn" onclick="window.location.href='bikes/death-rider.html'">View Details</button>
+                    <button class="view-btn" onclick="toggleDetails(this)">View Details</button>
                     <button class="add-btn" onclick="addToCart('Death Rider', 24000)">Add to Cart</button>
+                </div>
+                <div class="product-details">
+                    <h4>SPECIFICATIONS</h4>
+                    <ul>
+                        <li>Engine: 1340cc V-Twin</li>
+                        <li>Power: 75HP / 80 lb-ft torque</li>
+                        <li>Weight: 610 lbs</li>
+                        <li>Transmission: 4-speed manual</li>
+                        <li>Fuel: 4.2 gallon tank</li>
+                        <li>Seat Height: 29 inches</li>
+                        <li>Extended 6" over forks</li>
+                        <li>High-rise ape hangers</li>
+                        <li>Custom flame paint job</li>
+                    </ul>
                 </div>
             </div>
             
@@ -129,8 +243,22 @@
                 <p class="price">$23,500</p>
                 <p>Café racer performance build. Speed and style for the night streets.</p>
                 <div class="product-buttons">
-                    <button class="view-btn" onclick="window.location.href='bikes/midnight-racer.html'">View Details</button>
+                    <button class="view-btn" onclick="toggleDetails(this)">View Details</button>
                     <button class="add-btn" onclick="addToCart('Midnight Racer', 23500)">Add to Cart</button>
+                </div>
+                <div class="product-details">
+                    <h4>SPECIFICATIONS</h4>
+                    <ul>
+                        <li>Engine: 1200cc Inline-4</li>
+                        <li>Power: 98HP / 82 lb-ft torque</li>
+                        <li>Weight: 425 lbs</li>
+                        <li>Transmission: 6-speed manual</li>
+                        <li>Fuel: 3.7 gallon tank</li>
+                        <li>Seat Height: 31 inches</li>
+                        <li>Clip-on handlebars</li>
+                        <li>Racing suspension setup</li>
+                        <li>Performance exhaust system</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -204,6 +332,28 @@
             localStorage.setItem('fearCityCart', JSON.stringify(cart));
             updateCartCount();
             alert(name + ' added to cart!');
+        }
+        
+        function toggleDetails(button) {
+            // Close all other open details first
+            const allDetails = document.querySelectorAll('.product-details.active');
+            allDetails.forEach(detail => {
+                if (detail !== button.parentNode.nextElementSibling) {
+                    detail.classList.remove('active');
+                    const otherButton = detail.previousElementSibling.querySelector('.view-btn');
+                    if (otherButton) otherButton.textContent = 'View Details';
+                }
+            });
+            
+            // Toggle current details
+            const details = button.parentNode.nextElementSibling;
+            if (details.classList.contains('active')) {
+                details.classList.remove('active');
+                button.textContent = 'View Details';
+            } else {
+                details.classList.add('active');
+                button.textContent = 'Hide Details';
+            }
         }
         
         // Initialize on load
