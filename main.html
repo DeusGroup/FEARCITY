@@ -4,20 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fear City Cycles - Queens NYC Custom Motorcycles</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
     <style>
-        /* Nuclear mobile-first styles */
-        .product-card {
-            position: relative;
-            overflow: hidden;
-        }
-        
+        /* Nuclear mobile-first styles for product details */
         .product-details {
             display: none;
-            background: #000;
+            background: #111;
             border: 2px solid #8B0000;
             padding: 20px;
-            margin-top: 10px;
+            margin-top: 15px;
+            border-radius: 8px;
         }
         
         .product-details.active {
@@ -26,80 +23,117 @@
         
         .product-details h4 {
             color: #8B0000;
-            margin: 0 0 10px 0;
+            margin: 0 0 15px 0;
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .product-details ul {
             list-style: none;
             padding: 0;
-            margin: 10px 0;
+            margin: 0;
         }
         
         .product-details li {
-            padding: 5px 0;
+            padding: 8px 0;
             border-bottom: 1px solid #333;
+            color: #ccc;
         }
         
-        .view-btn {
-            background: #8B0000;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: background 0.3s;
-            width: 48%;
-        }
-        .view-btn:hover {
-            background: #a00;
-        }
-        .add-btn {
-            background: #333;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: background 0.3s;
-            width: 48%;
-        }
-        .add-btn:hover {
-            background: #555;
-        }
-        .product-buttons {
-            display: flex;
-            gap: 4%;
-            margin-top: 15px;
+        .product-details li:last-child {
+            border-bottom: none;
         }
         
-        @media (max-width: 600px) {
-            .product-buttons {
-                flex-direction: column;
-                gap: 10px;
+        /* Mobile responsive navigation fix */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex !important;
             }
-            .view-btn, .add-btn {
-                width: 100%;
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .hero {
+                margin-top: 70px;
+                padding: 60px 20px 80px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .products {
+                padding: 60px 20px;
+            }
+            
+            .products h2 {
+                font-size: 2.2rem;
+                margin-bottom: 40px;
+            }
+            
+            .product-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .product-card {
+                padding: 20px;
+                border-radius: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .products h2 {
+                font-size: 1.8rem;
+            }
+            
+            .product-card {
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <nav>
+    <nav class="main-nav">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo">
+            <a href="index.html" class="logo">
                 <img src="logo.svg" alt="Fear City Cycles">
-                <span class="logo-text">Fear City Cycles</span>
             </a>
             <ul class="nav-menu">
-                <li><a href="#bikes">Bikes</a></li>
-                <li><a href="#gear">Gear</a></li>
-                <li><a href="culture.html">Culture</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="cart/" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
+                <li><a href="#bikes" class="nav-link">Bikes</a></li>
+                <li><a href="#gear" class="nav-link">Gear</a></li>
+                <li><a href="culture.html" class="nav-link">Culture</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
+            <div class="nav-actions">
+                <a href="cart/" class="cart-link">Cart (<span id="cart-count" class="cart-count">0</span>)</a>
+                <div class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -355,6 +389,28 @@
                 button.textContent = 'Hide Details';
             }
         }
+        
+        // Mobile menu functionality
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (mobileMenuToggle && navMenu) {
+            mobileMenuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+        }
+        
+        // Close mobile menu when clicking on nav links
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    mobileMenuToggle.classList.remove('active');
+                }
+            });
+        });
         
         // Initialize on load
         updateCartCount();
