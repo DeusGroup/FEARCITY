@@ -3,243 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Surviving the Streets: A Queens Rider's Guide - Real advice from twenty years on Queens streets">
+    <meta name="description" content="Surviving the Streets - Twenty years riding Queens">
     <title>Surviving the Streets - Fear City Cycles</title>
     <link rel="icon" type="image/svg+xml" href="logo.svg">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/pages.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        /* Article styles */
-        .article-header {
+        body {
             background: #000;
-            padding: 2rem 1rem;
-            border-bottom: 2px solid #ff6b35;
-        }
-        
-        .article-header .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .breadcrumb {
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-        
-        .breadcrumb a {
-            color: #ff6b35;
-            text-decoration: none;
-        }
-        
-        .article-header h1 {
-            color: #ff6b35;
-            font-size: 2rem;
-            margin: 0 0 1rem 0;
-            line-height: 1.2;
-        }
-        
-        .article-meta {
-            color: #888;
-            font-size: 0.9rem;
-        }
-        
-        .article-content {
-            background: #111;
-            padding: 2rem 1rem;
-        }
-        
-        .content-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
             color: #ccc;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
             line-height: 1.6;
         }
         
-        .content-wrapper h2 {
-            color: #ff6b35;
-            font-size: 1.5rem;
-            margin: 2rem 0 1rem 0;
+        .article-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
         }
         
-        .content-wrapper h3 {
-            color: #ff6b35;
-            font-size: 1.2rem;
-            margin: 1.5rem 0 0.5rem 0;
+        .article-header {
+            text-align: center;
+            margin: 40px 0;
+            border-bottom: 2px solid #ff0000;
+            padding-bottom: 20px;
         }
         
-        .content-wrapper p {
-            margin: 0 0 1rem 0;
+        .article-header h1 {
+            color: #ff0000;
+            font-size: 32px;
+            margin: 0 0 10px 0;
+            letter-spacing: 2px;
         }
         
-        .content-wrapper ul {
-            margin: 0 0 1rem 1.5rem;
+        .article-meta {
+            color: #666;
+            font-size: 14px;
         }
         
-        .content-wrapper li {
-            margin-bottom: 0.5rem;
+        .article-content h2 {
+            color: #ff0000;
+            font-size: 24px;
+            margin: 30px 0 15px 0;
         }
         
-        .lead {
-            font-size: 1.1rem;
-            color: #fff;
-            font-weight: 500;
+        .article-content p {
+            margin: 0 0 20px 0;
         }
         
-        .story-nav {
-            background: #222;
-            padding: 1.5rem 1rem;
+        .article-content ul {
+            margin: 0 0 20px 20px;
+        }
+        
+        .article-content li {
+            margin-bottom: 10px;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin: 40px 0;
+            padding-top: 20px;
             border-top: 1px solid #333;
         }
         
-        .story-nav .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .back-to-culture {
-            color: #ff6b35;
+        .back-link a {
+            color: #ff0000;
             text-decoration: none;
-            font-weight: 500;
+            font-size: 18px;
         }
         
-        .back-to-culture:hover {
-            text-decoration: underline;
-        }
-        
-        /* Desktop styles */
-        @media (min-width: 768px) {
-            .article-header {
-                padding: 3rem 2rem;
-            }
-            
+        @media (max-width: 600px) {
             .article-header h1 {
-                font-size: 3rem;
+                font-size: 24px;
             }
             
-            .article-content {
-                padding: 3rem 2rem;
-            }
-            
-            .story-nav {
-                padding: 2rem;
+            .article-content h2 {
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <img src="logo.svg" alt="Fear City Cycles">
-                <span class="logo-text">Fear City Cycles</span>
-            </a>
-            <ul class="nav-menu">
-                <li><a href="bikes/">Bikes</a></li>
-                <li><a href="gear/">Gear</a></li>
-                <li><a href="culture.html" class="active">Culture</a></li>
-                <li><a href="main.html#about">About</a></li>
-                <li><a href="contact/">Contact</a></li>
-            </ul>
-            <div class="nav-cart">
-                <a href="cart/" class="cart-link">
-                    <span class="cart-icon">🛒</span>
-                    <span class="cart-count">0</span>
-                </a>
-            </div>
+    <div class="article-container">
+        <div class="article-header">
+            <h1>SURVIVING THE STREETS</h1>
+            <div class="article-meta">TOMMY MARTINEZ / QUEENS / 2025</div>
         </div>
-    </nav>
-
-    <!-- Article Header -->
-    <header class="article-header">
-        <div class="container">
-            <div class="breadcrumb">
-                <a href="culture.html">Culture</a> > Surviving the Streets
-            </div>
-            <h1>Surviving the Streets</h1>
-            <div class="article-meta">
-                Tommy Martinez • January 15, 2025
-            </div>
-        </div>
-    </header>
-
-    <!-- Article Content -->
-    <section class="article-content">
-        <div class="content-wrapper">
-            <p class="lead">Twenty years riding Queens taught me the rules. This isn't some guide for tourists - this is real talk from someone who's earned every mile.</p>
-
-            <h2>Know Your Territory</h2>
-            <p>Every neighborhood in Queens has its own rules. Astoria isn't Jamaica. LIC isn't Far Rockaway. You need to read the streets like a map, and every block tells a different story.</p>
-
-            <p>Learned this the hard way in '03. Rolled through Corona like I owned the place, engine roaring, making noise. Old-timer named Julio pulled me aside outside his garage. "Kid," he said, "you ride like that around here, you won't last long. Show respect, get respect."</p>
-
-            <p>He was right. The streets don't care about your ego. They only respect authenticity.</p>
-
-            <h2>Build Your Rep Slow</h2>
-            <p>Nobody trusts a flashy newcomer. In Queens, your reputation is everything, and it takes years to build. Start small. Help out at local shops. Show up to rides. Don't be the loudest guy in the room - be the most reliable.</p>
-
-            <p>My first year, I spent more time with a wrench than on my bike. Carlos at the shop on Northern Boulevard let me hang around, sweep floors, learn the trade. Wasn't glamorous, but every rider in the area started knowing my face.</p>
-
-            <h3>The Rules</h3>
+        
+        <div class="article-content">
+            <p>Twenty years riding Queens taught me the rules. This ain't a guide for tourists.</p>
+            
+            <h2>KNOW YOUR TERRITORY</h2>
+            <p>Every neighborhood has its own code. Astoria ain't Jamaica. LIC ain't Rockaway.</p>
+            <p>Learned this in '03. Rolled through Corona making noise. Old-timer Julio pulled me aside: "Kid, ride like that here, you won't last. Show respect, get respect."</p>
+            <p>He was right.</p>
+            
+            <h2>BUILD YOUR REP</h2>
+            <p>Nobody trusts flash. Your reputation takes years to build, seconds to destroy.</p>
+            <p>First year, spent more time with a wrench than riding. Carlos on Northern Boulevard let me sweep floors, learn the trade. Every rider started knowing my face.</p>
+            
+            <h2>THE RULES</h2>
             <ul>
-                <li><strong>Respect the veterans</strong> - They survived longer for a reason</li>
-                <li><strong>Never ride alone at night</strong> - Especially in unfamiliar territory</li>
-                <li><strong>Keep your bike clean</strong> - Shows respect for the culture</li>
-                <li><strong>Help when you can</strong> - Community comes first</li>
-                <li><strong>Don't start problems</strong> - But be ready to finish them</li>
+                <li>Respect the veterans</li>
+                <li>Never ride alone at night</li>
+                <li>Keep your bike clean</li>
+                <li>Help when you can</li>
+                <li>Don't start shit</li>
             </ul>
-
-            <h2>Find Your Crew</h2>
-            <p>Riding solo has its place, but in Queens, having solid people around you isn't just nice - it's survival. Your crew becomes your family, the people who'll ride through hell for you.</p>
-
-            <p>But choose carefully. A bad crew can drag you down faster than anything. Look for riders who respect the culture, who've been around, who understand that being part of something bigger means responsibility.</p>
-
-            <h2>Gear That Matters</h2>
-            <p>Your gear tells your story before you say a word. Every patch, every scar on your jacket, every mod on your bike speaks to who you are. Don't fake it - earn every mark.</p>
-
-            <p>Buy quality. Cheap gear won't protect you when it counts, and everyone can spot a fake from miles away. Get the real stuff and take care of it like your life depends on it - because it does.</p>
-
-            <h2>The Long Game</h2>
-            <p>Twenty years in, I'm still learning. The streets keep changing, new riders keep coming up. But some things stay constant: respect, authenticity, and understanding that this lifestyle is bigger than any one person.</p>
-
-            <p>Queens motorcycle culture has been here since the 70s and it'll be here long after we're gone. Your job is to add to the legend, not take away from it. Ride with purpose. Build something lasting.</p>
-
-            <p><strong>That's what survival really means - not just making it through today, but building something worth passing down.</strong></p>
+            
+            <h2>YOUR CREW</h2>
+            <p>Find solid people. Your crew becomes family. Choose wrong, they'll drag you down.</p>
+            
+            <h2>GEAR</h2>
+            <p>Buy quality. Take care of it. Your gear tells your story before you open your mouth.</p>
+            
+            <h2>THE LONG GAME</h2>
+            <p>Twenty years in, still learning. Queens motorcycle culture been here since the 70s. Will be here when we're gone.</p>
+            <p>Add to the legend. Don't take from it.</p>
+            <p>That's survival.</p>
         </div>
-    </section>
-
-    <!-- Navigation -->
-    <nav class="story-nav">
-        <div class="container">
-            <a href="culture.html" class="back-to-culture">← Back to Culture</a>
+        
+        <div class="back-link">
+            <a href="culture.html">← BACK TO CULTURE</a>
         </div>
-    </nav>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Fear City Cycles</h3>
-                    <p>Queens, NYC</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Navigate</h4>
-                    <ul>
-                        <li><a href="bikes/">Custom Bikes</a></li>
-                        <li><a href="gear/">Gear</a></li>
-                        <li><a href="contact/">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Fear City Cycles. Born in Queens. Built for Battle.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="assets/js/main.js"></script>
+    </div>
 </body>
 </html>
