@@ -8,19 +8,13 @@
     <link rel="icon" type="image/svg+xml" href="logo.svg">
     <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            background: #000;
-            color: #ccc;
-            font-family: 'Courier New', monospace;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-        
+        /* Keep article styling while allowing navbar */
         .article-container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
         }
         
         .article-header {
@@ -85,6 +79,28 @@
     </style>
 </head>
 <body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo.svg" alt="Fear City Cycles">
+                <span class="logo-text">Fear City Cycles</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="main.html#bikes">Bikes</a></li>
+                <li><a href="main.html#gear">Gear</a></li>
+                <li><a href="culture.html">Culture</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="main.html#contact">Contact</a></li>
+                <li><a href="cart/" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
     <div class="article-container">
         <div class="article-header">
             <h1>SURVIVING THE STREETS</h1>
@@ -128,5 +144,29 @@
             <a href="culture.html">← BACK TO CULTURE</a>
         </div>
     </div>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (mobileMenuToggle && navMenu) {
+            mobileMenuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+        }
+        
+        // Close mobile menu when clicking on nav links
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (navMenu && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    if (mobileMenuToggle) mobileMenuToggle.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
