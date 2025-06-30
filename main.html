@@ -6,13 +6,42 @@
     <title>Fear City Cycles - Queens NYC Custom Motorcycles</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Fix oversized product cards */
+        .product-card {
+            padding: 20px !important;
+            margin-bottom: 0 !important;
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 200px !important;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        
+        .product-card h3 {
+            font-size: 1.3em !important;
+            margin-bottom: 10px !important;
+        }
+        
+        .product-card p {
+            font-size: 0.95em;
+            margin-bottom: 15px !important;
+        }
+        
+        .price {
+            font-size: 1.3em !important;
+            margin-bottom: 15px !important;
+        }
+        
         /* Product details inline functionality */
         .product-details {
             display: none;
             background: #111;
             border: 2px solid #8B0000;
-            padding: 20px;
-            margin-top: 15px;
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 0.9em;
         }
         
         .product-details.active {
@@ -21,10 +50,11 @@
         
         .product-details h4 {
             color: #8B0000;
-            margin: 0 0 15px 0;
+            margin: 0 0 10px 0;
             font-family: 'Orbitron', monospace;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-size: 1em;
         }
         
         .product-details ul {
@@ -34,9 +64,10 @@
         }
         
         .product-details li {
-            padding: 8px 0;
+            padding: 5px 0;
             border-bottom: 1px solid #333;
             color: #ccc;
+            font-size: 0.85em;
         }
         
         .product-details li:last-child {
@@ -55,19 +86,24 @@
             margin-top: 15px;
         }
         
-        .add-btn {
-            background: #333;
-            color: white;
-            border: 2px solid #333;
-            padding: 12px 24px;
-            cursor: pointer;
+        .view-btn, .add-btn {
+            padding: 10px 20px !important;
+            font-size: 0.9em !important;
             font-family: var(--font-body);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s ease;
+            border: 2px solid;
+            cursor: pointer;
             text-decoration: none;
             display: inline-block;
+        }
+        
+        .add-btn {
+            background: #333;
+            color: white;
+            border-color: #333;
         }
         
         .add-btn:hover {
