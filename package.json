@@ -9,7 +9,7 @@
     "test:coverage": "jest --config jest.config.simple.js --coverage",
     "test:rate-limit": "jest --config jest.config.simple.js __tests__/rate-limit",
     "dev": "next dev",
-    "build": "next build",
+    "build": "echo 'Static site - no build required'",
     "start": "next start",
     "lint": "next lint",
     "rls:audit": "tsx scripts/rls-cli.ts audit",
