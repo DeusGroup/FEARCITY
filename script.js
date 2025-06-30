@@ -140,10 +140,152 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
     
+    function showProductDetails(product) {
+        // Remove any existing popup
+        const existingPopup = document.querySelector('.product-popup');
+        if (existingPopup) {
+            existingPopup.remove();
+        }
+        
+        // Create popup overlay
+        const popup = document.createElement('div');
+        popup.className = 'product-popup';
+        popup.innerHTML = `
+            <div class="popup-overlay"></div>
+            <div class="popup-content">
+                <button class="popup-close">&times;</button>
+                <div class="popup-image">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="popup-details">
+                    <h2>${product.name}</h2>
+                    <p class="popup-price">${product.price}</p>
+                    <p class="popup-description">${product.description}</p>
+                    <button class="popup-add-to-cart" data-id="${product.id}" data-name="${product.name}" data-price="${product.priceValue}">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Add styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .product-popup {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .popup-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.8);
+            }
+            .popup-content {
+                position: relative;
+                background: #000;
+                border: 2px solid #8B0000;
+                max-width: 800px;
+                max-height: 90vh;
+                overflow: auto;
+                display: flex;
+                gap: 20px;
+                padding: 20px;
+            }
+            .popup-close {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: #8B0000;
+                color: white;
+                border: none;
+                font-size: 24px;
+                width: 40px;
+                height: 40px;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+            .popup-close:hover {
+                background: #a00;
+            }
+            .popup-image {
+                flex: 1;
+            }
+            .popup-image img {
+                width: 100%;
+                height: auto;
+            }
+            .popup-details {
+                flex: 1;
+                color: white;
+            }
+            .popup-details h2 {
+                color: #8B0000;
+                margin: 0 0 10px 0;
+            }
+            .popup-price {
+                font-size: 24px;
+                font-weight: bold;
+                color: #8B0000;
+                margin: 10px 0;
+            }
+            .popup-description {
+                line-height: 1.6;
+                margin: 20px 0;
+            }
+            .popup-add-to-cart {
+                background: #8B0000;
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+            .popup-add-to-cart:hover {
+                background: #a00;
+            }
+            @media (max-width: 768px) {
+                .popup-content {
+                    flex-direction: column;
+                    max-width: 95%;
+                    margin: 20px;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        document.body.appendChild(popup);
+        
+        // Close popup handlers
+        popup.querySelector('.popup-close').addEventListener('click', () => popup.remove());
+        popup.querySelector('.popup-overlay').addEventListener('click', () => popup.remove());
+        
+        // Add to cart handler
+        popup.querySelector('.popup-add-to-cart').addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            const name = this.getAttribute('data-name');
+            const price = parseFloat(this.getAttribute('data-price'));
+            
+            addToCart(id, name, price);
+            popup.remove();
+        });
+    }
+    
     // Initialize cart count on page load
     updateCartCount();
     
-    // Add click handlers for view buttons (simulate add to cart for main page)
+    // Add click handlers for view buttons to show product details
     const viewButtons = document.querySelectorAll('.view-btn');
     viewButtons.forEach((button, index) => {
         button.addEventListener('click', function(e) {
@@ -154,8 +296,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const productName = productCard.querySelector('h3').textContent;
             const priceText = productCard.querySelector('.price').textContent;
             const price = parseFloat(priceText.replace(/[^0-9.-]+/g, ''));
+            const description = productCard.querySelector('p:not(.price)').textContent;
+            const imgSrc = productCard.querySelector('img').src;
             
-            addToCart(`bike-${index + 1}`, productName, price);
+            // Show product details popup
+            showProductDetails({
+                name: productName,
+                price: priceText,
+                description: description,
+                image: imgSrc,
+                id: `bike-${index + 1}`,
+                priceValue: price
+            });
         });
     });
     
