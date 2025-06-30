@@ -4,17 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fear City Cycles - Queens NYC Custom Motorcycles</title>
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        /* Nuclear mobile-first styles for product details */
+        /* Product details inline functionality */
         .product-details {
             display: none;
             background: #111;
             border: 2px solid #8B0000;
             padding: 20px;
             margin-top: 15px;
-            border-radius: 8px;
         }
         
         .product-details.active {
@@ -45,94 +43,59 @@
             border-bottom: none;
         }
         
-        /* Mobile responsive navigation fix */
-        @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: flex !important;
-            }
-            
-            .nav-menu {
-                display: none;
-            }
-            
-            .nav-menu.active {
-                display: flex;
-            }
-            
-            .hero {
-                margin-top: 70px;
-                padding: 60px 20px 80px 20px;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-                line-height: 1.2;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .products {
-                padding: 60px 20px;
-            }
-            
-            .products h2 {
-                font-size: 2.2rem;
-                margin-bottom: 40px;
-            }
-            
-            .product-grid {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-            
-            .product-card {
-                padding: 20px;
-                border-radius: 12px;
-            }
+        /* Remove hero background image */
+        .hero {
+            background: none !important;
         }
         
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .products h2 {
-                font-size: 1.8rem;
-            }
-            
-            .product-card {
-                padding: 15px;
-            }
+        /* Product buttons layout */
+        .product-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .add-btn {
+            background: #333;
+            color: white;
+            border: 2px solid #333;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .add-btn:hover {
+            background: #555;
+            border-color: #555;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
-    <nav class="main-nav">
+    <nav>
         <div class="nav-container">
-            <a href="index.html" class="logo">
+            <a href="index.html" class="nav-logo">
                 <img src="logo.svg" alt="Fear City Cycles">
+                <span class="logo-text">Fear City Cycles</span>
             </a>
             <ul class="nav-menu">
-                <li><a href="#bikes" class="nav-link">Bikes</a></li>
-                <li><a href="#gear" class="nav-link">Gear</a></li>
-                <li><a href="culture.html" class="nav-link">Culture</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#bikes">Bikes</a></li>
+                <li><a href="#gear">Gear</a></li>
+                <li><a href="culture.html">Culture</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="cart/" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
             </ul>
-            <div class="nav-actions">
-                <a href="cart/" class="cart-link">Cart (<span id="cart-count" class="cart-count">0</span>)</a>
-                <div class="mobile-menu-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
@@ -402,12 +365,12 @@
         }
         
         // Close mobile menu when clicking on nav links
-        const navLinks = document.querySelectorAll('.nav-link');
+        const navLinks = document.querySelectorAll('.nav-menu a');
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
-                if (navMenu.classList.contains('active')) {
+                if (navMenu && navMenu.classList.contains('active')) {
                     navMenu.classList.remove('active');
-                    mobileMenuToggle.classList.remove('active');
+                    if (mobileMenuToggle) mobileMenuToggle.classList.remove('active');
                 }
             });
         });
