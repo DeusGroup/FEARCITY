@@ -1,4 +1,8 @@
 {
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "installCommand": null,
+  "framework": null,
   "trailingSlash": false,
   "cleanUrls": true,
   "rewrites": [
