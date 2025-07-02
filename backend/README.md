@@ -2,6 +2,9 @@
 
 Complete Node.js/Express backend for Fear City Cycles e-commerce platform with Square payment integration.
 
+**Version**: 0.1.7 (90% Complete)  
+**Status**: Production-ready backend awaiting frontend integration
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -74,12 +77,22 @@ backend/
 
 ## 🔌 API Endpoints
 
+### Authentication (Ready for v0.1.7)
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
+- `GET /api/auth/me` - Get current user
+- `POST /api/auth/forgot-password` - Password reset request
+- `POST /api/auth/reset-password` - Reset password with token
+
 ### Products
 - `GET /api/products` - List products with filtering
-- `GET /api/products/:slug` - Get product by slug
+- `GET /api/products/:id` - Get product by ID
+- `GET /api/products/slug/:slug` - Get product by slug
 - `GET /api/products/:id/related` - Get related products
 - `POST /api/products` - Create product (Admin)
 - `PUT /api/products/:id` - Update product (Admin)
+- `DELETE /api/products/:id` - Delete product (Admin)
 
 ### Orders
 - `POST /api/orders` - Create new order
@@ -274,6 +287,62 @@ All API responses follow consistent format:
   "error": "Error message if failed"
 }
 ```
+
+## 🔒 Row-Level Security (RLS)
+
+### Implementation Status
+- ✅ All tables have RLS policies
+- ✅ User data isolation enforced
+- ✅ Admin override capabilities
+- ✅ Automated RLS testing
+
+### RLS Test Suite
+```bash
+# Run RLS tests
+npm run rls:test
+
+# Check RLS coverage
+npm run rls:coverage
+
+# Audit RLS policies
+npm run rls:audit
+```
+
+## 📈 v0.1.7 Progress
+
+### Backend (90% Complete)
+- ✅ Database schema with all tables
+- ✅ All CRUD API endpoints
+- ✅ Payment processing integration
+- ✅ Security middleware
+- ✅ Email service
+- ✅ Testing infrastructure
+
+### Frontend Integration (0% - Pending)
+- [ ] API integration layer
+- [ ] Authentication UI
+- [ ] Dynamic product loading
+- [ ] Cart persistence
+- [ ] Order processing flow
+
+See [V0.1.7-ROADMAP.md](../V0.1.7-ROADMAP.md) for detailed integration plan.
+
+## 🧪 Testing
+
+### Test Commands
+```bash
+npm test                    # Run all tests
+npm run test:unit          # Unit tests only
+npm run test:integration   # Integration tests
+npm run test:rls           # RLS security tests
+npm run test:coverage      # Coverage report
+```
+
+### Test Categories
+- **Unit Tests**: Individual function testing
+- **Integration Tests**: API endpoint testing
+- **RLS Tests**: Security policy verification
+- **Payment Tests**: Square sandbox testing
 
 ---
 
