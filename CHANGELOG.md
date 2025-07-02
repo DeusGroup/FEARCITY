@@ -5,6 +5,69 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.7] - (In Progress) - 🚀 FULL-STACK INTEGRATION
+
+### 🎯 Release Theme: "Powering the Engine: Full-Stack Integration with Supabase"
+**Status**: 🚧 IN PROGRESS (Backend 90% Complete, Frontend Integration Pending)
+**Achievement**: Transitioning from a static front-end to a dynamic, full-stack application.
+
+### 🚀 Core Backend Features (90% COMPLETE)
+- [x] **Supabase Database Setup** - Complete database schema implemented with PostgreSQL
+- [x] **Node.js/Express Backend** - Full backend server with security middleware operational
+- [x] **RESTful API Endpoints** - All CRUD endpoints for products, orders, customers implemented
+- [ ] **Frontend Integration** - Connect the frontend to the new backend API (0% - PENDING)
+- [x] **Secure Credential Management** - Environment variables structure in place
+
+### 📈 Detailed Deliverables
+- [x] **Database:**
+    - [x] Created `products` table with inventory tracking
+    - [x] Created `categories` table with slugs
+    - [x] Created `customers` table with Square integration
+    - [x] Created `orders` and `order_items` tables
+    - [x] Created `cart` and `cart_items` tables
+    - [x] Created `contact_submissions` table
+    - [x] Created `newsletter_subscribers` table
+    - [x] Created `admins` table for future admin panel
+    - [x] Implemented Row-Level Security (RLS) across all tables
+- [x] **API Endpoints:**
+    - [x] `GET /api/products` with filtering, search, pagination
+    - [x] `GET /api/products/:id` with related products
+    - [x] `POST /api/newsletter` with email validation
+    - [x] `POST /api/contact` with form submission handling
+    - [x] Complete cart API (GET, POST, PUT, DELETE)
+    - [x] Order processing API with Square payments
+    - [x] Customer management endpoints
+    - [x] Category endpoints
+- [ ] **Frontend Integration (PENDING):**
+    - [ ] Refactor `main.js` to fetch product data from the API
+    - [ ] Refactor `product.js` to fetch single product data from the API
+    - [ ] Refactor `culture.js` to fetch blog post data from the API
+    - [ ] Refactor `contact.js` to submit forms to the backend API
+    - [ ] Implement authentication UI (login/register pages)
+    - [ ] Create user dashboard for order history
+- [x] **Email & Forms:**
+    - [x] Nodemailer configured for backend email sending
+    - [x] Form validation and sanitization implemented
+    - [x] Email templates ready for transactional emails
+
+### 🔧 Technical Progress
+- [x] **Security Implementation:**
+    - [x] Helmet.js for security headers
+    - [x] CORS properly configured
+    - [x] Rate limiting implemented
+    - [x] Input validation with express-validator
+    - [x] SQL injection prevention via Prisma
+- [x] **Payment Integration:**
+    - [x] Square SDK integrated
+    - [x] Payment processing endpoints ready
+    - [x] Order fulfillment workflow
+- [x] **Testing Infrastructure:**
+    - [x] Jest testing framework configured
+    - [x] RLS testing suite implemented
+    - [x] API endpoint tests ready
+
+---
+
 ## [0.1.6] - 2025-06-29 (Released) - 📖 CULTURE/BLOG SECTION
 
 ### 🎯 Release Theme: "Underground Stories & NYC Motorcycle Culture"
