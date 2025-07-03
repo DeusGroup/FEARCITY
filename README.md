@@ -12,10 +12,10 @@
 
 Fear City Cycles is an authentic motorcycle lifestyle brand inspired by NYC's 1975 "Fear City" survival guide. This advanced e-commerce platform showcases custom motorcycles and gear with an underground punk rock aesthetic, featuring comprehensive PWA capabilities, mobile optimization, and advanced shopping functionality.
 
-**Current Version:** v0.1.5 (Production Ready)  
-**Built with:** HTML5, CSS3, JavaScript (Vanilla ES6+), Service Workers  
+**Current Version:** v0.1.7 (Backend 90% Complete, Frontend Integration Pending)  
+**Built with:** HTML5, CSS3, JavaScript (ES6+), Node.js/Express Backend, PostgreSQL  
 **Deployed on:** Vercel with custom domain and global CDN  
-**Features:** PWA, Offline Support, Mobile Optimization, Real-time Search
+**Features:** Full-Stack E-Commerce, PWA, User Authentication, Payment Processing
 
 ## ⭐ Key Features (v0.1.5)
 
@@ -80,20 +80,37 @@ Fear City Cycles is an authentic motorcycle lifestyle brand inspired by NYC's 19
 
 ### Local Development
 
+**📖 Quick Start Guide**: See [DEVELOPER-QUICKSTART.md](./DEVELOPER-QUICKSTART.md) for complete setup instructions.
+
+#### Frontend Only (Static Site)
 ```bash
-# Clone the repository
+# Clone and start frontend
 git clone https://github.com/yourusername/fear-city-cycles-website.git
 cd fear-city-cycles-website
 
-# Start local server (choose one)
+# Start static server
 python -m http.server 8000
-# OR
-npx http-server
-# OR
-php -S localhost:8000
+# Open http://localhost:8000
+```
 
-# Open browser
-open http://localhost:8000
+#### Full-Stack Development (v0.1.7)
+```bash
+# Install dependencies
+npm install
+cd backend && npm install && cd ..
+
+# Set up database
+cp backend/.env.example backend/.env
+# Edit backend/.env with your database settings
+cd backend && npx prisma migrate dev && npx prisma generate && cd ..
+
+# Start backend (Terminal 1)
+cd backend && npm run dev
+# Backend runs on http://localhost:3001
+
+# Start frontend (Terminal 2)
+python -m http.server 8000
+# Frontend runs on http://localhost:8000
 ```
 
 ### Production Deployment
@@ -109,43 +126,36 @@ The site is static and can be deployed to any hosting service:
 
 ```
 fear-city-cycles-website/
-├── assets/
+├── 📁 backend/              # Express.js Backend (v0.1.7)
+│   ├── routes/              # API endpoints
+│   ├── prisma/              # Database schema & migrations
+│   ├── server.js            # Main server file
+│   └── package.json         # Backend dependencies
+├── 📁 assets/               # Frontend Assets
 │   ├── css/                 # Stylesheets (6 files + minified)
-│   │   ├── main.css         # Core styles
-│   │   ├── responsive.css   # Mobile/tablet responsive
-│   │   ├── pages.css        # Page-specific styles
-│   │   ├── product.css      # Product page styles
-│   │   ├── gateway.css      # Gateway page styles
-│   │   ├── cart-animations.css  # Shopping cart animations
-│   │   └── *.min.css        # Minified versions
 │   ├── js/                  # JavaScript modules (7 files + minified)
-│   │   ├── main.js          # Core application logic
-│   │   ├── contact.js       # EmailJS contact form integration
+│   │   ├── main.js          # Core app logic (hardcoded products)
+│   │   ├── contact.js       # EmailJS integration
 │   │   ├── cart.js          # Shopping cart functionality
-│   │   ├── product.js       # Product specifications & galleries
-│   │   ├── mobile-enhancements.js  # Touch optimization
-│   │   ├── performance-optimizer.js  # Performance monitoring
-│   │   ├── gateway.js       # Gateway page interactions
-│   │   └── *.min.js         # Minified versions
-│   └── images/              # SVG assets (12 professional images)
-├── bikes/                   # Motorcycle product pages
-│   ├── index.html          # Bikes listing page
-│   └── *.html              # Individual bike detail pages
-├── gear/                    # Gear & apparel pages
-│   ├── index.html          # Gear listing page
-│   └── *.html              # Individual gear detail pages
-├── contact/                 # Contact forms
-├── cart/                    # Shopping cart page
-├── index.html              # Gateway entrance page
-├── main.html               # Main homepage
-├── sw.js                   # Service Worker for PWA
-├── offline.html            # Offline fallback page
-└── Documentation/
-    ├── PROJECT-STATUS.md   # Project completion status
-    ├── CHANGELOG.md        # Version history
-    ├── TODO.md             # Task management
-    ├── V0.1.5-ROADMAP.md   # Development roadmap
-    └── EMAILJS-SETUP.md    # EmailJS integration guide
+│   │   └── ...              # Other modules
+│   └── images/              # Professional assets (12 images)
+├── 📁 bikes/                # Motorcycle product pages
+├── 📁 gear/                 # Gear & apparel pages
+├── 📁 culture/              # Blog/culture section (v0.1.6)
+├── 📁 contact/              # Contact forms
+├── 📁 cart/                 # Shopping cart page
+├── index.html               # Gateway entrance page
+├── main.html                # Main homepage
+├── sw.js                    # Service Worker for PWA
+├── offline.html             # Offline fallback page
+└── 📚 Documentation/
+    ├── API-REFERENCE.md     # Complete API documentation
+    ├── DEVELOPER-QUICKSTART.md  # New developer onboarding
+    ├── V0.1.7-ROADMAP.md    # Implementation timeline
+    ├── V0.1.7-USER-SYSTEM-TASKS.md  # User system specs
+    ├── PROJECT-STATUS.md    # Current progress
+    ├── CHANGELOG.md         # Version history
+    └── TODO.md              # Task management
 ```
 
 ## 🔧 Configuration
