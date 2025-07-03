@@ -198,13 +198,34 @@ Last Updated: 2025-07-02
 - [x] **Security Features** - JWT auth, rate limiting, input validation ✅
 - [x] **Testing Infrastructure** - Jest with RLS testing suite ✅
 
-### [FRONTEND] API Integration 🔴 HIGH PRIORITY (0% Complete)
-- [ ] **Week 1: Frontend-Backend Connection**
+### [FRONTEND] API Integration 🔴 HIGH PRIORITY (10% Complete)
+- [ ] **Week 1: Frontend-Backend Connection (40% Complete)**
   - [ ] Deploy backend to Vercel
-  - [ ] Create API integration layer (api.js)
-  - [ ] Replace hardcoded products with API calls
+    - [ ] Set up Vercel account and project
+    - [ ] Configure environment variables
+    - [ ] Run database migrations
+    - [ ] Verify API endpoints are accessible
+  - [x] Create API integration layer (api.js) ✅ COMPLETE (2025-07-02)
+    - [x] FearCityAPI class with all endpoints
+    - [x] Environment detection (dev/prod)
+    - [x] JWT authentication support
+    - [x] Error handling
+  - [x] Replace hardcoded products with API calls ✅ COMPLETE (2025-07-02)
+    - [x] Update main.js to use fearCityAPI.fetchProducts()
+    - [x] Dynamic product card generation
+    - [x] Loading indicators and error handling
+  - [ ] Update remaining product pages
+    - [ ] Update bikes/index.html to use API
+    - [ ] Update gear/index.html to use API
+    - [ ] Update individual product pages to fetch by ID/slug
   - [ ] Connect shopping cart to backend
+    - [ ] Implement cart sync for logged-in users
+    - [ ] Update cart.js to use API endpoints
+    - [ ] Handle anonymous vs authenticated cart
   - [ ] Update contact forms to use API
+    - [ ] Replace EmailJS with API calls in contact.js
+    - [ ] Update all 4 form types (custom, gear, press, general)
+    - [ ] Add loading states and error handling
   
 - [ ] **Week 2: Dynamic Content**
   - [ ] Fetch blog posts from API
@@ -332,16 +353,24 @@ Last Updated: 2025-07-02
 
 ## 📊 Task Statistics
 
-- **Total Tasks**: 115
-- **Completed**: 98 (85%)
+- **Total Tasks**: 125 (expanded with subtasks)
+- **Completed**: 102 (82%)
   - v0.1.5: 78 tasks
   - v0.1.6: 10 tasks
   - v0.1.7 Backend: 10 tasks
-- **In Progress (v0.1.7)**: 17 (15%)
-  - Frontend Integration: 17 tasks
-- **High Priority**: 17 tasks (v0.1.7 frontend)
+  - v0.1.7 Frontend: 4 tasks (api.js + main.js updates)
+- **In Progress (v0.1.7)**: 23 (18%)
+  - Frontend Integration Week 1: 9 remaining tasks
+  - Frontend Integration Week 2-4: 14 tasks
+- **High Priority**: 23 tasks (v0.1.7 frontend)
 - **Medium Priority**: 5 tasks
 - **Low Priority**: 10 tasks
+
+### v0.1.7 Frontend Progress
+- **Week 1**: 40% Complete (4 of 10 tasks)
+- **Week 2**: 0% Complete
+- **Week 3**: 0% Complete 
+- **Week 4**: 0% Complete
 
 ## 🎯 v0.1.5 Final Status
 
