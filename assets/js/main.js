@@ -518,23 +518,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Search functionality - Enhanced Product Search System
-    const productDatabase = [
-        // Motorcycles
-        { id: 'bike-001', name: 'Street Reaper', category: 'street-fighter', price: 24500, specs: '1000cc Twin Engine Raw Power Minimal Aesthetics NYC Streets Built', description: 'Stripped-down street fighter built for NYC streets. Raw power, minimal aesthetics.', type: 'motorcycle', page: 'bikes/street-reaper.html' },
-        { id: 'bike-002', name: 'Borough Bruiser', category: 'street-fighter', price: 28000, specs: '1200cc Twin Aggressive Stance Chrome Accents Heavy Duty Cruiser', description: 'Heavy-duty cruiser with chrome attitude. Built to dominate the boroughs.', type: 'motorcycle', page: 'bikes/borough-bruiser.html' },
-        { id: 'bike-003', name: 'Fear Fighter', category: 'street-fighter', price: 32000, specs: '1000cc Twin Track Inspired Carbon Details Performance', description: 'Track-inspired machine with carbon details and performance engineering.', type: 'motorcycle', page: 'bikes/fear-fighter.html' },
-        { id: 'bike-004', name: 'Queens Crusher', category: 'bobber', price: 22000, specs: '750cc Twin Bobber Style Vintage Inspired Classic', description: 'Vintage-inspired bobber built for the streets of Queens.', type: 'motorcycle', page: 'bikes/queens-crusher.html' },
-        { id: 'bike-005', name: 'Death Rider', category: 'chopper', price: 26500, specs: '1100cc Twin Extended Fork Classic Chopper Style', description: 'Classic chopper with extended fork and authentic style.', type: 'motorcycle', page: 'bikes/death-rider.html' },
-        { id: 'bike-006', name: 'Midnight Racer', category: 'cafe-racer', price: 25500, specs: '900cc Twin Café Racer Performance Tuned Racing', description: 'Performance-tuned café racer for midnight runs.', type: 'motorcycle', page: 'bikes/midnight-racer.html' },
-        
-        // Gear & Apparel
-        { id: 'gear-001', name: 'Fear City Jacket', category: 'jackets', price: 175, specs: 'Leather Armor Plated Street Protection', description: 'Leather jacket with armor plating for street protection.', type: 'gear', page: 'gear/index.html' },
-        { id: 'gear-002', name: 'Queens Skull Tee', category: 'apparel', price: 35, specs: 'Cotton Queens NYC Design Skull Graphics', description: 'Premium cotton tee with Queens skull design.', type: 'gear', page: 'gear/index.html' },
-        { id: 'gear-003', name: 'Reaper Riding Gloves', category: 'gloves', price: 65, specs: 'Leather Reinforced Grip Protection', description: 'Reinforced leather gloves for maximum grip and protection.', type: 'gear', page: 'gear/index.html' },
-        { id: 'gear-004', name: 'Fear City Patch', category: 'accessories', price: 15, specs: 'Embroidered Iron On NYC Pride', description: 'Embroidered Fear City patch - show your NYC pride.', type: 'gear', page: 'gear/index.html' },
-        { id: 'gear-005', name: 'Prospect Vest', category: 'vests', price: 85, specs: 'Heavy Denim Reinforced Cut Ready', description: 'Heavy denim vest, reinforced and cut-ready.', type: 'gear', page: 'gear/index.html' },
-        { id: 'gear-006', name: 'Skull Keychain', category: 'accessories', price: 25, specs: 'Pewter Cast Heavy Duty Ring 2 inch Height', description: 'Pewter cast skull keychain with heavy-duty ring.', type: 'gear', page: 'gear/index.html' }
-    ];
+    // Products will be loaded dynamically from the API
+    let productDatabase = [];
 
     // Enhanced search function with fuzzy matching
     function searchProducts(query) {
@@ -1039,3 +1024,185 @@ function showSizeGuide(productType) {
 
 // Export cart for use in other pages
 window.fearCityCart = cart;
+
+// Load products from API
+async function loadProducts() {
+    try {
+        // Show loading indicator
+        const productsSection = document.querySelector('.products');
+        if (productsSection && !document.querySelector('.loading-indicator')) {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'loading-indicator';
+            loadingDiv.innerHTML = '<p>Loading products...</p>';
+            loadingDiv.style.cssText = 'text-align: center; padding: 20px; color: #ccc;';
+            productsSection.insertBefore(loadingDiv, productsSection.firstChild);
+        }
+
+        // Fetch products from API
+        const products = await window.fearCityAPI.fetchProducts();
+        
+        // Transform API response to match existing format
+        productDatabase = products.map(product => ({
+            id: product.id,
+            name: product.name,
+            category: product.category?.slug || product.category,
+            price: product.price,
+            specs: product.specifications ? Object.values(product.specifications).join(' ') : '',
+            description: product.description,
+            type: product.category?.name === 'Motorcycles' ? 'motorcycle' : 'gear',
+            page: product.category?.name === 'Motorcycles' 
+                ? `bikes/${product.slug}.html` 
+                : 'gear/index.html',
+            image: product.image || product.images?.[0] || '/assets/images/placeholder.svg'
+        }));
+
+        // Remove loading indicator
+        const loadingIndicator = document.querySelector('.loading-indicator');
+        if (loadingIndicator) {
+            loadingIndicator.remove();
+        }
+
+        // Update product display if on main page
+        updateProductDisplay();
+
+        // Re-initialize search with loaded products
+        initializeSearchWithProducts();
+
+        console.log(`Loaded ${productDatabase.length} products from API`);
+
+    } catch (error) {
+        console.error('Error loading products:', error);
+        
+        // Remove loading indicator
+        const loadingIndicator = document.querySelector('.loading-indicator');
+        if (loadingIndicator) {
+            loadingIndicator.remove();
+        }
+
+        // Show error message
+        showToast('Unable to load products. Please refresh the page.', 'error', 5000);
+        
+        // Optionally fall back to hardcoded data for demo purposes
+        // productDatabase = getFallbackProducts();
+    }
+}
+
+// Update product display on the page
+function updateProductDisplay() {
+    const productGrids = document.querySelectorAll('.product-grid');
+    
+    productGrids.forEach(grid => {
+        // Skip if grid already has products (static HTML)
+        if (grid.children.length > 0 && !grid.dataset.dynamic) {
+            return;
+        }
+
+        // Mark as dynamic to prevent re-rendering
+        grid.dataset.dynamic = 'true';
+
+        // Clear existing content
+        grid.innerHTML = '';
+
+        // Filter products based on page context
+        const isGearPage = window.location.pathname.includes('/gear/');
+        const isBikesPage = window.location.pathname.includes('/bikes/');
+        
+        let productsToShow = productDatabase;
+        if (isGearPage) {
+            productsToShow = productDatabase.filter(p => p.type === 'gear');
+        } else if (isBikesPage) {
+            productsToShow = productDatabase.filter(p => p.type === 'motorcycle');
+        }
+
+        // Create product cards
+        productsToShow.forEach(product => {
+            const productCard = createProductCard(product);
+            grid.appendChild(productCard);
+        });
+
+        // Re-attach event listeners for add to cart buttons
+        attachCartEventListeners();
+    });
+}
+
+// Create a product card element
+function createProductCard(product) {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    
+    card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
+        <p class="price">$${product.price.toLocaleString()}</p>
+        <div class="product-actions">
+            <a href="${product.page}" class="btn-secondary">View Details</a>
+            <button class="btn-primary add-to-cart" 
+                    data-product-id="${product.id}" 
+                    data-price="${product.price}">
+                Add to Cart
+            </button>
+        </div>
+    `;
+    
+    return card;
+}
+
+// Re-attach cart event listeners after dynamic content load
+function attachCartEventListeners() {
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        // Remove existing listeners to prevent duplicates
+        button.replaceWith(button.cloneNode(true));
+    });
+
+    // Re-attach listeners
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const productCard = this.closest('.product-card');
+            const product = {
+                id: this.dataset.productId,
+                name: productCard.querySelector('h3').textContent,
+                price: parseFloat(this.dataset.price),
+                image: productCard.querySelector('img').src,
+                size: this.dataset.size || 'Standard'
+            };
+
+            cart.addItem(product);
+        });
+    });
+}
+
+// Initialize search with loaded products
+function initializeSearchWithProducts() {
+    // Re-initialize search functionality if search input exists
+    const searchInput = document.getElementById('product-search');
+    if (searchInput && productDatabase.length > 0) {
+        // Search functionality is already set up, just needs products loaded
+        console.log('Search initialized with', productDatabase.length, 'products');
+    }
+}
+
+// Load products when API is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if API is available
+    if (typeof window.fearCityAPI !== 'undefined') {
+        // Load products immediately
+        loadProducts();
+    } else {
+        // Wait for API script to load
+        const checkAPI = setInterval(() => {
+            if (typeof window.fearCityAPI !== 'undefined') {
+                clearInterval(checkAPI);
+                loadProducts();
+            }
+        }, 100);
+
+        // Timeout after 5 seconds
+        setTimeout(() => {
+            clearInterval(checkAPI);
+            console.warn('API not available, using static content');
+        }, 5000);
+    }
+});
