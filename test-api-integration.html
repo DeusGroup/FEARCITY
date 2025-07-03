@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Integration Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #ccc;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+        .success { color: #4CAF50; }
+        .error { color: #f44336; }
+        .loading { color: #FFC107; }
+        #products { margin-top: 20px; }
+        .product {
+            background: #222;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        button {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        button:hover { background: #a00000; }
+    </style>
+</head>
+<body>
+    <h1>Fear City Cycles - API Integration Test</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: API Connection</h2>
+        <button onclick="testAPIConnection()">Test API Connection</button>
+        <div id="api-status"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Load Products</h2>
+        <button onclick="testLoadProducts()">Load Products from API</button>
+        <div id="products-status"></div>
+        <div id="products"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Mock API (No Backend Required)</h2>
+        <button onclick="testMockAPI()">Test with Mock Data</button>
+        <div id="mock-status"></div>
+    </div>
+
+    <!-- Include our API files -->
+    <script src="assets/js/api.js"></script>
+    
+    <script>
+        // Test 1: Check if API is reachable
+        async function testAPIConnection() {
+            const statusDiv = document.getElementById('api-status');
+            statusDiv.innerHTML = '<p class="loading">Testing API connection...</p>';
+            
+            try {
+                const response = await fetch('http://localhost:3001/health');
+                if (response.ok) {
+                    const data = await response.json();
+                    statusDiv.innerHTML = '<p class="success">✓ API is running! Response: ' + JSON.stringify(data) + '</p>';
+                } else {
+                    statusDiv.innerHTML = '<p class="error">✗ API returned status: ' + response.status + '</p>';
+                }
+            } catch (error) {
+                statusDiv.innerHTML = '<p class="error">✗ Cannot connect to API: ' + error.message + '</p>';
+                statusDiv.innerHTML += '<p>Make sure backend is running: cd backend && npm run dev</p>';
+            }
+        }
+
+        // Test 2: Load products using our API class
+        async function testLoadProducts() {
+            const statusDiv = document.getElementById('products-status');
+            const productsDiv = document.getElementById('products');
+            
+            statusDiv.innerHTML = '<p class="loading">Loading products...</p>';
+            productsDiv.innerHTML = '';
+            
+            try {
+                const products = await window.fearCityAPI.fetchProducts();
+                statusDiv.innerHTML = '<p class="success">✓ Loaded ' + products.length + ' products</p>';
+                
+                products.forEach(product => {
+                    const productDiv = document.createElement('div');
+                    productDiv.className = 'product';
+                    productDiv.innerHTML = `
+                        <h3>${product.name}</h3>
+                        <p>Price: $${product.price}</p>
+                        <p>Category: ${product.category?.name || 'Unknown'}</p>
+                        <p>${product.description}</p>
+                    `;
+                    productsDiv.appendChild(productDiv);
+                });
+            } catch (error) {
+                statusDiv.innerHTML = '<p class="error">✗ Error loading products: ' + error.message + '</p>';
+            }
+        }
+
+        // Test 3: Mock API test (works without backend)
+        function testMockAPI() {
+            const statusDiv = document.getElementById('mock-status');
+            
+            // Mock the fetchProducts method temporarily
+            const originalFetch = window.fearCityAPI.fetchProducts;
+            window.fearCityAPI.fetchProducts = async () => {
+                // Simulate API delay
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // Return mock data
+                return [
+                    {
+                        id: 1,
+                        name: 'Street Reaper',
+                        price: 24500,
+                        description: 'Stripped-down street fighter built for NYC streets.',
+                        category: { name: 'Motorcycles', slug: 'motorcycles' }
+                    },
+                    {
+                        id: 2,
+                        name: 'Fear City Jacket',
+                        price: 175,
+                        description: 'Leather jacket with armor plating.',
+                        category: { name: 'Gear', slug: 'gear' }
+                    }
+                ];
+            };
+            
+            statusDiv.innerHTML = '<p class="loading">Testing with mock data...</p>';
+            
+            testLoadProducts().then(() => {
+                statusDiv.innerHTML = '<p class="success">✓ Mock test complete - API integration is working!</p>';
+                // Restore original method
+                window.fearCityAPI.fetchProducts = originalFetch;
+            });
+        }
+
+        // Check API availability on load
+        window.addEventListener('DOMContentLoaded', function() {
+            const apiStatus = window.fearCityAPI ? '✓ API class loaded' : '✗ API class not found';
+            console.log(apiStatus);
+            
+            // Show API base URL
+            if (window.fearCityAPI) {
+                console.log('API Base URL:', window.fearCityAPI.baseURL);
+            }
+        });
+    </script>
+</body>
+</html>
