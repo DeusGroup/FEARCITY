@@ -9,7 +9,9 @@
     "test:coverage": "jest --config jest.config.simple.js --coverage",
     "test:rate-limit": "jest --config jest.config.simple.js __tests__/rate-limit",
     "dev": "next dev",
-    "build": "echo 'Static site - no build required'",
+    "build": "prisma generate",
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate",
     "start": "next start",
     "lint": "next lint",
     "rls:audit": "tsx scripts/rls-cli.ts audit",
@@ -40,7 +42,10 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "commander": "^11.0.0",
-    "dotenv": "^16.0.0"
+    "dotenv": "^16.0.0",
+    "@prisma/client": "^5.1.1",
+    "prisma": "^5.1.1",
+    "express-validator": "^7.0.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",
