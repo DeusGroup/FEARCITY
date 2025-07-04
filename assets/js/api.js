@@ -467,14 +467,21 @@ class FearCityAPI {
     }
 }
 
-// Create and export singleton instance
+// Always make available globally
+window.FearCityAPI = FearCityAPI;
+window.fearCityAPI = new FearCityAPI();
+
+// For module usage
 const fearCityAPI = new FearCityAPI();
 
-// Also export the class for testing or multiple instances
-export { FearCityAPI, fearCityAPI as default };
-
-// For non-module usage, attach to window
-if (typeof window !== 'undefined') {
-    window.FearCityAPI = FearCityAPI;
-    window.fearCityAPI = fearCityAPI;
+// Try to export for modules (wrapped in try-catch to prevent errors in script mode)
+try {
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = { FearCityAPI, fearCityAPI };
+    } else {
+        // ES modules export
+        window.exports = { FearCityAPI, fearCityAPI };
+    }
+} catch (e) {
+    // Ignore export errors when loaded as script
 }
