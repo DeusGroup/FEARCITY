@@ -1,8 +1,9 @@
-const { PrismaClient } = require('@prisma/client');
+// Next.js API Route: /api/products
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -41,7 +42,6 @@ module.exports = async function handler(req, res) {
         }),
         ...(maxPrice && {
           price: {
-            ...where.price,
             lte: parseFloat(maxPrice)
           }
         }),

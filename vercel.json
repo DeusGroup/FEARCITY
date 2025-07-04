@@ -1,19 +1,9 @@
 {
   "version": 2,
-  "functions": {
-    "api-health.js": {
-      "runtime": "@vercel/node"
-    },
-    "api/**/*.js": {
-      "runtime": "@vercel/node"
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/health",
-      "dest": "/api-health.js"
-    }
-  ],
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": ".",
   "rewrites": [
     {
       "source": "/culture",

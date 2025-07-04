@@ -14,11 +14,11 @@ class FearCityAPI {
         
         // Local development
         if (hostname === 'localhost' || hostname === '127.0.0.1') {
-            return 'http://localhost:3001';
+            return 'http://localhost:3000';
         }
         
-        // Production - use working backend
-        return 'https://fear-city-cycles-backend-3gl8f66wk-deusgroups-projects.vercel.app';
+        // Production - unified deployment on same domain
+        return '';
     }
 
     // Get stored authentication token
