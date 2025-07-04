@@ -60,7 +60,7 @@
             position: relative;
             z-index: 1;
             margin-bottom: 40px;
-            animation: fadeIn 1.5s ease-out;
+            animation: fadeIn 0.8s ease-out;
         }
         
         .gateway-logo img {
@@ -80,7 +80,7 @@
             text-transform: uppercase;
             position: relative;
             z-index: 1;
-            animation: slideUp 1.5s ease-out 0.4s both;
+            animation: slideUp 0.8s ease-out 0.2s both;
             text-shadow: 
                 0 0 20px #8B0000,
                 0 0 40px #8B0000,
@@ -104,7 +104,7 @@
             font-family: 'Oswald', sans-serif;
             position: relative;
             z-index: 1;
-            animation: slowButtonReveal 2.5s ease-out 1.2s both;
+            animation: slowButtonReveal 1.2s ease-out 0.6s both;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             overflow: hidden;
             backdrop-filter: blur(5px);
@@ -123,11 +123,11 @@
         
         .enter-btn.loading {
             pointer-events: none;
-            animation: buttonLoading 2s ease-in-out infinite;
+            animation: buttonLoading 1.2s ease-in-out infinite;
         }
         
         .gateway-body.exiting {
-            animation: exitToCity 1.5s ease-in both;
+            animation: exitToCity 1.0s ease-in both;
         }
         
         @keyframes buttonLoading {
@@ -342,9 +342,9 @@
                 // Redirect after exit animation completes
                 setTimeout(() => {
                     window.location.href = 'main.html';
-                }, 1500); // Match exitToCity animation duration
+                }, 1000); // Match exitToCity animation duration
                 
-            }, 1000); // Let button pulse for 1 second first
+            }, 600); // Let button pulse for 0.6 seconds first
         });
     </script>
 </body>

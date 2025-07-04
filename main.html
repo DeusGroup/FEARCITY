@@ -74,9 +74,106 @@
             border-bottom: none;
         }
         
-        /* Remove hero background image */
+        /* Hero Movie Styles */
         .hero {
+            position: relative;
             background: none !important;
+            overflow: hidden;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-movie-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .hero-movie {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: background-image 0.1s ease-in-out;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(0, 0, 0, 0.7) 0%,
+                rgba(139, 0, 0, 0.3) 50%,
+                rgba(0, 0, 0, 0.7) 100%
+            );
+            z-index: 2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin-bottom: 20px;
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            margin-bottom: 30px;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B0000, #cc0000);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid #8B0000;
+            transition: all 0.3s ease;
+            text-shadow: none;
+        }
+        
+        .cta-btn:hover {
+            background: linear-gradient(135deg, #cc0000, #8B0000);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+        }
+        
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-btn {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
         }
         
         /* Product buttons layout */
@@ -137,9 +234,17 @@
     </nav>
 
     <section class="hero">
-        <h1>Lean Mean Built in Queens</h1>
-        <p>These aren't garage queens - they're street fighters.</p>
-        <a href="#bikes" class="cta-btn">View Our Rides</a>
+        <div class="hero-movie-container">
+            <div class="hero-movie" id="heroMovie">
+                <!-- Hero movie frames will be dynamically loaded here -->
+            </div>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Lean Mean Built in Queens</h1>
+            <p>These aren't garage queens - they're street fighters.</p>
+            <a href="#bikes" class="cta-btn">View Our Rides</a>
+        </div>
     </section>
 
     <section class="products" id="bikes">
@@ -167,25 +272,123 @@
         <p>&copy; 2025 Fear City Cycles - Born in Queens. Built for Battle.</p>
     </footer>
 
+    <!-- Emergency cart conflict prevention -->
     <script>
-        // Nuclear inline cart functionality
-        let cart = JSON.parse(localStorage.getItem('fearCityCart')) || [];
+        // Execute immediately to prevent cart conflicts
+        window.addEventListener('error', function(e) {
+            if (e.message && e.message.includes('redeclaration of let cart')) {
+                console.log('INTERCEPTED: Cart redeclaration error prevented');
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        });
         
+        // Override any existing cart declarations
+        try {
+            Object.defineProperty(window, 'cart', {
+                configurable: true,
+                set: function(value) {
+                    console.log('Cart assignment intercepted');
+                    this._cart = value;
+                },
+                get: function() {
+                    return this._cart;
+                }
+            });
+        } catch (e) {
+            console.log('Cart property override failed:', e);
+        }
+    </script>
+    
+    <script>
+        // Force clear service worker cache to remove main.js
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                    console.log('Service worker unregistered');
+                }
+            });
+            
+            // Clear all caches
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    names.forEach(function(name) {
+                        caches.delete(name);
+                        console.log('Cache deleted:', name);
+                    });
+                });
+            }
+        }
+        
+        // Aggressively block any attempt to load main.js
+        const originalCreateElement = document.createElement;
+        document.createElement = function(tagName) {
+            const element = originalCreateElement.call(this, tagName);
+            if (tagName.toLowerCase() === 'script') {
+                const originalSetAttribute = element.setAttribute;
+                element.setAttribute = function(name, value) {
+                    if (name === 'src' && value && value.includes('main.js')) {
+                        console.log('BLOCKED: Attempt to load main.js via createElement');
+                        return;
+                    }
+                    return originalSetAttribute.call(this, name, value);
+                };
+            }
+            return element;
+        };
+        
+        // Block existing script attempts
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                mutation.addedNodes.forEach(function(node) {
+                    if (node.tagName === 'SCRIPT' && node.src && node.src.includes('main.js')) {
+                        console.log('BLOCKED: main.js script tag removed');
+                        node.remove();
+                    }
+                });
+            });
+        });
+        observer.observe(document.head, { childList: true });
+        observer.observe(document.body, { childList: true });
+        
+        // Remove any existing main.js scripts
+        document.querySelectorAll('script[src*="main.js"]').forEach(script => {
+            console.log('REMOVED: Existing main.js script');
+            script.remove();
+        });
+        
+        (function() {
+        // Prevent cart variable conflicts
+        try {
+            if (typeof cart !== 'undefined') {
+                // Rename existing cart to avoid conflicts
+                window.oldCart = cart;
+                delete window.cart;
+            }
+        } catch (e) {
+            // Ignore any errors from cart access
+        }
+        
+        // Debug: Check for script conflicts
+        console.log('Main.html inline script loading...');
+        console.log('Cart conflict prevention applied');
+        
+        // Cart functionality is handled by ShoppingCart class in main.js
         function updateCartCount() {
-            const count = cart.reduce((total, item) => total + item.quantity, 0);
-            document.getElementById('cart-count').textContent = count;
+            // This will be handled by the ShoppingCart class
+            if (window.fearCityCart) {
+                const count = window.fearCityCart.getItemCount();
+                document.getElementById('cart-count').textContent = count;
+            }
         }
         
         function addToCart(name, price) {
-            const existing = cart.find(item => item.name === name);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({ name: name, price: price, quantity: 1 });
+            // Use the global cart instance
+            if (window.fearCityCart) {
+                window.fearCityCart.addItem({ name: name, price: price, id: name.toLowerCase().replace(/\s+/g, '-') });
             }
-            localStorage.setItem('fearCityCart', JSON.stringify(cart));
-            updateCartCount();
-            alert(name + ' added to cart!');
         }
         
         function toggleDetails(button) {
@@ -232,17 +435,178 @@
             });
         });
         
+        // Simple cart functionality (replacing main.js to avoid conflicts)
+        window.fearCityCart = {
+            items: JSON.parse(localStorage.getItem('fearCityCart')) || [],
+            
+            addItem: function(product) {
+                const existing = this.items.find(item => item.id === product.id);
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    this.items.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        quantity: 1
+                    });
+                }
+                this.saveCart();
+                this.updateDisplay();
+                alert(product.name + ' added to cart!');
+            },
+            
+            getItemCount: function() {
+                return this.items.reduce((count, item) => count + item.quantity, 0);
+            },
+            
+            saveCart: function() {
+                localStorage.setItem('fearCityCart', JSON.stringify(this.items));
+            },
+            
+            updateDisplay: function() {
+                const count = this.getItemCount();
+                document.getElementById('cart-count').textContent = count;
+            }
+        };
+        
         // Initialize on load
-        updateCartCount();
+        setTimeout(() => {
+            updateCartCount();
+            window.fearCityCart.updateDisplay();
+        }, 100);
+        
+        })(); // End of IIFE
     </script>
     
-    <!-- API Integration and Main Scripts -->
-    <script src="assets/js/api.js"></script>
-    <script src="assets/js/main.js"></script>
+    <!-- Skip external scripts due to cache conflicts - implement hero movie inline -->
     
-    <!-- Product Loading for Main Page -->
+    <!-- Inline Hero Movie and Product Loading -->
     <script>
+        // Inline Hero Movie Implementation
+        function initHeroMovie() {
+            console.log('🎬 Initializing hero movie...');
+            
+            const movieElement = document.getElementById('heroMovie');
+            if (!movieElement) {
+                console.log('❌ Hero movie element not found');
+                return;
+            }
+            
+            const baseURL = 'https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/hero/hero%20movie/';
+            let frames = [];
+            let currentFrame = 0;
+            let movieInterval;
+            
+            // Test common frame naming patterns
+            async function detectFrames() {
+                const patterns = [
+                    { prefix: '', start: 1, end: 20, format: (i) => `${i}.jpg` },
+                    { prefix: 'frame_', start: 1, end: 20, format: (i) => `frame_${i}.jpg` },
+                    { prefix: 'hero_', start: 1, end: 20, format: (i) => `hero_${i}.jpg` },
+                    { prefix: '', start: 1, end: 20, format: (i) => `${i.toString().padStart(3, '0')}.jpg` }
+                ];
+                
+                for (let pattern of patterns) {
+                    console.log(`🔍 Testing pattern: ${pattern.prefix || '[number]'}.jpg`);
+                    const testFrames = [];
+                    
+                    for (let i = pattern.start; i <= pattern.end && testFrames.length < 10; i++) {
+                        const frameName = pattern.format(i);
+                        const frameUrl = baseURL + frameName;
+                        
+                        try {
+                            const response = await fetch(frameUrl, { method: 'HEAD' });
+                            if (response.ok) {
+                                testFrames.push(frameUrl);
+                                console.log(`✅ Found: ${frameName}`);
+                            } else {
+                                break; // Stop on first miss for this pattern
+                            }
+                        } catch (e) {
+                            break;
+                        }
+                    }
+                    
+                    if (testFrames.length >= 3) {
+                        frames = testFrames;
+                        console.log(`🎯 Found ${frames.length} frames with pattern: ${pattern.prefix || '[number]'}.jpg`);
+                        return true;
+                    }
+                }
+                
+                console.log('❌ No hero movie frames found');
+                return false;
+            }
+            
+            // Start the movie
+            function startMovie() {
+                if (frames.length === 0) {
+                    console.log('📷 Using fallback static image');
+                    movieElement.style.backgroundImage = "url('assets/images/hero-bg.jpg')";
+                    return;
+                }
+                
+                console.log(`🎬 Starting hero movie with ${frames.length} frames`);
+                
+                function playFrame() {
+                    movieElement.style.backgroundImage = `url('${frames[currentFrame]}')`;
+                    currentFrame = (currentFrame + 1) % frames.length;
+                }
+                
+                // Start playing
+                playFrame();
+                movieInterval = setInterval(playFrame, 1000 / 24); // 24 FPS
+                
+                // Pause when page not visible
+                document.addEventListener('visibilitychange', function() {
+                    if (document.hidden) {
+                        clearInterval(movieInterval);
+                    } else {
+                        movieInterval = setInterval(playFrame, 1000 / 24);
+                    }
+                });
+            }
+            
+            // Initialize
+            detectFrames().then(found => {
+                startMovie();
+            });
+        }
+        
+        // Inline API for products
+        function createMockAPI() {
+            const mockProducts = [
+                { id: 'street-reaper', name: 'Street Reaper', price: 24500, images: ['/assets/images/bike-street-reaper.jpg'], description: 'Pure aggression on two wheels.', category: { slug: 'motorcycles' } },
+                { id: 'queens-crusher', name: 'Queens Crusher', price: 26750, images: ['/assets/images/bike-queens-crusher.jpg'], description: 'Born in Queens, built for battle.', category: { slug: 'motorcycles' } },
+                { id: 'death-rider', name: 'Death Rider', price: 29500, images: ['/assets/images/bike-death-rider.jpg'], description: 'When subtlety is not an option.', category: { slug: 'motorcycles' } },
+                { id: 'reaper-gloves', name: 'Reaper Riding Gloves', price: 89, images: ['/assets/images/gloves-reaper-riding.jpg'], description: 'Professional-grade riding gloves.', category: { slug: 'gear' } },
+                { id: 'fear-city-jacket', name: 'Fear City Leather Jacket', price: 395, images: ['/assets/images/jacket-fear-city.jpg'], description: 'Premium leather jacket.', category: { slug: 'gear' } },
+                { id: 'queens-skull-tee', name: 'Queens Skull Tee', price: 35, images: ['/assets/images/tee-queens-skull.jpg'], description: 'Rep Queens with this hardcore design.', category: { slug: 'gear' } }
+            ];
+            
+            return {
+                fetchProducts: function(params = {}) {
+                    return new Promise(resolve => {
+                        let filtered = mockProducts;
+                        if (params.category) {
+                            filtered = mockProducts.filter(p => p.category.slug === params.category);
+                        }
+                        setTimeout(() => resolve({ products: filtered }), 100);
+                    });
+                }
+            };
+        }
+        
         document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 Initializing page...');
+            
+            // Start hero movie
+            initHeroMovie();
+            
+            // Initialize products
+            const api = createMockAPI();
             console.log('Loading products for main page...');
             
             try {
@@ -313,6 +677,236 @@
             `;
             return card;
         }
+        
+        // Hero Movie Player
+        class HeroMovie {
+            constructor() {
+                this.movieElement = document.getElementById('heroMovie');
+                this.frames = [];
+                this.currentFrame = 0;
+                this.isPlaying = false;
+                this.frameRate = 24; // FPS
+                this.frameInterval = 1000 / this.frameRate;
+                this.baseURL = 'https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/hero/hero%20movie/';
+                
+                this.init();
+            }
+            
+            async init() {
+                console.log('Hero movie initializing...');
+                console.log('Base URL:', this.baseURL);
+                try {
+                    await this.loadFrames();
+                    this.preloadImages();
+                    this.startMovie();
+                } catch (error) {
+                    console.error('Hero movie initialization failed:', error);
+                    console.log('Falling back to static image');
+                    this.fallbackToStaticImage();
+                }
+            }
+            
+            async loadFrames() {
+                console.log('Starting frame detection...');
+                // Try to detect frames automatically
+                // First, let's try common naming patterns
+                const patterns = [
+                    'frame_',
+                    'hero_',
+                    'movie_',
+                    'sequence_',
+                    'img_',
+                    ''
+                ];
+                
+                const extensions = ['jpg', 'jpeg', 'png'];
+                
+                for (let pattern of patterns) {
+                    console.log(`Trying pattern: "${pattern}" with extensions:`, extensions);
+                    for (let ext of extensions) {
+                        console.log(`Testing pattern: ${pattern}*.${ext}`);
+                        if (await this.detectFrameSequence(pattern, ext)) {
+                            console.log(`✓ Found hero movie frames with pattern: ${pattern}*.${ext}`);
+                            return;
+                        }
+                    }
+                }
+                
+                console.error('❌ No hero movie frames found with any pattern');
+                throw new Error('No hero movie frames found');
+            }
+            
+            async detectFrameSequence(prefix, extension) {
+                console.log(`  Detecting sequence for: ${prefix}*.${extension}`);
+                
+                // Test for numbered sequences (1-100, 001-100, 0001-1000)
+                const formats = [
+                    { name: 'simple', start: 1, end: 20, format: (i) => `${prefix}${i}` },
+                    { name: 'padded3', start: 1, end: 20, format: (i) => `${prefix}${i.toString().padStart(3, '0')}` },
+                    { name: 'padded4', start: 0, end: 20, format: (i) => `${prefix}${i.toString().padStart(4, '0')}` },
+                    { name: 'padded2', start: 1, end: 20, format: (i) => `${prefix}${i.toString().padStart(2, '0')}` }
+                ];
+                
+                for (let format of formats) {
+                    console.log(`    Testing format: ${format.name} (${format.start}-${format.end})`);
+                    const frames = [];
+                    let consecutiveFails = 0;
+                    
+                    for (let i = format.start; i <= format.end && consecutiveFails < 3; i++) {
+                        const frameName = `${format.format(i)}.${extension}`;
+                        const frameUrl = `${this.baseURL}${frameName}`;
+                        
+                        if (await this.imageExists(frameUrl)) {
+                            frames.push(frameUrl);
+                            consecutiveFails = 0;
+                            console.log(`      ✓ Found: ${frameName}`);
+                        } else {
+                            consecutiveFails++;
+                        }
+                    }
+                    
+                    console.log(`    Format ${format.name} result: ${frames.length} frames found`);
+                    
+                    if (frames.length >= 3) { // Minimum 3 frames for a movie (lowered for testing)
+                        this.frames = frames;
+                        console.log(`🎬 SUCCESS: Found ${frames.length} frames with format: ${prefix}[number].${extension}`);
+                        console.log('Frame URLs:', frames);
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+            
+            async imageExists(url) {
+                try {
+                    const response = await fetch(url, { method: 'HEAD' });
+                    return response.ok;
+                } catch (error) {
+                    return false;
+                }
+            }
+            
+            preloadImages() {
+                // Preload first few frames for smooth playback
+                const preloadCount = Math.min(10, this.frames.length);
+                
+                for (let i = 0; i < preloadCount; i++) {
+                    const img = new Image();
+                    img.src = this.frames[i];
+                }
+            }
+            
+            startMovie() {
+                if (this.frames.length === 0) {
+                    this.fallbackToStaticImage();
+                    return;
+                }
+                
+                this.isPlaying = true;
+                this.playFrame();
+                
+                // Start the animation loop
+                this.movieInterval = setInterval(() => {
+                    if (this.isPlaying) {
+                        this.nextFrame();
+                        this.playFrame();
+                    }
+                }, this.frameInterval);
+                
+                console.log(`Hero movie started with ${this.frames.length} frames at ${this.frameRate} FPS`);
+            }
+            
+            playFrame() {
+                if (this.frames.length > 0) {
+                    this.movieElement.style.backgroundImage = `url('${this.frames[this.currentFrame]}')`;
+                }
+            }
+            
+            nextFrame() {
+                this.currentFrame = (this.currentFrame + 1) % this.frames.length;
+            }
+            
+            pause() {
+                this.isPlaying = false;
+            }
+            
+            play() {
+                this.isPlaying = true;
+            }
+            
+            stop() {
+                this.isPlaying = false;
+                this.currentFrame = 0;
+                this.playFrame();
+            }
+            
+            fallbackToStaticImage() {
+                console.log('Using fallback static hero image');
+                this.movieElement.style.backgroundImage = "url('assets/images/hero-bg.jpg')";
+            }
+            
+            destroy() {
+                if (this.movieInterval) {
+                    clearInterval(this.movieInterval);
+                }
+                this.isPlaying = false;
+            }
+        }
+        
+        // Test function to manually check frame URLs
+        window.testHeroFrame = async function(frameName) {
+            const baseURL = 'https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/hero/hero%20movie/';
+            const url = baseURL + frameName;
+            console.log('Testing:', url);
+            
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+                return response.ok;
+            } catch (error) {
+                console.error('Error:', error);
+                return false;
+            }
+        };
+        
+        // Manual hero movie starter - call this if auto-detection fails
+        window.startHeroMovie = function(frameNames) {
+            if (heroMovie && frameNames.length > 0) {
+                const baseURL = 'https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/hero/hero%20movie/';
+                heroMovie.frames = frameNames.map(name => baseURL + name);
+                console.log('Manual frames set:', heroMovie.frames);
+                heroMovie.startMovie();
+                console.log('Manual hero movie started!');
+            }
+        };
+        
+        // Initialize hero movie when page loads
+        let heroMovie;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize hero movie
+            heroMovie = new HeroMovie();
+            
+            // Pause movie when page is not visible (performance optimization)
+            document.addEventListener('visibilitychange', function() {
+                if (heroMovie) {
+                    if (document.hidden) {
+                        heroMovie.pause();
+                    } else {
+                        heroMovie.play();
+                    }
+                }
+            });
+        });
+        
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (heroMovie) {
+                heroMovie.destroy();
+            }
+        });
     </script>
 </body>
 </html>

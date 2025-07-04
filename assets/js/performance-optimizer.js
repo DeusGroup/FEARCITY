@@ -138,7 +138,7 @@ class PerformanceOptimizer {
         // Preload critical CSS and JavaScript
         const criticalResources = [
             { href: '/assets/css/main.css', as: 'style' },
-            { href: '/assets/js/main.js', as: 'script' },
+            { href: '/assets/js/api.js', as: 'script' },
             { href: '/assets/images/fear-city-logo-small.png', as: 'image' }
         ];
 

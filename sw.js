@@ -1,8 +1,8 @@
 // Fear City Cycles - Service Worker for Performance Caching
 
-const CACHE_NAME = 'fear-city-cycles-v1.5.0';
-const STATIC_CACHE = 'fear-city-static-v1';
-const DYNAMIC_CACHE = 'fear-city-dynamic-v1';
+const CACHE_NAME = 'fear-city-cycles-v1.6.0';
+const STATIC_CACHE = 'fear-city-static-v2';
+const DYNAMIC_CACHE = 'fear-city-dynamic-v2';
 
 // Assets to cache on install
 const STATIC_ASSETS = [
@@ -13,7 +13,7 @@ const STATIC_ASSETS = [
     '/assets/css/responsive.css',
     '/assets/css/pages.css',
     '/assets/css/gateway.css',
-    '/assets/js/main.js',
+    '/assets/js/api.js',
     '/assets/js/gateway.js',
     '/assets/js/contact.js',
     '/assets/js/cart.js',
