@@ -16,7 +16,10 @@
             results.innerHTML = 'Testing...';
             
             try {
-                const api = new FearCityAPI();
+                console.log('FearCityAPI available:', typeof FearCityAPI);
+                console.log('window.FearCityAPI available:', typeof window.FearCityAPI);
+                
+                const api = new window.FearCityAPI();
                 console.log('API initialized:', api);
                 console.log('Base URL:', api.baseURL);
                 

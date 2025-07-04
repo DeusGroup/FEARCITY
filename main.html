@@ -246,9 +246,17 @@
             console.log('Loading products for main page...');
             
             try {
-                // Import and initialize API
-                const apiModule = await import('./assets/js/api.js');
-                const fearCityAPI = new apiModule.FearCityAPI();
+                // Initialize API (should be available from script tag)
+                console.log('window.FearCityAPI available:', typeof window.FearCityAPI);
+                let fearCityAPI;
+                
+                if (window.FearCityAPI) {
+                    fearCityAPI = new window.FearCityAPI();
+                } else {
+                    // Fallback to module import
+                    const apiModule = await import('./assets/js/api.js');
+                    fearCityAPI = new apiModule.FearCityAPI();
+                }
                 
                 // Load bikes
                 console.log('Fetching motorcycles...');
