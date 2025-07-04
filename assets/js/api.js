@@ -17,8 +17,8 @@ class FearCityAPI {
             return 'http://localhost:3001';
         }
         
-        // Production - use mock data temporarily (backend deleted)
-        return 'MOCK_MODE';
+        // Production - use same domain for API calls
+        return '';
     }
 
     // Get stored authentication token
