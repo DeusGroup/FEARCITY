@@ -1,12 +1,12 @@
 {
   "version": 2,
   "framework": null,
-  "buildCommand": null,
+  "buildCommand": "npm run build",
   "outputDirectory": ".",
-  "installCommand": null,
+  "installCommand": "npm install",
   "functions": {
     "api/**/*.js": {
-      "runtime": "@vercel/node@3"
+      "runtime": "@vercel/node"
     }
   },
   "rewrites": [
@@ -18,8 +18,5 @@
       "source": "/culture/",
       "destination": "/culture.html"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
