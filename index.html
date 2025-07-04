@@ -104,15 +104,14 @@
             font-family: 'Oswald', sans-serif;
             position: relative;
             z-index: 1;
-            animation: slideUp 1.5s ease-out 0.6s both;
+            animation: slowButtonReveal 2.5s ease-out 1.2s both;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             overflow: hidden;
             backdrop-filter: blur(5px);
             box-shadow: 
-                0 0 10px #8B0000,
-                0 0 20px #8B0000,
-                0 0 30px #8B0000,
-                inset 0 0 10px rgba(139, 0, 0, 0.1);
+                0 0 5px rgba(139, 0, 0, 0.4),
+                0 0 10px rgba(139, 0, 0, 0.2),
+                inset 0 0 5px rgba(139, 0, 0, 0.1);
         }
         
         .enter-btn::before {
@@ -145,12 +144,11 @@
             transform: translateY(-3px);
             border-color: #cc0000;
             box-shadow: 
-                0 0 15px #cc0000,
-                0 0 30px #cc0000,
-                0 0 45px #cc0000,
-                0 0 60px #8B0000,
+                0 0 8px rgba(204, 0, 0, 0.6),
+                0 0 16px rgba(204, 0, 0, 0.3),
+                0 0 24px rgba(139, 0, 0, 0.2),
                 0 8px 25px rgba(139, 0, 0, 0.4),
-                inset 0 0 15px rgba(204, 0, 0, 0.2);
+                inset 0 0 8px rgba(204, 0, 0, 0.2);
         }
         
         .enter-btn:hover::before {
@@ -182,6 +180,41 @@
             to { 
                 opacity: 1; 
                 transform: translateY(0);
+            }
+        }
+        
+        @keyframes slowButtonReveal {
+            0% { 
+                opacity: 0; 
+                transform: translateY(40px) scale(0.8);
+                box-shadow: 
+                    0 0 0 rgba(139, 0, 0, 0),
+                    0 0 0 rgba(139, 0, 0, 0),
+                    inset 0 0 0 rgba(139, 0, 0, 0);
+            }
+            30% {
+                opacity: 0.3;
+                transform: translateY(20px) scale(0.9);
+                box-shadow: 
+                    0 0 2px rgba(139, 0, 0, 0.2),
+                    0 0 4px rgba(139, 0, 0, 0.1),
+                    inset 0 0 2px rgba(139, 0, 0, 0.05);
+            }
+            60% {
+                opacity: 0.7;
+                transform: translateY(5px) scale(0.98);
+                box-shadow: 
+                    0 0 4px rgba(139, 0, 0, 0.3),
+                    0 0 8px rgba(139, 0, 0, 0.15),
+                    inset 0 0 4px rgba(139, 0, 0, 0.08);
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1);
+                box-shadow: 
+                    0 0 5px rgba(139, 0, 0, 0.4),
+                    0 0 10px rgba(139, 0, 0, 0.2),
+                    inset 0 0 5px rgba(139, 0, 0, 0.1);
             }
         }
         
