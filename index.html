@@ -19,7 +19,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Bebas+Neue&display=swap');
         
-        /* Premium Hardcore Punk Motorcycle Aesthetic */
+        /* Premium Hardcore Punk Motorcycle Aesthetic with Brand Colors */
         * {
             margin: 0;
             padding: 0;
@@ -40,7 +40,7 @@
             overflow: hidden;
         }
         
-        /* Gritty background texture */
+        /* Brand-colored atmospheric background */
         .gateway-body::before {
             content: '';
             position: absolute;
@@ -49,9 +49,10 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
-                radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.015) 0%, transparent 40%),
-                linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.008) 50%, transparent 52%);
+                radial-gradient(ellipse at 20% 20%, rgba(139, 0, 0, 0.08) 0%, transparent 45%),
+                radial-gradient(ellipse at 80% 80%, rgba(204, 0, 0, 0.05) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 50%, rgba(139, 0, 0, 0.03) 0%, transparent 60%),
+                linear-gradient(135deg, transparent 47%, rgba(139, 0, 0, 0.01) 50%, transparent 53%);
             z-index: 0;
         }
         
@@ -66,7 +67,7 @@
             max-width: 380px;
             width: 90%;
             height: auto;
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+            filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.3)) drop-shadow(0 0 60px rgba(139, 0, 0, 0.1));
         }
         
         .gateway-title {
@@ -74,29 +75,33 @@
             font-size: 5.5rem;
             font-weight: 400;
             margin-bottom: 16px;
-            color: #ffffff;
+            background: linear-gradient(135deg, #ffffff 0%, #cccccc 50%, #8B0000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: 6px;
             text-transform: uppercase;
             position: relative;
             z-index: 1;
             animation: slideUp 1.5s ease-out 0.4s both;
-            text-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 50px rgba(139, 0, 0, 0.5);
         }
         
         .gateway-tagline {
             font-size: 1.0rem;
             margin-bottom: 60px;
-            color: #cccccc;
+            color: #666666;
             font-weight: 300;
             letter-spacing: 12px;
             text-transform: uppercase;
             position: relative;
             z-index: 1;
             animation: slideUp 1.5s ease-out 0.6s both;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
         }
         
         .enter-btn {
-            background: transparent;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.1) 0%, transparent 50%);
             color: #ffffff;
             padding: 20px 50px;
             text-decoration: none;
@@ -104,13 +109,15 @@
             font-weight: 500;
             letter-spacing: 4px;
             text-transform: uppercase;
-            border: 2px solid #ffffff;
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #8B0000 0%, #cc0000 50%, #8B0000 100%) 1;
             font-family: 'Oswald', sans-serif;
             position: relative;
             z-index: 1;
             animation: slideUp 1.5s ease-out 0.8s both;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             overflow: hidden;
+            backdrop-filter: blur(5px);
         }
         
         .enter-btn::before {
@@ -120,29 +127,64 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: #ffffff;
-            transition: left 0.4s ease;
+            background: linear-gradient(135deg, #8B0000 0%, #cc0000 50%, #8B0000 100%);
+            transition: left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: -1;
+        }
+        
+        .enter-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(204, 0, 0, 0.2) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
             z-index: -1;
         }
         
         .enter-btn:hover {
-            color: #000000;
+            color: #ffffff;
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 8px 25px rgba(139, 0, 0, 0.4),
+                0 15px 40px rgba(139, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-image: linear-gradient(135deg, #cc0000 0%, #ffffff 50%, #cc0000 100%) 1;
         }
         
         .enter-btn:hover::before {
             left: 0;
         }
         
+        .enter-btn:hover::after {
+            opacity: 1;
+        }
+        
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+            from { 
+                opacity: 0; 
+                transform: scale(0.9);
+                filter: drop-shadow(0 0 0 rgba(139, 0, 0, 0));
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1);
+                filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.3)) drop-shadow(0 0 60px rgba(139, 0, 0, 0.1));
+            }
         }
         
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
         }
         
         /* Mobile responsiveness */
