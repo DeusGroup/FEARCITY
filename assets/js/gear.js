@@ -35,8 +35,8 @@
                 limit: 20
             });
             
-            if (response.success && response.data.products) {
-                allGear = response.data.products;
+            if (response && response.products) {
+                allGear = response.products;
                 displayGear(allGear);
             } else {
                 throw new Error('Failed to load gear');

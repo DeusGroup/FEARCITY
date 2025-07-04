@@ -18,7 +18,7 @@ class FearCityAPI {
         }
         
         // Production
-        return 'https://fear-city-cycles-backend-deusgroup-deusgroups-projects.vercel.app';
+        return 'https://fear-city-cycles-backend-3gl8f66wk-deusgroups-projects.vercel.app';
     }
 
     // Get stored authentication token
@@ -148,7 +148,7 @@ class FearCityAPI {
     }
 
     async fetchProductBySlug(slug) {
-        return await this.request(`/api/products/slug/${slug}`);
+        return await this.request(`/api/products/${slug}`);
     }
 
     async fetchRelatedProducts(id) {

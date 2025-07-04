@@ -53,8 +53,8 @@ async function loadProductData(identifier) {
             response = await fearCityAPI.fetchProduct(identifier);
         }
         
-        if (response.success && response.data) {
-            const product = response.data;
+        if (response && response.product) {
+            const product = response.product;
             await renderProductPage(product);
             await loadRelatedProducts(product);
         } else {
@@ -273,8 +273,8 @@ async function loadRelatedProducts(product) {
     try {
         const response = await fearCityAPI.fetchRelatedProducts(product.id);
         
-        if (response.success && response.data && response.data.length > 0) {
-            renderRelatedProducts(response.data);
+        if (response && response.products && response.products.length > 0) {
+            renderRelatedProducts(response.products);
         } else {
             // Fallback: load products from same category
             const categoryResponse = await fearCityAPI.fetchProducts({
@@ -283,8 +283,8 @@ async function loadRelatedProducts(product) {
                 exclude: product.id
             });
             
-            if (categoryResponse.success && categoryResponse.data.products) {
-                renderRelatedProducts(categoryResponse.data.products);
+            if (categoryResponse && categoryResponse.products) {
+                renderRelatedProducts(categoryResponse.products);
             }
         }
     } catch (error) {

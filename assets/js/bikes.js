@@ -35,8 +35,8 @@
                 limit: 20
             });
             
-            if (response.success && response.data.products) {
-                allBikes = response.data.products;
+            if (response && response.products) {
+                allBikes = response.products;
                 displayBikes(allBikes);
             } else {
                 throw new Error('Failed to load bikes');
