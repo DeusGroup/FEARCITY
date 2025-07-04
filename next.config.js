@@ -1,45 +1,28 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Static export for frontend files
-  output: 'standalone',
-  
-  // Disable image optimization for static export
+  // Disable image optimization for serverless
   images: {
     unoptimized: true,
   },
 
-  // Custom webpack config for API routes
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      // Handle Prisma for serverless functions
-      config.externals.push('_http_common');
-    }
-    return config;
-  },
-
-  // Ensure API routes work
+  // Ensure API routes work with Prisma
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client'],
   },
 
-  // Static file serving
+  // Static file serving for existing HTML files
   trailingSlash: false,
   
-  // Custom headers for static files
-  async headers() {
+  // Serve static HTML files alongside Next.js
+  async rewrites() {
     return [
       {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-        ],
+        source: '/main',
+        destination: '/main.html',
+      },
+      {
+        source: '/culture',
+        destination: '/culture.html',
       },
     ];
   },
