@@ -75,16 +75,19 @@
             font-size: 5.5rem;
             font-weight: 400;
             margin-bottom: 16px;
-            background: linear-gradient(90deg, #ffffff 0%, #ffffff 15%, #cc0000 45%, #8B0000 70%, #000000 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #ffffff;
             letter-spacing: 6px;
             text-transform: uppercase;
             position: relative;
             z-index: 1;
             animation: slideUp 1.5s ease-out 0.4s both;
-            text-shadow: 0 0 50px rgba(139, 0, 0, 0.5);
+            text-shadow: 
+                0 0 20px #8B0000,
+                0 0 40px #8B0000,
+                0 0 60px #8B0000,
+                2px 2px 0px #8B0000,
+                4px 4px 0px #cc0000,
+                6px 6px 0px #8B0000;
         }
         
         .gateway-tagline {
