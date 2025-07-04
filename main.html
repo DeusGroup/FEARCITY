@@ -6,73 +6,86 @@
     <title>Fear City Cycles - Queens NYC Custom Motorcycles</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Fix oversized product cards */
+        /* Product Grid Styles */
+        .products {
+            padding: 60px 20px;
+            background: #111;
+        }
+        
+        .products h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
         .product-card {
-            padding: 20px !important;
-            margin-bottom: 0 !important;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #8B0000;
         }
         
         .product-card img {
             width: 100%;
-            height: 200px !important;
+            height: 250px;
             object-fit: cover;
-            margin-bottom: 15px;
+            background: #333;
+        }
+        
+        .product-info {
+            padding: 20px;
         }
         
         .product-card h3 {
-            font-size: 1.3em !important;
-            margin-bottom: 10px !important;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 10px;
         }
         
         .product-card p {
-            font-size: 0.95em;
-            margin-bottom: 15px !important;
-        }
-        
-        .price {
-            font-size: 1.3em !important;
-            margin-bottom: 15px !important;
-        }
-        
-        /* Product details inline functionality */
-        .product-details {
-            display: none;
-            background: #111;
-            border: 2px solid #8B0000;
-            padding: 15px;
-            margin-top: 10px;
-            font-size: 0.9em;
-        }
-        
-        .product-details.active {
-            display: block;
-        }
-        
-        .product-details h4 {
-            color: #8B0000;
-            margin: 0 0 10px 0;
-            font-family: 'Orbitron', monospace;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 1em;
-        }
-        
-        .product-details ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        
-        .product-details li {
-            padding: 5px 0;
-            border-bottom: 1px solid #333;
             color: #ccc;
-            font-size: 0.85em;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
         }
         
-        .product-details li:last-child {
-            border-bottom: none;
+        .product-card .price {
+            font-size: 1.5rem;
+            color: #8B0000;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
+        
+        .product-card button {
+            width: 100%;
+            padding: 15px;
+            background: #8B0000;
+            color: white;
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .product-card button:hover {
+            background: #cc0000;
+        }
+        
         
         /* Simple Hero - No Movie */
         .hero {
@@ -131,38 +144,6 @@
             }
         }
         
-        /* Product buttons layout */
-        .product-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .view-btn, .add-btn {
-            padding: 10px 20px !important;
-            font-size: 0.9em !important;
-            font-family: var(--font-body);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            border: 2px solid;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .add-btn {
-            background: #333;
-            color: white;
-            border-color: #333;
-        }
-        
-        .add-btn:hover {
-            background: #555;
-            border-color: #555;
-            transform: translateY(-2px);
-        }
     </style>
 </head>
 <body>
@@ -199,14 +180,142 @@
     <section class="products" id="bikes">
         <h2>Custom Motorcycles</h2>
         <div class="product-grid">
-            <!-- Motorcycles will be loaded dynamically from API -->
+            <!-- Street Reaper -->
+            <div class="product-card">
+                <img src="assets/images/bike-street-reaper.jpg" alt="Street Reaper">
+                <div class="product-info">
+                    <h3>Street Reaper</h3>
+                    <p>Pure aggression on two wheels. Stripped-down street fighter built for NYC streets.</p>
+                    <div class="price">$24,500</div>
+                    <button onclick="addToCart('street-reaper', 'Street Reaper', 24500)">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Borough Bruiser -->
+            <div class="product-card">
+                <img src="assets/images/bike-borough-bruiser.jpg" alt="Borough Bruiser">
+                <div class="product-info">
+                    <h3>Borough Bruiser</h3>
+                    <p>Heavy-duty cruiser with chrome attitude. Built to dominate the boroughs.</p>
+                    <div class="price">$28,000</div>
+                    <button onclick="addToCart('borough-bruiser', 'Borough Bruiser', 28000)">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Fear Fighter -->
+            <div class="product-card">
+                <img src="assets/images/bike-fear-fighter.jpg" alt="Fear Fighter">
+                <div class="product-info">
+                    <h3>Fear Fighter</h3>
+                    <p>Track-inspired machine with carbon details and performance engineering.</p>
+                    <div class="price">$32,000</div>
+                    <button onclick="addToCart('fear-fighter', 'Fear Fighter', 32000)">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Queens Crusher -->
+            <div class="product-card">
+                <img src="assets/images/bike-queens-crusher.jpg" alt="Queens Crusher">
+                <div class="product-info">
+                    <h3>Queens Crusher</h3>
+                    <p>Vintage-inspired bobber built for the streets of Queens.</p>
+                    <div class="price">$22,000</div>
+                    <button onclick="addToCart('queens-crusher', 'Queens Crusher', 22000)">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Death Rider -->
+            <div class="product-card">
+                <img src="assets/images/bike-death-rider.jpg" alt="Death Rider">
+                <div class="product-info">
+                    <h3>Death Rider</h3>
+                    <p>Classic chopper with extended fork and authentic style.</p>
+                    <div class="price">$26,500</div>
+                    <button onclick="addToCart('death-rider', 'Death Rider', 26500)">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Midnight Racer -->
+            <div class="product-card">
+                <img src="assets/images/bike-midnight-racer.jpg" alt="Midnight Racer">
+                <div class="product-info">
+                    <h3>Midnight Racer</h3>
+                    <p>Performance-tuned café racer for midnight runs.</p>
+                    <div class="price">$25,500</div>
+                    <button onclick="addToCart('midnight-racer', 'Midnight Racer', 25500)">Add to Cart</button>
+                </div>
+            </div>
         </div>
     </section>
 
     <section class="products" id="gear">
         <h2>Gear & Apparel</h2>
         <div class="product-grid">
-            <!-- Gear products will be loaded dynamically from API -->
+            <!-- Fear City Jacket -->
+            <div class="product-card">
+                <img src="assets/images/jacket-fear-city.jpg" alt="Fear City Jacket">
+                <div class="product-info">
+                    <h3>Fear City Leather Jacket</h3>
+                    <p>Premium leather jacket with armor plating for street protection.</p>
+                    <div class="price">$395</div>
+                    <button onclick="addToCart('fear-jacket', 'Fear City Leather Jacket', 395)">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Queens Skull Tee -->
+            <div class="product-card">
+                <img src="assets/images/tee-queens-skull.jpg" alt="Queens Skull Tee">
+                <div class="product-info">
+                    <h3>Queens Skull Tee</h3>
+                    <p>Premium cotton tee with Queens skull design.</p>
+                    <div class="price">$35</div>
+                    <button onclick="addToCart('queens-tee', 'Queens Skull Tee', 35)">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Reaper Riding Gloves -->
+            <div class="product-card">
+                <img src="assets/images/gloves-reaper-riding.jpg" alt="Reaper Riding Gloves">
+                <div class="product-info">
+                    <h3>Reaper Riding Gloves</h3>
+                    <p>Reinforced leather gloves for maximum grip and protection.</p>
+                    <div class="price">$89</div>
+                    <button onclick="addToCart('reaper-gloves', 'Reaper Riding Gloves', 89)">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Fear City Patch -->
+            <div class="product-card">
+                <img src="assets/images/patch-fear-city.jpg" alt="Fear City Patch">
+                <div class="product-info">
+                    <h3>Fear City Patch</h3>
+                    <p>Embroidered Fear City patch - show your NYC pride.</p>
+                    <div class="price">$15</div>
+                    <button onclick="addToCart('fear-patch', 'Fear City Patch', 15)">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Prospect Vest -->
+            <div class="product-card">
+                <img src="assets/images/vest-prospect.jpg" alt="Prospect Vest">
+                <div class="product-info">
+                    <h3>Prospect Vest</h3>
+                    <p>Heavy denim vest, reinforced and cut-ready.</p>
+                    <div class="price">$85</div>
+                    <button onclick="addToCart('prospect-vest', 'Prospect Vest', 85)">Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- Skull Keychain -->
+            <div class="product-card">
+                <img src="assets/images/keychain-skull.jpg" alt="Skull Keychain">
+                <div class="product-info">
+                    <h3>Skull Keychain</h3>
+                    <p>Pewter cast skull keychain with heavy-duty ring.</p>
+                    <div class="price">$25</div>
+                    <button onclick="addToCart('skull-keychain', 'Skull Keychain', 25)">Add to Cart</button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -326,39 +435,9 @@
         
         // Cart functionality is handled by ShoppingCart class in main.js
         function updateCartCount() {
-            // This will be handled by the ShoppingCart class
             if (window.fearCityCart) {
                 const count = window.fearCityCart.getItemCount();
                 document.getElementById('cart-count').textContent = count;
-            }
-        }
-        
-        function addToCart(name, price) {
-            // Use the global cart instance
-            if (window.fearCityCart) {
-                window.fearCityCart.addItem({ name: name, price: price, id: name.toLowerCase().replace(/\s+/g, '-') });
-            }
-        }
-        
-        function toggleDetails(button) {
-            // Close all other open details first
-            const allDetails = document.querySelectorAll('.product-details.active');
-            allDetails.forEach(detail => {
-                if (detail !== button.parentNode.nextElementSibling) {
-                    detail.classList.remove('active');
-                    const otherButton = detail.previousElementSibling.querySelector('.view-btn');
-                    if (otherButton) otherButton.textContent = 'View Details';
-                }
-            });
-            
-            // Toggle current details
-            const details = button.parentNode.nextElementSibling;
-            if (details.classList.contains('active')) {
-                details.classList.remove('active');
-                button.textContent = 'View Details';
-            } else {
-                details.classList.add('active');
-                button.textContent = 'Hide Details';
             }
         }
         
@@ -420,10 +499,12 @@
             }
         };
         
-        // Initialize on load
+        // Initialize cart display
         setTimeout(() => {
             updateCartCount();
-            window.fearCityCart.updateDisplay();
+            if (window.fearCityCart) {
+                window.fearCityCart.updateDisplay();
+            }
         }, 100);
         
         })(); // End of IIFE
@@ -434,106 +515,17 @@
     <!-- Inline Hero Movie and Product Loading -->
     <script>
         
-        // Inline API for products
-        function createMockAPI() {
-            const mockProducts = [
-                { id: 'street-reaper', name: 'Street Reaper', price: 24500, images: ['/assets/images/bike-street-reaper.jpg'], description: 'Pure aggression on two wheels.', category: { slug: 'motorcycles' } },
-                { id: 'queens-crusher', name: 'Queens Crusher', price: 26750, images: ['/assets/images/bike-queens-crusher.jpg'], description: 'Born in Queens, built for battle.', category: { slug: 'motorcycles' } },
-                { id: 'death-rider', name: 'Death Rider', price: 29500, images: ['/assets/images/bike-death-rider.jpg'], description: 'When subtlety is not an option.', category: { slug: 'motorcycles' } },
-                { id: 'reaper-gloves', name: 'Reaper Riding Gloves', price: 89, images: ['/assets/images/gloves-reaper-riding.jpg'], description: 'Professional-grade riding gloves.', category: { slug: 'gear' } },
-                { id: 'fear-city-jacket', name: 'Fear City Leather Jacket', price: 395, images: ['/assets/images/jacket-fear-city.jpg'], description: 'Premium leather jacket.', category: { slug: 'gear' } },
-                { id: 'queens-skull-tee', name: 'Queens Skull Tee', price: 35, images: ['/assets/images/tee-queens-skull.jpg'], description: 'Rep Queens with this hardcore design.', category: { slug: 'gear' } }
-            ];
-            
-            return {
-                fetchProducts: function(params = {}) {
-                    return new Promise(resolve => {
-                        let filtered = mockProducts;
-                        if (params.category) {
-                            filtered = mockProducts.filter(p => p.category.slug === params.category);
-                        }
-                        setTimeout(() => resolve({ products: filtered }), 100);
-                    });
-                }
-            };
-        }
-        
-        document.addEventListener('DOMContentLoaded', async function() {
-            console.log('🚀 Initializing page...');
-            
-            
-            // Initialize products
-            const api = createMockAPI();
-            console.log('Loading products for main page...');
-            
-            try {
-                // Initialize API (should be available from script tag)
-                console.log('window.FearCityAPI available:', typeof window.FearCityAPI);
-                let fearCityAPI;
-                
-                if (window.FearCityAPI) {
-                    fearCityAPI = new window.FearCityAPI();
-                } else {
-                    // Fallback to module import
-                    const apiModule = await import('./assets/js/api.js');
-                    fearCityAPI = new apiModule.FearCityAPI();
-                }
-                
-                // Load bikes
-                console.log('Fetching motorcycles...');
-                const bikesResponse = await fearCityAPI.fetchProducts({ category: 'motorcycles' });
-                console.log('Bikes response:', bikesResponse);
-                
-                if (bikesResponse && bikesResponse.products) {
-                    const bikesGrid = document.querySelector('#bikes .product-grid');
-                    if (bikesGrid) {
-                        bikesGrid.innerHTML = '';
-                        bikesResponse.products.forEach(bike => {
-                            const bikeCard = createProductCard(bike);
-                            bikesGrid.appendChild(bikeCard);
-                        });
-                        console.log('Loaded', bikesResponse.products.length, 'bikes');
-                    }
-                }
-                
-                // Load gear
-                console.log('Fetching gear...');
-                const gearResponse = await fearCityAPI.fetchProducts({ category: 'gear' });
-                console.log('Gear response:', gearResponse);
-                
-                if (gearResponse && gearResponse.products) {
-                    const gearGrid = document.querySelector('#gear .product-grid');
-                    if (gearGrid) {
-                        gearGrid.innerHTML = '';
-                        gearResponse.products.forEach(gear => {
-                            const gearCard = createProductCard(gear);
-                            gearGrid.appendChild(gearCard);
-                        });
-                        console.log('Loaded', gearResponse.products.length, 'gear items');
-                    }
-                }
-                
-            } catch (error) {
-                console.error('Error loading products:', error);
+        // Simple cart functionality for hardcoded products
+        function addToCart(id, name, price) {
+            if (window.fearCityCart) {
+                window.fearCityCart.addItem({ id, name, price });
             }
-        });
-        
-        // Create product card HTML
-        function createProductCard(product) {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <img src="${product.images[0]}" alt="${product.name}" loading="lazy">
-                <h3>${product.name}</h3>
-                <p class="price">$${product.price.toLocaleString()}</p>
-                <p>${product.description}</p>
-                <div class="product-buttons">
-                    <button class="view-btn" onclick="window.location.href='${product.category.slug}/${product.slug}.html'">View Details</button>
-                    <button class="add-btn" onclick="window.fearCityCart && window.fearCityCart.addItem('${product.id}', '${product.name}', ${product.price}, '${product.images[0]}')">Add to Cart</button>
-                </div>
-            `;
-            return card;
         }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Page loaded with hardcoded products');
+            // Products are now hardcoded in HTML, no dynamic loading needed
+        });
         
         
     </script>
