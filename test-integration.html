@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Integration Test - Fear City Cycles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #111;
+            color: #fff;
+        }
+        .test-section {
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success {
+            background: #2d5a27;
+            border: 1px solid #4a8c44;
+        }
+        .error {
+            background: #8B0000;
+            border: 1px solid #cd0000;
+        }
+        .pending {
+            background: #555;
+            border: 1px solid #777;
+        }
+        button {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #a50000;
+        }
+        pre {
+            background: #333;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Fear City Cycles - API Integration Test Suite</h1>
+    <p>Testing our backend API integration and frontend changes.</p>
+
+    <div class="test-grid">
+        <!-- Backend Health Check -->
+        <div class="test-section">
+            <h2>🏥 Backend Health Check</h2>
+            <button onclick="testBackendHealth()">Test Backend Health</button>
+            <div id="health-result" class="test-result pending">
+                Click to test backend connectivity...
+            </div>
+        </div>
+
+        <!-- API Products Test -->
+        <div class="test-section">
+            <h2>🏍️ Products API Test</h2>
+            <button onclick="testProductsAPI()">Test Products API</button>
+            <button onclick="testCategoriesAPI()">Test Categories API</button>
+            <div id="products-result" class="test-result pending">
+                Click to test product API endpoints...
+            </div>
+        </div>
+
+        <!-- Cart API Test -->
+        <div class="test-section">
+            <h2>🛒 Cart API Test</h2>
+            <button onclick="testCartAPI()">Test Cart Operations</button>
+            <div id="cart-result" class="test-result pending">
+                Click to test cart API functionality...
+            </div>
+        </div>
+
+        <!-- Contact API Test -->
+        <div class="test-section">
+            <h2>📧 Contact API Test</h2>
+            <button onclick="testContactAPI()">Test Contact Form</button>
+            <div id="contact-result" class="test-result pending">
+                Click to test contact form submission...
+            </div>
+        </div>
+
+        <!-- Frontend Pages Test -->
+        <div class="test-section">
+            <h2>🖥️ Frontend Pages Test</h2>
+            <button onclick="testFrontendPages()">Test Page Loading</button>
+            <div id="frontend-result" class="test-result pending">
+                Click to test if pages load correctly...
+            </div>
+        </div>
+
+        <!-- JavaScript Modules Test -->
+        <div class="test-section">
+            <h2>📜 JavaScript Integration Test</h2>
+            <button onclick="testJavaScriptModules()">Test JS Modules</button>
+            <div id="js-result" class="test-result pending">
+                Click to test JavaScript module loading...
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Test Summary</h2>
+        <div id="summary-result" class="test-result pending">
+            Run tests to see summary...
+        </div>
+        <button onclick="runAllTests()">🚀 Run All Tests</button>
+    </div>
+
+    <script type="module">
+        // Import API module
+        let FearCityAPI;
+        try {
+            const apiModule = await import('./assets/js/api.js');
+            FearCityAPI = apiModule.FearCityAPI;
+        } catch (error) {
+            console.error('Failed to import API module:', error);
+        }
+
+        const api = FearCityAPI ? new FearCityAPI() : null;
+        let testResults = {};
+
+        // Backend Health Check
+        window.testBackendHealth = async function() {
+            const resultDiv = document.getElementById('health-result');
+            resultDiv.textContent = 'Testing backend health...';
+            resultDiv.className = 'test-result pending';
+
+            try {
+                const response = await fetch('https://fear-city-cycles-backend-deusgroup-deusgroups-projects.vercel.app/health');
+                const data = await response.json();
+                
+                if (response.ok && data.status === 'OK') {
+                    resultDiv.innerHTML = `
+                        <strong>✅ Backend Health: GOOD</strong><br>
+                        Version: ${data.version}<br>
+                        Environment: ${data.environment}<br>
+                        Timestamp: ${data.timestamp}
+                    `;
+                    resultDiv.className = 'test-result success';
+                    testResults.health = true;
+                } else {
+                    throw new Error('Health check failed');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Backend Health: FAILED</strong><br>Error: ${error.message}`;
+                resultDiv.className = 'test-result error';
+                testResults.health = false;
+            }
+        };
+
+        // Products API Test
+        window.testProductsAPI = async function() {
+            const resultDiv = document.getElementById('products-result');
+            resultDiv.textContent = 'Testing products API...';
+            resultDiv.className = 'test-result pending';
+
+            if (!api) {
+                resultDiv.innerHTML = '<strong>❌ API module not loaded</strong>';
+                resultDiv.className = 'test-result error';
+                testResults.products = false;
+                return;
+            }
+
+            try {
+                // Test products endpoint
+                const productsResponse = await api.fetchProducts();
+                const categoriesResponse = await api.fetchCategories();
+
+                if (productsResponse.success && categoriesResponse.success) {
+                    const productCount = productsResponse.data.products?.length || 0;
+                    const categoryCount = categoriesResponse.data.categories?.length || 0;
+
+                    resultDiv.innerHTML = `
+                        <strong>✅ Products API: WORKING</strong><br>
+                        Products loaded: ${productCount}<br>
+                        Categories loaded: ${categoryCount}<br>
+                        <details>
+                            <summary>Sample Data</summary>
+                            <pre>${JSON.stringify(productsResponse.data.products?.[0] || {}, null, 2)}</pre>
+                        </details>
+                    `;
+                    resultDiv.className = 'test-result success';
+                    testResults.products = true;
+                } else {
+                    throw new Error('API returned unsuccessful response');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Products API: FAILED</strong><br>Error: ${error.message}`;
+                resultDiv.className = 'test-result error';
+                testResults.products = false;
+            }
+        };
+
+        window.testCategoriesAPI = async function() {
+            await testProductsAPI(); // Combined test
+        };
+
+        // Cart API Test
+        window.testCartAPI = async function() {
+            const resultDiv = document.getElementById('cart-result');
+            resultDiv.textContent = 'Testing cart API...';
+            resultDiv.className = 'test-result pending';
+
+            if (!api) {
+                resultDiv.innerHTML = '<strong>❌ API module not loaded</strong>';
+                resultDiv.className = 'test-result error';
+                testResults.cart = false;
+                return;
+            }
+
+            try {
+                // Test cart fetch (should work even without auth)
+                const cartResponse = await api.fetchCart();
+                
+                // Test add to cart (may fail without auth, but should return proper error)
+                let addResult = null;
+                try {
+                    addResult = await api.addToCart('test-product-id', 1);
+                } catch (err) {
+                    addResult = { error: err.message };
+                }
+
+                resultDiv.innerHTML = `
+                    <strong>✅ Cart API: ACCESSIBLE</strong><br>
+                    Cart fetch: ${cartResponse.success ? 'Success' : 'Failed'}<br>
+                    Add to cart: ${addResult.success ? 'Success' : 'Failed (expected without auth)'}<br>
+                    <details>
+                        <summary>Response Details</summary>
+                        <pre>Cart: ${JSON.stringify(cartResponse, null, 2)}</pre>
+                        <pre>Add: ${JSON.stringify(addResult, null, 2)}</pre>
+                    </details>
+                `;
+                resultDiv.className = 'test-result success';
+                testResults.cart = true;
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Cart API: FAILED</strong><br>Error: ${error.message}`;
+                resultDiv.className = 'test-result error';
+                testResults.cart = false;
+            }
+        };
+
+        // Contact API Test
+        window.testContactAPI = async function() {
+            const resultDiv = document.getElementById('contact-result');
+            resultDiv.textContent = 'Testing contact API...';
+            resultDiv.className = 'test-result pending';
+
+            if (!api) {
+                resultDiv.innerHTML = '<strong>❌ API module not loaded</strong>';
+                resultDiv.className = 'test-result error';
+                testResults.contact = false;
+                return;
+            }
+
+            try {
+                const testContactData = {
+                    type: 'GENERAL',
+                    firstName: 'Test',
+                    lastName: 'User',
+                    email: 'test@fearcitycycles.com',
+                    message: 'This is a test message from the integration test suite.',
+                    source: 'test_suite'
+                };
+
+                const contactResponse = await api.submitContactForm(testContactData);
+
+                if (contactResponse.success) {
+                    resultDiv.innerHTML = `
+                        <strong>✅ Contact API: WORKING</strong><br>
+                        Form submission: Success<br>
+                        Message: ${contactResponse.message || 'Form submitted successfully'}
+                    `;
+                    resultDiv.className = 'test-result success';
+                    testResults.contact = true;
+                } else {
+                    throw new Error(contactResponse.message || 'Contact form submission failed');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<strong>❌ Contact API: FAILED</strong><br>Error: ${error.message}`;
+                resultDiv.className = 'test-result error';
+                testResults.contact = false;
+            }
+        };
+
+        // Frontend Pages Test
+        window.testFrontendPages = async function() {
+            const resultDiv = document.getElementById('frontend-result');
+            resultDiv.textContent = 'Testing frontend pages...';
+            resultDiv.className = 'test-result pending';
+
+            const pagesToTest = [
+                { url: './main.html', name: 'Main Page' },
+                { url: './bikes/index.html', name: 'Bikes Page' },
+                { url: './gear/index.html', name: 'Gear Page' },
+                { url: './contact/index.html', name: 'Contact Page' },
+                { url: './bikes/street-reaper.html', name: 'Street Reaper Product Page' },
+                { url: './gear/fear-city-jacket.html', name: 'Fear City Jacket Product Page' }
+            ];
+
+            let results = [];
+            
+            for (const page of pagesToTest) {
+                try {
+                    const response = await fetch(page.url);
+                    if (response.ok) {
+                        results.push(`✅ ${page.name}: OK`);
+                    } else {
+                        results.push(`❌ ${page.name}: ${response.status}`);
+                    }
+                } catch (error) {
+                    results.push(`❌ ${page.name}: ${error.message}`);
+                }
+            }
+
+            const allSuccess = results.every(r => r.includes('✅'));
+            
+            resultDiv.innerHTML = `
+                <strong>${allSuccess ? '✅' : '⚠️'} Frontend Pages Test</strong><br>
+                ${results.join('<br>')}
+            `;
+            resultDiv.className = allSuccess ? 'test-result success' : 'test-result error';
+            testResults.frontend = allSuccess;
+        };
+
+        // JavaScript Modules Test
+        window.testJavaScriptModules = async function() {
+            const resultDiv = document.getElementById('js-result');
+            resultDiv.textContent = 'Testing JavaScript modules...';
+            resultDiv.className = 'test-result pending';
+
+            const tests = [];
+
+            // Test API module
+            if (FearCityAPI) {
+                tests.push('✅ API Module: Loaded');
+            } else {
+                tests.push('❌ API Module: Failed to load');
+            }
+
+            // Test if cart is available globally
+            if (typeof window.fearCityCart !== 'undefined') {
+                tests.push('✅ Cart Module: Available globally');
+            } else {
+                tests.push('⚠️ Cart Module: Not initialized (normal on test page)');
+            }
+
+            // Test module imports
+            try {
+                await import('./assets/js/bikes.js');
+                tests.push('✅ Bikes Module: Importable');
+            } catch (error) {
+                tests.push('❌ Bikes Module: Import failed');
+            }
+
+            try {
+                await import('./assets/js/gear.js');
+                tests.push('✅ Gear Module: Importable');
+            } catch (error) {
+                tests.push('❌ Gear Module: Import failed');
+            }
+
+            try {
+                await import('./assets/js/contact.js');
+                tests.push('✅ Contact Module: Importable');
+            } catch (error) {
+                tests.push('❌ Contact Module: Import failed');
+            }
+
+            try {
+                await import('./assets/js/product-dynamic.js');
+                tests.push('✅ Product Dynamic Module: Importable');
+            } catch (error) {
+                tests.push('❌ Product Dynamic Module: Import failed');
+            }
+
+            const allSuccess = tests.every(t => t.includes('✅') || t.includes('⚠️'));
+
+            resultDiv.innerHTML = `
+                <strong>${allSuccess ? '✅' : '❌'} JavaScript Modules Test</strong><br>
+                ${tests.join('<br>')}
+            `;
+            resultDiv.className = allSuccess ? 'test-result success' : 'test-result error';
+            testResults.javascript = allSuccess;
+        };
+
+        // Run All Tests
+        window.runAllTests = async function() {
+            const summaryDiv = document.getElementById('summary-result');
+            summaryDiv.textContent = 'Running all tests...';
+            summaryDiv.className = 'test-result pending';
+
+            testResults = {};
+
+            await testBackendHealth();
+            await testProductsAPI();
+            await testCartAPI();
+            await testContactAPI();
+            await testFrontendPages();
+            await testJavaScriptModules();
+
+            // Calculate summary
+            const totalTests = Object.keys(testResults).length;
+            const passedTests = Object.values(testResults).filter(Boolean).length;
+            const successRate = totalTests > 0 ? Math.round((passedTests / totalTests) * 100) : 0;
+
+            const summaryClass = successRate >= 80 ? 'success' : successRate >= 50 ? 'pending' : 'error';
+            const summaryIcon = successRate >= 80 ? '✅' : successRate >= 50 ? '⚠️' : '❌';
+
+            summaryDiv.innerHTML = `
+                <strong>${summaryIcon} Integration Test Summary</strong><br>
+                Tests Passed: ${passedTests}/${totalTests} (${successRate}%)<br>
+                <br>
+                <strong>Test Results:</strong><br>
+                ${Object.entries(testResults).map(([test, result]) => 
+                    `${result ? '✅' : '❌'} ${test.charAt(0).toUpperCase() + test.slice(1)}`
+                ).join('<br>')}
+                <br><br>
+                <strong>Status:</strong> ${successRate >= 80 ? 'READY FOR PRODUCTION' : successRate >= 50 ? 'NEEDS ATTENTION' : 'MAJOR ISSUES'}
+            `;
+            summaryDiv.className = `test-result ${summaryClass}`;
+        };
+
+        // Auto-run basic health check on load
+        setTimeout(testBackendHealth, 1000);
+    </script>
+</body>
+</html>

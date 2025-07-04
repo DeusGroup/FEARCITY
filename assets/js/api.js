@@ -18,7 +18,7 @@ class FearCityAPI {
         }
         
         // Production
-        return 'https://fear-city-cycles-backend-n7x20s4j0-deusgroups-projects.vercel.app';
+        return 'https://fear-city-cycles-backend-deusgroup-deusgroups-projects.vercel.app';
     }
 
     // Get stored authentication token

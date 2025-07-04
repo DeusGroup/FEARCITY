@@ -6,22 +6,94 @@ class ShoppingCart {
         this.items = this.loadCart();
         this.abandonmentTimer = null;
         this.sessionStartTime = Date.now();
+        this.api = null;
+        this.isAuthenticated = false;
         this.updateCartDisplay();
         this.initializeCartPersistence();
         this.setupAbandonmentPrevention();
+        this.initializeAPI();
         // Make cart globally accessible
         window.fearCityCart = this;
     }
 
-    addItem(product) {
+    // Initialize API integration
+    async initializeAPI() {
+        try {
+            // Import API class dynamically
+            const apiModule = await import('./api.js');
+            this.api = new apiModule.FearCityAPI();
+            
+            // Check if user is authenticated
+            this.isAuthenticated = !!this.api.getStoredToken();
+            
+            // If authenticated, sync cart with backend
+            if (this.isAuthenticated) {
+                await this.syncCartWithBackend();
+            }
+        } catch (error) {
+            console.warn('API initialization failed, falling back to local storage only:', error);
+            this.api = null;
+            this.isAuthenticated = false;
+        }
+    }
+
+    // Sync local cart with backend cart
+    async syncCartWithBackend() {
+        if (!this.api || !this.isAuthenticated) return;
+
+        try {
+            // Fetch cart from backend
+            const response = await this.api.fetchCart();
+            
+            if (response.success && response.data.items) {
+                // Merge local cart with backend cart
+                const backendItems = response.data.items.map(item => ({
+                    id: item.productId,
+                    name: item.product?.name || 'Unknown Product',
+                    price: parseFloat(item.price || 0),
+                    image: item.product?.images?.[0] || '',
+                    quantity: item.quantity,
+                    size: item.variant || 'Standard',
+                    customOptions: item.customOptions || [],
+                    backendItemId: item.id // Store backend ID for updates
+                }));
+
+                // Merge with local items (prioritize local items)
+                const mergedItems = [...this.items];
+                
+                // Add backend items that aren't in local cart
+                backendItems.forEach(backendItem => {
+                    const existsLocally = this.items.some(localItem =>
+                        localItem.id === backendItem.id &&
+                        (localItem.size || 'Standard') === backendItem.size
+                    );
+                    
+                    if (!existsLocally) {
+                        mergedItems.push(backendItem);
+                    }
+                });
+
+                this.items = mergedItems;
+                this.saveCart();
+                this.updateCartDisplay();
+            }
+        } catch (error) {
+            console.warn('Cart sync failed:', error);
+        }
+    }
+
+    // Enhanced addItem with API integration
+    async addItem(product) {
         const existingItem = this.items.find(item => 
             item.id === product.id && 
             (item.size || 'Standard') === (product.size || 'Standard') &&
             JSON.stringify(item.customOptions || []) === JSON.stringify(product.customOptions || [])
         );
 
+        let updatedItem;
         if (existingItem) {
             existingItem.quantity += 1;
+            updatedItem = existingItem;
             this.showQuantityAnimation(existingItem);
         } else {
             const newItem = {
@@ -32,16 +104,31 @@ class ShoppingCart {
                 customOptions: product.customOptions || []
             };
             this.items.push(newItem);
+            updatedItem = newItem;
         }
 
+        // Save locally first for immediate UI feedback
         this.saveCart();
         this.updateCartDisplay();
         this.showEnhancedNotification(`Added ${product.name} to cart`, 'success');
         this.trackCartEvent('add_to_cart', product);
         this.resetAbandonmentTimer();
+
+        // Sync with backend if authenticated
+        if (this.api && this.isAuthenticated) {
+            try {
+                await this.api.addToCart(product.id, 1, {
+                    variant: product.size,
+                    customOptions: product.customOptions
+                });
+            } catch (error) {
+                console.warn('Failed to sync cart addition with backend:', error);
+                // Still continue with local storage - no need to revert
+            }
+        }
     }
 
-    removeItem(productId, size = 'Standard', customOptions = []) {
+    async removeItem(productId, size = 'Standard', customOptions = []) {
         const itemIndex = this.items.findIndex(item => 
             item.id === productId && 
             (item.size || 'Standard') === size &&
@@ -51,10 +138,22 @@ class ShoppingCart {
         if (itemIndex !== -1) {
             const removedItem = this.items[itemIndex];
             this.items.splice(itemIndex, 1);
+            
+            // Save locally first for immediate UI feedback
             this.saveCart();
             this.updateCartDisplay();
             this.showEnhancedNotification(`Removed ${removedItem.name} from cart`, 'remove');
             this.trackCartEvent('remove_from_cart', removedItem);
+
+            // Sync with backend if authenticated and has backend ID
+            if (this.api && this.isAuthenticated && removedItem.backendItemId) {
+                try {
+                    await this.api.removeFromCart(removedItem.backendItemId);
+                } catch (error) {
+                    console.warn('Failed to sync cart removal with backend:', error);
+                    // Local storage is already updated, so we don't revert
+                }
+            }
         }
     }
 
@@ -80,13 +179,25 @@ class ShoppingCart {
         }
     }
 
-    clearCart() {
+    async clearCart() {
         if (this.items.length > 0) {
             this.items = [];
+            
+            // Save locally first for immediate UI feedback
             this.saveCart();
             this.updateCartDisplay();
             this.showEnhancedNotification('Cart cleared', 'info');
             this.trackCartEvent('clear_cart');
+
+            // Sync with backend if authenticated
+            if (this.api && this.isAuthenticated) {
+                try {
+                    await this.api.clearCart();
+                } catch (error) {
+                    console.warn('Failed to clear backend cart:', error);
+                    // Local storage is already cleared, so we don't revert
+                }
+            }
         }
     }
 
@@ -501,19 +612,36 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Add to cart functionality
     document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', async function(e) {
             e.preventDefault();
 
-            const productCard = this.closest('.product-card');
-            const product = {
-                id: this.dataset.productId,
-                name: productCard.querySelector('h3').textContent,
-                price: parseFloat(this.dataset.price),
-                image: productCard.querySelector('img').src,
-                size: this.dataset.size || 'Standard'
-            };
+            // Disable button to prevent double-clicks
+            const originalText = this.textContent;
+            this.disabled = true;
+            this.textContent = 'Adding...';
 
-            cart.addItem(product);
+            try {
+                const productCard = this.closest('.product-card');
+                const product = {
+                    id: this.dataset.productId,
+                    name: this.dataset.name || productCard.querySelector('h3')?.textContent || 'Unknown Product',
+                    price: parseFloat(this.dataset.price),
+                    image: this.dataset.image || productCard.querySelector('img')?.src || '',
+                    size: this.dataset.size || 'Standard'
+                };
+
+                await cart.addItem(product);
+            } catch (error) {
+                console.error('Error adding item to cart:', error);
+                // Show error notification
+                if (window.fearCityCart) {
+                    window.fearCityCart.showEnhancedNotification('Failed to add item to cart', 'error');
+                }
+            } finally {
+                // Re-enable button
+                this.disabled = false;
+                this.textContent = originalText;
+            }
         });
     });
 
@@ -1157,22 +1285,47 @@ function attachCartEventListeners() {
 
     // Re-attach listeners
     document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', async function(e) {
             e.preventDefault();
 
-            const productCard = this.closest('.product-card');
-            const product = {
-                id: this.dataset.productId,
-                name: productCard.querySelector('h3').textContent,
-                price: parseFloat(this.dataset.price),
-                image: productCard.querySelector('img').src,
-                size: this.dataset.size || 'Standard'
-            };
+            // Disable button to prevent double-clicks
+            const originalText = this.textContent;
+            this.disabled = true;
+            this.textContent = 'Adding...';
 
-            cart.addItem(product);
+            try {
+                const productCard = this.closest('.product-card');
+                const product = {
+                    id: this.dataset.productId,
+                    name: this.dataset.name || productCard.querySelector('h3')?.textContent || 'Unknown Product',
+                    price: parseFloat(this.dataset.price),
+                    image: this.dataset.image || productCard.querySelector('img')?.src || '',
+                    size: this.dataset.size || 'Standard'
+                };
+
+                await cart.addItem(product);
+            } catch (error) {
+                console.error('Error adding item to cart:', error);
+                // Show error notification
+                if (window.fearCityCart) {
+                    window.fearCityCart.showEnhancedNotification('Failed to add item to cart', 'error');
+                }
+            } finally {
+                // Re-enable button
+                this.disabled = false;
+                this.textContent = originalText;
+            }
         });
     });
 }
+
+// Global function to initialize add-to-cart buttons for dynamically loaded content
+function initializeAddToCartButtons() {
+    attachCartEventListeners();
+}
+
+// Make it globally available for bike.js and gear.js
+window.initializeAddToCartButtons = initializeAddToCartButtons;
 
 // Initialize search with loaded products
 function initializeSearchWithProducts() {

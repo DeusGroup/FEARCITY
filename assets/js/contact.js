@@ -1,18 +1,17 @@
 // Fear City Cycles - Contact Page JavaScript
 
-// EmailJS Configuration
-const EMAILJS_CONFIG = {
-    SERVICE_ID: 'fear_city_service', // Replace with your actual service ID
-    TEMPLATE_IDS: {
-        custom: 'template_custom_build',
-        gear: 'template_gear_inquiry',
-        press: 'template_press_request',
-        general: 'template_general_contact'
-    },
-    PUBLIC_KEY: import.meta?.env?.VITE_EMAILJS_PUBLIC_KEY || '' // Loaded from environment
-};
+// API Configuration
+let fearCityAPI = null;
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    // Initialize API
+    try {
+        const apiModule = await import('./api.js');
+        fearCityAPI = new apiModule.FearCityAPI();
+    } catch (error) {
+        console.warn('Failed to initialize API:', error);
+    }
+
     // Inquiry form switching
     const inquiryButtons = document.querySelectorAll('.inquiry-btn');
     const contactForms = document.querySelectorAll('.contact-form');
@@ -47,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-function submitContactForm(form) {
+async function submitContactForm(form) {
     const formData = new FormData(form);
     const formType = form.id.replace('-form', '');
 
@@ -57,38 +56,30 @@ function submitContactForm(form) {
     submitBtn.textContent = 'SENDING...';
     submitBtn.disabled = true;
 
-    // Prepare email parameters from form data
-    const emailParams = {
-        form_type: formType.toUpperCase(),
-        timestamp: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
-        // Common fields
-        name: formData.get('name') || 'Not provided',
-        email: formData.get('email') || 'Not provided',
-        phone: formData.get('phone') || 'Not provided',
-        message: formData.get('message') || 'Not provided',
-        // Custom build specific fields
-        build_type: formData.get('build-type') || 'Not specified',
-        budget: formData.get('budget') || 'Not specified',
-        // Gear inquiry specific fields
-        product: formData.get('product') || 'Not specified',
-        size: formData.get('size') || 'Not specified',
-        // Press specific fields
-        organization: formData.get('organization') || 'Not specified',
-        deadline: formData.get('deadline') || 'Not specified',
-        // Add reply_to for convenience
-        reply_to: formData.get('email') || 'noreply@fearcitycycles.com'
+    // Prepare form data for API
+    const contactData = {
+        type: formType.toUpperCase(),
+        firstName: formData.get('first-name') || formData.get('name') || '',
+        lastName: formData.get('last-name') || '',
+        email: formData.get('email') || '',
+        phone: formData.get('phone') || '',
+        message: formData.get('message') || '',
+        // Additional fields based on form type
+        buildType: formData.get('build-type') || null,
+        budget: formData.get('budget') || null,
+        product: formData.get('product') || null,
+        size: formData.get('size') || null,
+        organization: formData.get('organization') || null,
+        deadline: formData.get('deadline') || null,
+        source: 'website'
     };
 
-    // Use EmailJS to send the email
-    if (typeof emailjs !== 'undefined' && EMAILJS_CONFIG.PUBLIC_KEY !== 'YOUR_EMAILJS_PUBLIC_KEY') {
-        // Real EmailJS implementation
-        emailjs.send(
-            EMAILJS_CONFIG.SERVICE_ID,
-            EMAILJS_CONFIG.TEMPLATE_IDS[formType] || EMAILJS_CONFIG.TEMPLATE_IDS.general,
-            emailParams
-        ).then(
-            function(response) {
-                console.log('EmailJS Success:', response.status, response.text);
+    try {
+        if (fearCityAPI) {
+            // Use backend API
+            const response = await fearCityAPI.submitContactForm(contactData);
+            
+            if (response.success) {
                 // Reset form
                 form.reset();
                 // Show success message
@@ -101,31 +92,19 @@ function submitContactForm(form) {
                         'value': 1
                     });
                 }
-            },
-            function(error) {
-                console.error('EmailJS Error:', error);
-                showErrorMessage('Failed to send message. Please try again or email us directly at info@fearcitycycles.com');
+            } else {
+                throw new Error(response.message || 'Failed to submit form');
             }
-        ).finally(() => {
-            // Reset button
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        });
-    } else {
-        // Fallback for development/demo (EmailJS not configured)
-        console.warn('EmailJS not configured. Using demo mode.');
-        console.log('Form submission:', emailParams);
-        
-        // Simulate API call for demo
-        setTimeout(() => {
-            // Reset form
-            form.reset();
-            // Show success message
-            showSuccessMessage(getSuccessMessage(formType));
-            // Reset button
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 2000);
+        } else {
+            throw new Error('API not available');
+        }
+    } catch (error) {
+        console.error('Contact form submission error:', error);
+        showErrorMessage(error.message || 'Failed to send message. Please try again or email us directly at info@fearcitycycles.com');
+    } finally {
+        // Reset button
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
     }
 }
 

@@ -6,8 +6,10 @@
     <meta name="description" content="Street Reaper - Aggressive street fighter motorcycle from Fear City Cycles. Matte black finish, underground Queens NYC style.">
     <title>Street Reaper | Fear City Cycles</title>
     <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/pages.css">
     <link rel="stylesheet" href="../assets/css/product.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6S25C1TTY"></script>
     <script>
@@ -160,22 +162,7 @@
         </div>
     </main>
 
-    <script>
-        // Make product database available globally for related products
-        window.productDatabase = [
-            { id: 'bike-001', name: 'Street Reaper', category: 'street-fighter', price: 24500, page: '../bikes/street-reaper.html' },
-            { id: 'bike-002', name: 'Borough Bruiser', category: 'street-fighter', price: 28000, page: '../bikes/borough-bruiser.html' },
-            { id: 'bike-003', name: 'Fear Fighter', category: 'street-fighter', price: 32000, page: '../bikes/fear-fighter.html' },
-            { id: 'bike-004', name: 'Queens Crusher', category: 'bobber', price: 22000, page: '../bikes/queens-crusher.html' },
-            { id: 'bike-005', name: 'Death Rider', category: 'chopper', price: 26500, page: '../bikes/death-rider.html' },
-            { id: 'bike-006', name: 'Midnight Racer', category: 'cafe-racer', price: 25500, page: '../bikes/midnight-racer.html' },
-            { id: 'gear-001', name: 'Fear City Jacket', category: 'jackets', price: 175, page: '../gear/index.html' },
-            { id: 'gear-002', name: 'Queens Skull Tee', category: 'apparel', price: 35, page: '../gear/index.html' },
-            { id: 'gear-003', name: 'Reaper Riding Gloves', category: 'gloves', price: 65, page: '../gear/index.html' }
-        ];
-    </script>
     <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/product.js"></script>
-    <script src="../assets/js/mobile-enhancements.js"></script>
+    <script type="module" src="../assets/js/product-dynamic.js"></script>
 </body>
 </html>

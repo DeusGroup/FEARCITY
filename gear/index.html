@@ -73,108 +73,7 @@
     <section class="gear-grid">
         <div class="container">
             <div class="product-grid">
-                <div class="product-card" data-category="jackets">
-                    <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/jacket-fear-city.jpg" alt="Fear City Leather Jacket">
-                    <h3>FEAR CITY LEATHER JACKET</h3>
-                    <p class="gear-specs">Premium Cowhide, Armor Ready, Classic Cut</p>
-                    <p class="price">$450</p>
-                    <div class="size-options">
-                        <select class="size-selector">
-                            <option value="">Select Size</option>
-                            <option value="S">Small</option>
-                            <option value="M">Medium</option>
-                            <option value="L">Large</option>
-                            <option value="XL">X-Large</option>
-                            <option value="XXL">XX-Large</option>
-                        </select>
-                    </div>
-                    <div class="card-actions">
-                        <button class="btn btn-outline" onclick="showSizeGuide('Leather Jacket')">SIZE GUIDE</button>
-                        <button class="btn btn-primary add-to-cart" data-product-id="gear-001" data-price="450">ADD TO CART</button>
-                    </div>
-                </div>
-
-                <div class="product-card" data-category="apparel">
-                    <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/tee-queens-skull.jpg" alt="Queens Skull Tee">
-                    <h3>QUEENS SKULL TEE</h3>
-                    <p class="gear-specs">100% Cotton, Screen Printed, Pre-Shrunk</p>
-                    <p class="price">$35</p>
-                    <div class="size-options">
-                        <select class="size-selector">
-                            <option value="">Select Size</option>
-                            <option value="S">Small</option>
-                            <option value="M">Medium</option>
-                            <option value="L">Large</option>
-                            <option value="XL">X-Large</option>
-                            <option value="XXL">XX-Large</option>
-                        </select>
-                    </div>
-                    <div class="card-actions">
-                        <button class="btn btn-outline" onclick="showSizeGuide('T-Shirt')">SIZE GUIDE</button>
-                        <button class="btn btn-primary add-to-cart" data-product-id="gear-002" data-price="35">ADD TO CART</button>
-                    </div>
-                </div>
-
-                <div class="product-card" data-category="protective">
-                    <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/gloves-reaper-riding.jpg" alt="Reaper Riding Gloves">
-                    <h3>REAPER RIDING GLOVES</h3>
-                    <p class="gear-specs">Leather Palm, Kevlar Knuckles, Touchscreen Compatible</p>
-                    <p class="price">$125</p>
-                    <div class="size-options">
-                        <select class="size-selector">
-                            <option value="">Select Size</option>
-                            <option value="S">Small</option>
-                            <option value="M">Medium</option>
-                            <option value="L">Large</option>
-                            <option value="XL">X-Large</option>
-                        </select>
-                    </div>
-                    <div class="card-actions">
-                        <button class="btn btn-outline" onclick="showSizeGuide('Gloves')">SIZE GUIDE</button>
-                        <button class="btn btn-primary add-to-cart" data-product-id="gear-003" data-price="125">ADD TO CART</button>
-                    </div>
-                </div>
-
-                <div class="product-card" data-category="accessories">
-                    <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/patch-fear-city.jpg" alt="Fear City Patch">
-                    <h3>FEAR CITY PATCH</h3>
-                    <p class="gear-specs">Embroidered, Iron-On, 4" Diameter</p>
-                    <p class="price">$15</p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary add-to-cart" data-product-id="gear-004" data-price="15">ADD TO CART</button>
-                    </div>
-                </div>
-
-                <div class="product-card" data-category="jackets">
-                    <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/vest-prospect.jpg" alt="Prospect Vest">
-                    <h3>PROSPECT VEST</h3>
-                    <p class="gear-specs">Heavy Denim, Reinforced, Cut Ready</p>
-                    <p class="price">$85</p>
-                    <div class="size-options">
-                        <select class="size-selector">
-                            <option value="">Select Size</option>
-                            <option value="S">Small</option>
-                            <option value="M">Medium</option>
-                            <option value="L">Large</option>
-                            <option value="XL">X-Large</option>
-                            <option value="XXL">XX-Large</option>
-                        </select>
-                    </div>
-                    <div class="card-actions">
-                        <button class="btn btn-outline" onclick="showSizeGuide('Vest')">SIZE GUIDE</button>
-                        <button class="btn btn-primary add-to-cart" data-product-id="gear-005" data-price="85">ADD TO CART</button>
-                    </div>
-                </div>
-
-                <div class="product-card" data-category="accessories">
-                    <img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/products/gear/keychain-skull.jpg" alt="Skull Keychain">
-                    <h3>SKULL KEYCHAIN</h3>
-                    <p class="gear-specs">Pewter Cast, Heavy Duty Ring, 2" Height</p>
-                    <p class="price">$25</p>
-                    <div class="card-actions">
-                        <button class="btn btn-primary add-to-cart" data-product-id="gear-006" data-price="25">ADD TO CART</button>
-                    </div>
-                </div>
+                <!-- Products will be loaded dynamically from API -->
             </div>
         </div>
     </section>
@@ -217,7 +116,7 @@
     </footer>
 
     <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/gear.js"></script>
+    <script type="module" src="../assets/js/gear.js"></script>
     <script src="../assets/js/mobile-enhancements.js"></script>
     <script src="../assets/js/performance-optimizer.js"></script>
 </body>
