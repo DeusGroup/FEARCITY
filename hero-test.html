@@ -157,6 +157,7 @@
             // Test common frame naming patterns
             async function detectFrames() {
                 const patterns = [
+                    { name: 'Your frames', prefix: 'u7972711186_a_queens_street_with_industrial_area_with_graffit_8ade0ea0-7d47-4822-b7fc-85fa975a71bb_3_', start: 0, end: 30, format: (i) => `u7972711186_a_queens_street_with_industrial_area_with_graffit_8ade0ea0-7d47-4822-b7fc-85fa975a71bb_3_${i.toString().padStart(3, '0')}.jpg` },
                     { name: 'Simple numbers', prefix: '', start: 1, end: 30, format: (i) => `${i}.jpg` },
                     { name: 'Padded 2', prefix: '', start: 1, end: 30, format: (i) => `${i.toString().padStart(2, '0')}.jpg` },
                     { name: 'Padded 3', prefix: '', start: 1, end: 30, format: (i) => `${i.toString().padStart(3, '0')}.jpg` },
