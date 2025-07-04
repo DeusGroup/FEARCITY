@@ -18,7 +18,7 @@ class FearCityAPI {
         }
         
         // Production
-        return 'https://api.fearcitycycles.com'; // Update with actual production API URL
+        return 'https://fear-city-cycles-backend-n7x20s4j0-deusgroups-projects.vercel.app';
     }
 
     // Get stored authentication token

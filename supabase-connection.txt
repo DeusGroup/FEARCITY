@@ -1,0 +1,15 @@
+For Vercel deployment, use this DATABASE_URL:
+
+postgresql://postgres:YOUR_SUPABASE_PASSWORD@db.qmjauzmtznndsysnaxzo.supabase.co:5432/postgres
+
+Replace YOUR_SUPABASE_PASSWORD with your actual Supabase database password.
+
+You can find your password in:
+1. Supabase Dashboard → Settings → Database
+2. Or in your local .env file if you've saved it
+
+Alternative: If you want to use the REST API approach, you'll need:
+SUPABASE_URL=https://qmjauzmtznndsysnaxzo.supabase.co
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtamF1em10em5uZHN5c25heHpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEyMzEwMzIsImV4cCI6MjA2NjgwNzAzMn0.Fx8Cicv8ZFtWBHWJAS9kHyrvOQOxXGbQNoPM5a69pfQ
+
+But for Prisma (your current setup), you need the PostgreSQL connection string format.

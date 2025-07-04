@@ -8,7 +8,7 @@
     "dev": "nodemon server.js",
     "build": "prisma generate",
     "postinstall": "prisma generate",
-    "vercel-build": "prisma generate && prisma migrate deploy",
+    "vercel-build": "prisma generate",
     "test": "jest",
     "lint": "eslint .",
     "migrate": "npx prisma migrate dev",
