@@ -74,54 +74,17 @@
             border-bottom: none;
         }
         
-        /* Hero Movie Styles */
+        /* Simple Hero - No Movie */
         .hero {
-            position: relative;
-            background: none !important;
-            overflow: hidden;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(139,0,0,0.3)), url('assets/images/hero-bg.jpg') center/cover;
             min-height: 60vh;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        
-        .hero-movie-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        
-        .hero-movie {
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: background-image 0.1s ease-in-out;
-        }
-        
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                45deg,
-                rgba(0, 0, 0, 0.7) 0%,
-                rgba(139, 0, 0, 0.3) 50%,
-                rgba(0, 0, 0, 0.7) 100%
-            );
-            z-index: 2;
+            text-align: center;
         }
         
         .hero-content {
-            position: relative;
-            z-index: 3;
-            text-align: center;
             color: white;
             max-width: 800px;
             padding: 0 20px;
@@ -142,7 +105,7 @@
         
         .cta-btn {
             display: inline-block;
-            background: linear-gradient(135deg, #8B0000, #cc0000);
+            background: #8B0000;
             color: white;
             padding: 15px 30px;
             text-decoration: none;
@@ -151,16 +114,13 @@
             letter-spacing: 1px;
             border: 2px solid #8B0000;
             transition: all 0.3s ease;
-            text-shadow: none;
         }
         
         .cta-btn:hover {
-            background: linear-gradient(135deg, #cc0000, #8B0000);
+            background: #cc0000;
             transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
         }
         
-        /* Mobile responsive adjustments */
         @media (max-width: 768px) {
             .hero-content h1 {
                 font-size: 2.5rem;
@@ -168,11 +128,6 @@
             
             .hero-content p {
                 font-size: 1.1rem;
-            }
-            
-            .cta-btn {
-                padding: 12px 25px;
-                font-size: 0.9rem;
             }
         }
         
@@ -234,12 +189,6 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-movie-container">
-            <div class="hero-movie" id="heroMovie">
-                <!-- Hero movie frames will be dynamically loaded here -->
-            </div>
-            <div class="hero-overlay"></div>
-        </div>
         <div class="hero-content">
             <h1>Lean Mean Built in Queens</h1>
             <p>These aren't garage queens - they're street fighters.</p>
@@ -484,97 +433,6 @@
     
     <!-- Inline Hero Movie and Product Loading -->
     <script>
-        // Inline Hero Movie Implementation
-        function initHeroMovie() {
-            console.log('🎬 Initializing hero movie...');
-            
-            const movieElement = document.getElementById('heroMovie');
-            if (!movieElement) {
-                console.log('❌ Hero movie element not found');
-                return;
-            }
-            
-            const baseURL = 'https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/hero/hero%20movie/';
-            let frames = [];
-            let currentFrame = 0;
-            let movieInterval;
-            
-            // Test common frame naming patterns
-            async function detectFrames() {
-                const patterns = [
-                    { prefix: 'u7972711186_a_queens_street_with_industrial_area_with_graffit_8ade0ea0-7d47-4822-b7fc-85fa975a71bb_3_', start: 0, end: 50, format: (i) => `u7972711186_a_queens_street_with_industrial_area_with_graffit_8ade0ea0-7d47-4822-b7fc-85fa975a71bb_3_${i.toString().padStart(3, '0')}.jpg` },
-                    { prefix: '', start: 1, end: 20, format: (i) => `${i}.jpg` },
-                    { prefix: 'frame_', start: 1, end: 20, format: (i) => `frame_${i}.jpg` },
-                    { prefix: 'hero_', start: 1, end: 20, format: (i) => `hero_${i}.jpg` },
-                    { prefix: '', start: 1, end: 20, format: (i) => `${i.toString().padStart(3, '0')}.jpg` }
-                ];
-                
-                for (let pattern of patterns) {
-                    console.log(`🔍 Testing pattern: ${pattern.prefix || '[number]'}.jpg`);
-                    const testFrames = [];
-                    
-                    for (let i = pattern.start; i <= pattern.end && testFrames.length < 10; i++) {
-                        const frameName = pattern.format(i);
-                        const frameUrl = baseURL + frameName;
-                        
-                        try {
-                            const response = await fetch(frameUrl, { method: 'HEAD' });
-                            if (response.ok) {
-                                testFrames.push(frameUrl);
-                                console.log(`✅ Found: ${frameName}`);
-                            } else {
-                                break; // Stop on first miss for this pattern
-                            }
-                        } catch (e) {
-                            break;
-                        }
-                    }
-                    
-                    if (testFrames.length >= 3) {
-                        frames = testFrames;
-                        console.log(`🎯 Found ${frames.length} frames with pattern: ${pattern.prefix || '[number]'}.jpg`);
-                        return true;
-                    }
-                }
-                
-                console.log('❌ No hero movie frames found');
-                return false;
-            }
-            
-            // Start the movie
-            function startMovie() {
-                if (frames.length === 0) {
-                    console.log('📷 Using fallback static image');
-                    movieElement.style.backgroundImage = "url('assets/images/hero-bg.jpg')";
-                    return;
-                }
-                
-                console.log(`🎬 Starting hero movie with ${frames.length} frames`);
-                
-                function playFrame() {
-                    movieElement.style.backgroundImage = `url('${frames[currentFrame]}')`;
-                    currentFrame = (currentFrame + 1) % frames.length;
-                }
-                
-                // Start playing
-                playFrame();
-                movieInterval = setInterval(playFrame, 1000 / 24); // 24 FPS
-                
-                // Pause when page not visible
-                document.addEventListener('visibilitychange', function() {
-                    if (document.hidden) {
-                        clearInterval(movieInterval);
-                    } else {
-                        movieInterval = setInterval(playFrame, 1000 / 24);
-                    }
-                });
-            }
-            
-            // Initialize
-            detectFrames().then(found => {
-                startMovie();
-            });
-        }
         
         // Inline API for products
         function createMockAPI() {
@@ -603,8 +461,6 @@
         document.addEventListener('DOMContentLoaded', async function() {
             console.log('🚀 Initializing page...');
             
-            // Start hero movie
-            initHeroMovie();
             
             // Initialize products
             const api = createMockAPI();
@@ -679,235 +535,7 @@
             return card;
         }
         
-        // Hero Movie Player
-        class HeroMovie {
-            constructor() {
-                this.movieElement = document.getElementById('heroMovie');
-                this.frames = [];
-                this.currentFrame = 0;
-                this.isPlaying = false;
-                this.frameRate = 24; // FPS
-                this.frameInterval = 1000 / this.frameRate;
-                this.baseURL = 'https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/hero/hero%20movie/';
-                
-                this.init();
-            }
-            
-            async init() {
-                console.log('Hero movie initializing...');
-                console.log('Base URL:', this.baseURL);
-                try {
-                    await this.loadFrames();
-                    this.preloadImages();
-                    this.startMovie();
-                } catch (error) {
-                    console.error('Hero movie initialization failed:', error);
-                    console.log('Falling back to static image');
-                    this.fallbackToStaticImage();
-                }
-            }
-            
-            async loadFrames() {
-                console.log('Starting frame detection...');
-                // Try to detect frames automatically
-                // First, let's try common naming patterns
-                const patterns = [
-                    'frame_',
-                    'hero_',
-                    'movie_',
-                    'sequence_',
-                    'img_',
-                    ''
-                ];
-                
-                const extensions = ['jpg', 'jpeg', 'png'];
-                
-                for (let pattern of patterns) {
-                    console.log(`Trying pattern: "${pattern}" with extensions:`, extensions);
-                    for (let ext of extensions) {
-                        console.log(`Testing pattern: ${pattern}*.${ext}`);
-                        if (await this.detectFrameSequence(pattern, ext)) {
-                            console.log(`✓ Found hero movie frames with pattern: ${pattern}*.${ext}`);
-                            return;
-                        }
-                    }
-                }
-                
-                console.error('❌ No hero movie frames found with any pattern');
-                throw new Error('No hero movie frames found');
-            }
-            
-            async detectFrameSequence(prefix, extension) {
-                console.log(`  Detecting sequence for: ${prefix}*.${extension}`);
-                
-                // Test for numbered sequences (1-100, 001-100, 0001-1000)
-                const formats = [
-                    { name: 'simple', start: 1, end: 20, format: (i) => `${prefix}${i}` },
-                    { name: 'padded3', start: 1, end: 20, format: (i) => `${prefix}${i.toString().padStart(3, '0')}` },
-                    { name: 'padded4', start: 0, end: 20, format: (i) => `${prefix}${i.toString().padStart(4, '0')}` },
-                    { name: 'padded2', start: 1, end: 20, format: (i) => `${prefix}${i.toString().padStart(2, '0')}` }
-                ];
-                
-                for (let format of formats) {
-                    console.log(`    Testing format: ${format.name} (${format.start}-${format.end})`);
-                    const frames = [];
-                    let consecutiveFails = 0;
-                    
-                    for (let i = format.start; i <= format.end && consecutiveFails < 3; i++) {
-                        const frameName = `${format.format(i)}.${extension}`;
-                        const frameUrl = `${this.baseURL}${frameName}`;
-                        
-                        if (await this.imageExists(frameUrl)) {
-                            frames.push(frameUrl);
-                            consecutiveFails = 0;
-                            console.log(`      ✓ Found: ${frameName}`);
-                        } else {
-                            consecutiveFails++;
-                        }
-                    }
-                    
-                    console.log(`    Format ${format.name} result: ${frames.length} frames found`);
-                    
-                    if (frames.length >= 3) { // Minimum 3 frames for a movie (lowered for testing)
-                        this.frames = frames;
-                        console.log(`🎬 SUCCESS: Found ${frames.length} frames with format: ${prefix}[number].${extension}`);
-                        console.log('Frame URLs:', frames);
-                        return true;
-                    }
-                }
-                
-                return false;
-            }
-            
-            async imageExists(url) {
-                try {
-                    const response = await fetch(url, { method: 'HEAD' });
-                    return response.ok;
-                } catch (error) {
-                    return false;
-                }
-            }
-            
-            preloadImages() {
-                // Preload first few frames for smooth playback
-                const preloadCount = Math.min(10, this.frames.length);
-                
-                for (let i = 0; i < preloadCount; i++) {
-                    const img = new Image();
-                    img.src = this.frames[i];
-                }
-            }
-            
-            startMovie() {
-                if (this.frames.length === 0) {
-                    this.fallbackToStaticImage();
-                    return;
-                }
-                
-                this.isPlaying = true;
-                this.playFrame();
-                
-                // Start the animation loop
-                this.movieInterval = setInterval(() => {
-                    if (this.isPlaying) {
-                        this.nextFrame();
-                        this.playFrame();
-                    }
-                }, this.frameInterval);
-                
-                console.log(`Hero movie started with ${this.frames.length} frames at ${this.frameRate} FPS`);
-            }
-            
-            playFrame() {
-                if (this.frames.length > 0) {
-                    this.movieElement.style.backgroundImage = `url('${this.frames[this.currentFrame]}')`;
-                }
-            }
-            
-            nextFrame() {
-                this.currentFrame = (this.currentFrame + 1) % this.frames.length;
-            }
-            
-            pause() {
-                this.isPlaying = false;
-            }
-            
-            play() {
-                this.isPlaying = true;
-            }
-            
-            stop() {
-                this.isPlaying = false;
-                this.currentFrame = 0;
-                this.playFrame();
-            }
-            
-            fallbackToStaticImage() {
-                console.log('Using fallback static hero image');
-                this.movieElement.style.backgroundImage = "url('assets/images/hero-bg.jpg')";
-            }
-            
-            destroy() {
-                if (this.movieInterval) {
-                    clearInterval(this.movieInterval);
-                }
-                this.isPlaying = false;
-            }
-        }
         
-        // Test function to manually check frame URLs
-        window.testHeroFrame = async function(frameName) {
-            const baseURL = 'https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/hero/hero%20movie/';
-            const url = baseURL + frameName;
-            console.log('Testing:', url);
-            
-            try {
-                const response = await fetch(url, { method: 'HEAD' });
-                console.log('Response status:', response.status);
-                console.log('Response ok:', response.ok);
-                return response.ok;
-            } catch (error) {
-                console.error('Error:', error);
-                return false;
-            }
-        };
-        
-        // Manual hero movie starter - call this if auto-detection fails
-        window.startHeroMovie = function(frameNames) {
-            if (heroMovie && frameNames.length > 0) {
-                const baseURL = 'https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/hero/hero%20movie/';
-                heroMovie.frames = frameNames.map(name => baseURL + name);
-                console.log('Manual frames set:', heroMovie.frames);
-                heroMovie.startMovie();
-                console.log('Manual hero movie started!');
-            }
-        };
-        
-        // Initialize hero movie when page loads
-        let heroMovie;
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize hero movie
-            heroMovie = new HeroMovie();
-            
-            // Pause movie when page is not visible (performance optimization)
-            document.addEventListener('visibilitychange', function() {
-                if (heroMovie) {
-                    if (document.hidden) {
-                        heroMovie.pause();
-                    } else {
-                        heroMovie.play();
-                    }
-                }
-            });
-        });
-        
-        // Cleanup on page unload
-        window.addEventListener('beforeunload', function() {
-            if (heroMovie) {
-                heroMovie.destroy();
-            }
-        });
     </script>
 </body>
 </html>
