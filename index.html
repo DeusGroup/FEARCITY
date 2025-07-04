@@ -17,46 +17,139 @@
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <link rel="stylesheet" href="assets/css/gateway.css">
     <style>
-        /* Emergency styles to fix display */
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&display=swap');
+        
+        /* Premium Gateway Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         .gateway-body {
-            background-color: #000;
+            background-color: #0a0a0a;
             color: #fff;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Oswald', sans-serif;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
+        
+        /* Background texture effect */
+        .gateway-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(139, 0, 0, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+        
+        .gateway-logo {
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1s ease-out;
+        }
+        
         .gateway-logo img {
-            max-width: 300px;
-            margin-bottom: 20px;
+            max-width: 400px;
+            width: 90%;
+            height: auto;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.5));
         }
+        
         .gateway-title {
-            font-size: 3em;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5em;
             margin-bottom: 10px;
-            color: #8B0000;
+            background: linear-gradient(180deg, #fff 0%, #8B0000 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             text-transform: uppercase;
+            letter-spacing: 5px;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 1s ease-out 0.3s both;
         }
+        
         .gateway-tagline {
-            font-size: 1.5em;
-            margin-bottom: 30px;
-            color: #ccc;
-        }
-        .enter-btn {
-            background: #8B0000;
-            color: white;
-            padding: 15px 40px;
-            text-decoration: none;
-            font-size: 1.2em;
+            font-size: 1.8em;
+            margin-bottom: 50px;
+            color: #999;
             text-transform: uppercase;
-            border: 2px solid #fff;
-            transition: all 0.3s;
+            letter-spacing: 10px;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 1s ease-out 0.5s both;
         }
+        
+        .enter-btn {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            color: white;
+            padding: 20px 60px;
+            text-decoration: none;
+            font-size: 1.3em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border: 2px solid #8B0000;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+            animation: slideIn 1s ease-out 0.7s both;
+        }
+        
+        .enter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #8B0000 0%, #cc0000 100%);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+        
         .enter-btn:hover {
-            background: #cc0000;
-            transform: scale(1.05);
+            border-color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.5);
+        }
+        
+        .enter-btn:hover::before {
+            left: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .gateway-logo img { max-width: 300px; }
+            .gateway-title { font-size: 3.5em; letter-spacing: 3px; }
+            .gateway-tagline { font-size: 1.2em; letter-spacing: 5px; }
+            .enter-btn { padding: 15px 40px; font-size: 1.1em; }
         }
     </style>
     <!-- Google tag (gtag.js) -->
@@ -76,7 +169,7 @@
 </head>
 <body class="gateway-body">
     <div class="gateway-logo">
-        <img src="assets/images/fear-city-logo-small.jpg" alt="Fear City Cycles">
+        <img src="assets/images/fear-city-logo-inverted.svg" alt="Fear City Cycles">
     </div>
     <h1 class="gateway-title">Fear City Cycles</h1>
     <p class="gateway-tagline">Lean Mean Built in Queens</p>
