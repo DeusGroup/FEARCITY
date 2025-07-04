@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fear City Cycles - Underground motorcycle culture from Queens, NYC. Custom bikes and gear for riders who live on the edge.">
+    <title>Fear City Cycles - Queens NYC | Ride or Die</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Hero Movie Styles */
+        .hero {
+            position: relative;
+            min-height: 60vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-movie-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .hero-movie {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.4) 0%,
+                rgba(139, 0, 0, 0.2) 50%,
+                rgba(0, 0, 0, 0.6) 100%
+            );
+            z-index: 2;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin-bottom: 20px;
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            margin-bottom: 30px;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B0000, #cc0000);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid #8B0000;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-btn:hover {
+            background: linear-gradient(135deg, #cc0000, #8B0000);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+        }
+        
+        /* Product Grid */
+        .products {
+            padding: 60px 20px;
+            background: #111;
+        }
+        
+        .products h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #fff;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .product-card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: #8B0000;
+            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.3);
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .product-card h3 {
+            padding: 15px;
+            font-size: 1.3rem;
+            color: #fff;
+        }
+        
+        .product-card p {
+            padding: 0 15px;
+            color: #ccc;
+            font-size: 0.95rem;
+        }
+        
+        .product-card .price {
+            padding: 15px;
+            font-size: 1.5rem;
+            color: #8B0000;
+            font-weight: bold;
+        }
+        
+        .product-card button {
+            width: 100%;
+            padding: 15px;
+            background: #8B0000;
+            color: white;
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .product-card button:hover {
+            background: #cc0000;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="index.html" class="brand-logo">
+                <span>Fear City Cycles</span>
+            </a>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+            <div class="nav-menu" id="navMenu">
+                <a href="#" class="active">Home</a>
+                <a href="bikes/">Bikes</a>
+                <a href="gear/">Gear</a>
+                <a href="culture.html">Culture</a>
+                <a href="about.html">About</a>
+                <a href="contact/">Contact</a>
+                <a href="cart/" class="cart-link">Cart (<span id="cartCount">0</span>)</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-movie-container">
+            <div class="hero-movie" id="heroMovie"></div>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Lean Mean Built in Queens</h1>
+            <p>These aren't garage queens - they're street fighters.</p>
+            <a href="#bikes" class="cta-btn">View Our Rides</a>
+        </div>
+    </section>
+
+    <section class="products" id="bikes">
+        <h2>Custom Motorcycles</h2>
+        <div class="product-grid" id="bikesGrid"></div>
+    </section>
+
+    <section class="products" id="gear">
+        <h2>Gear & Apparel</h2>
+        <div class="product-grid" id="gearGrid"></div>
+    </section>
+
+    <section class="contact">
+        <h2>Visit the Shop</h2>
+        <p>Queens, NYC<br>
+        Email: info@fearcitycycles.com<br>
+        Phone: Call if you know</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Fear City Cycles - Born in Queens. Built for Battle.</p>
+    </footer>
+
+    <script>
+        // Clean Cart Implementation
+        const Cart = {
+            items: JSON.parse(localStorage.getItem('fearCityCartV2')) || [],
+            
+            add(product) {
+                const existing = this.items.find(item => item.id === product.id);
+                if (existing) {
+                    existing.quantity++;
+                } else {
+                    this.items.push({ ...product, quantity: 1 });
+                }
+                this.save();
+                this.updateDisplay();
+                this.showNotification(`Added ${product.name} to cart`);
+            },
+            
+            save() {
+                localStorage.setItem('fearCityCartV2', JSON.stringify(this.items));
+            },
+            
+            updateDisplay() {
+                const count = this.items.reduce((sum, item) => sum + item.quantity, 0);
+                document.getElementById('cartCount').textContent = count;
+            },
+            
+            showNotification(message) {
+                const notification = document.createElement('div');
+                notification.textContent = message;
+                notification.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    right: 20px;
+                    background: #8B0000;
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 4px;
+                    z-index: 1000;
+                    animation: slideIn 0.3s ease;
+                `;
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+            }
+        };
+
+        // Hero Movie Implementation
+        function initHeroMovie() {
+            const movieElement = document.getElementById('heroMovie');
+            const baseURL = 'https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/hero/hero%20movie/';
+            const framePrefix = 'u7972711186_a_queens_street_with_industrial_area_with_graffit_8ade0ea0-7d47-4822-b7fc-85fa975a71bb_3_';
+            
+            let currentFrame = 0;
+            const totalFrames = 51;
+            const frames = [];
+            
+            // Generate frame URLs
+            for (let i = 0; i < totalFrames; i++) {
+                const frameNumber = i.toString().padStart(3, '0');
+                frames.push(`${baseURL}${framePrefix}${frameNumber}.jpg`);
+            }
+            
+            // Preload frames
+            console.log('Preloading hero movie frames...');
+            let loadedCount = 0;
+            
+            frames.forEach((url, index) => {
+                const img = new Image();
+                img.onload = () => {
+                    loadedCount++;
+                    if (loadedCount === totalFrames) {
+                        console.log('All frames loaded, starting movie');
+                        startMovie();
+                    }
+                };
+                img.onerror = () => console.error(`Failed to load frame ${index}`);
+                img.src = url;
+            });
+            
+            function startMovie() {
+                // Simple frame switching
+                function showFrame() {
+                    movieElement.style.backgroundImage = `url('${frames[currentFrame]}')`;
+                    currentFrame = (currentFrame + 1) % totalFrames;
+                }
+                
+                showFrame(); // Show first frame
+                setInterval(showFrame, 150); // ~6.7 FPS for smooth viewing
+            }
+        }
+
+        // Mock Products
+        const products = {
+            bikes: [
+                { id: 'street-reaper', name: 'Street Reaper', price: 24500, image: 'assets/images/bike-street-reaper.jpg', description: 'Pure aggression on two wheels' },
+                { id: 'queens-crusher', name: 'Queens Crusher', price: 26750, image: 'assets/images/bike-queens-crusher.jpg', description: 'Born in Queens, built for battle' },
+                { id: 'death-rider', name: 'Death Rider', price: 29500, image: 'assets/images/bike-death-rider.jpg', description: 'When subtlety is not an option' },
+                { id: 'borough-bruiser', name: 'Borough Bruiser', price: 28000, image: 'assets/images/bike-borough-bruiser.jpg', description: 'Heavy-duty cruiser with attitude' },
+                { id: 'fear-fighter', name: 'Fear Fighter', price: 32000, image: 'assets/images/bike-fear-fighter.jpg', description: 'Track-inspired street dominator' },
+                { id: 'midnight-racer', name: 'Midnight Racer', price: 25500, image: 'assets/images/bike-midnight-racer.jpg', description: 'Built for the night riders' }
+            ],
+            gear: [
+                { id: 'fear-jacket', name: 'Fear City Leather Jacket', price: 395, image: 'assets/images/jacket-fear-city.jpg', description: 'Premium leather, armored protection' },
+                { id: 'reaper-gloves', name: 'Reaper Riding Gloves', price: 89, image: 'assets/images/gloves-reaper-riding.jpg', description: 'Professional-grade protection' },
+                { id: 'queens-tee', name: 'Queens Skull Tee', price: 35, image: 'assets/images/tee-queens-skull.jpg', description: 'Rep Queens with pride' },
+                { id: 'prospect-vest', name: 'Prospect Vest', price: 85, image: 'assets/images/vest-prospect.jpg', description: 'Heavy denim, cut-ready' },
+                { id: 'skull-keychain', name: 'Skull Keychain', price: 25, image: 'assets/images/keychain-skull.jpg', description: 'Pewter cast with heavy ring' },
+                { id: 'fear-patch', name: 'Fear City Patch', price: 15, image: 'assets/images/patch-fear-city.jpg', description: 'Show your NYC pride' }
+            ]
+        };
+
+        // Render Products
+        function renderProducts() {
+            const bikesGrid = document.getElementById('bikesGrid');
+            const gearGrid = document.getElementById('gearGrid');
+            
+            // Render bikes
+            products.bikes.forEach(bike => {
+                const card = createProductCard(bike);
+                bikesGrid.appendChild(card);
+            });
+            
+            // Render gear
+            products.gear.forEach(item => {
+                const card = createProductCard(item);
+                gearGrid.appendChild(card);
+            });
+        }
+
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" onerror="this.src='assets/images/placeholder.jpg'">
+                <h3>${product.name}</h3>
+                <p>${product.description}</p>
+                <p class="price">$${product.price.toLocaleString()}</p>
+                <button onclick="Cart.add({id: '${product.id}', name: '${product.name}', price: ${product.price}})">
+                    Add to Cart
+                </button>
+            `;
+            return card;
+        }
+
+        // Mobile Menu
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            document.getElementById('navMenu').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Initialize Everything
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Initializing Fear City Cycles V2...');
+            Cart.updateDisplay();
+            renderProducts();
+            initHeroMovie();
+        });
+    </script>
+</body>
+</html>
