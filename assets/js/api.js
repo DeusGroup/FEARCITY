@@ -17,8 +17,8 @@ class FearCityAPI {
             return 'http://localhost:3001';
         }
         
-        // Production - use working backend temporarily while debugging serverless
-        return 'https://fear-city-cycles-backend-3gl8f66wk-deusgroups-projects.vercel.app';
+        // Production - use mock data temporarily (backend deleted)
+        return 'MOCK_MODE';
     }
 
     // Get stored authentication token
@@ -45,6 +45,11 @@ class FearCityAPI {
 
     // Base request method with error handling
     async request(endpoint, options = {}) {
+        // Mock mode for development/testing
+        if (this.baseURL === 'MOCK_MODE') {
+            return this.mockRequest(endpoint, options);
+        }
+
         const url = `${this.baseURL}${endpoint}`;
         
         // Default headers
@@ -87,6 +92,63 @@ class FearCityAPI {
             }
             throw error;
         }
+    }
+
+    // Mock API responses for testing
+    async mockRequest(endpoint, options = {}) {
+        console.log('MOCK API:', endpoint, options.method || 'GET');
+        
+        // Simulate network delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        if (endpoint === '/api/products') {
+            return {
+                products: [
+                    {
+                        id: 'street-reaper',
+                        slug: 'street-reaper',
+                        name: 'Street Reaper',
+                        price: 24500,
+                        images: ['/assets/images/bike-street-reaper.jpg'],
+                        description: 'Pure aggression on two wheels. Built for riders who know the streets.',
+                        category: { name: 'Motorcycles', slug: 'motorcycles' }
+                    },
+                    {
+                        id: 'reaper-gloves',
+                        slug: 'reaper-riding-gloves',
+                        name: 'Reaper Riding Gloves',
+                        price: 89,
+                        images: ['/assets/images/gloves-reaper-riding.jpg'],
+                        description: 'Professional-grade riding gloves with superior grip.',
+                        category: { name: 'Gear', slug: 'gear' }
+                    }
+                ]
+            };
+        }
+
+        if (endpoint.includes('/api/products/')) {
+            const slug = endpoint.split('/').pop();
+            return {
+                product: {
+                    id: slug,
+                    slug: slug,
+                    name: slug.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                    price: 24500,
+                    images: [`/assets/images/bike-${slug}.jpg`],
+                    description: 'Custom build from Fear City Cycles.',
+                    category: { name: 'Motorcycles', slug: 'motorcycles' }
+                }
+            };
+        }
+
+        if (endpoint === '/api/contact') {
+            return {
+                success: true,
+                message: 'Contact form submitted successfully (MOCK)'
+            };
+        }
+
+        return { message: 'Mock API response' };
     }
 
     // Handle error responses
