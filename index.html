@@ -250,7 +250,28 @@
         <img src="assets/images/fear-city-logo-inverted.svg" alt="Fear City Cycles">
     </div>
     <h1 class="gateway-title">Fear City Cycles</h1>
-    <a href="main.html" class="enter-btn">Enter the City</a>
-    <script src="script.js"></script>
+    <a href="main.html" class="enter-btn" id="enterBtn">Enter the City</a>
+    <script>
+        // Disable button until animation completes
+        const enterBtn = document.getElementById('enterBtn');
+        
+        // Disable initially
+        enterBtn.style.pointerEvents = 'none';
+        enterBtn.style.cursor = 'default';
+        
+        // Enable after animation completes (1.2s delay + 2.5s animation = 3.7s)
+        setTimeout(() => {
+            enterBtn.style.pointerEvents = 'auto';
+            enterBtn.style.cursor = 'pointer';
+        }, 3700);
+        
+        // Add visual feedback when disabled
+        enterBtn.addEventListener('click', (e) => {
+            if (enterBtn.style.pointerEvents === 'none') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
 </body>
 </html>
