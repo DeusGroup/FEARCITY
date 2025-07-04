@@ -235,7 +235,7 @@
                     return;
                 }
                 
-                log(`🎬 Starting hero movie with ${frames.length} frames at 24 FPS`);
+                log(`🎬 Starting hero movie with ${frames.length} frames at 8 FPS (slower, smoother)`);
                 
                 // Preload ALL frames for seamless playback
                 log('⏳ Preloading all frames for seamless looping...');
@@ -262,84 +262,36 @@
                 });
                 
                 function startSeamlessPlayback() {
-                    // Use multiple image elements for smoother transitions
-                    const movieContainer = movieElement.parentElement;
-                    
-                    // Create two image elements for double buffering
-                    const img1 = document.createElement('div');
-                    const img2 = document.createElement('div');
-                    
-                    [img1, img2].forEach(img => {
-                        img.style.cssText = `
-                            position: absolute;
-                            top: 0;
-                            left: 0;
-                            width: 100%;
-                            height: 100%;
-                            background-size: cover;
-                            background-position: center;
-                            background-repeat: no-repeat;
-                            opacity: 0;
-                            transition: opacity 0.05s linear;
-                        `;
-                        movieElement.appendChild(img);
-                    });
-                    
-                    let activeImg = img1;
-                    let inactiveImg = img2;
-                    
-                    // Preload the last frame into the buffer for seamless loop
-                    inactiveImg.style.backgroundImage = `url('${frames[frames.length - 1]}')`;
-                    
+                    // Simple direct frame switching for stability
                     function playFrame() {
-                        // Set the current frame on the active image
-                        activeImg.style.backgroundImage = `url('${frames[currentFrame]}')`;
-                        activeImg.style.opacity = '1';
-                        inactiveImg.style.opacity = '0';
-                        
-                        // Preload the next frame (including wrap-around for seamless loop)
-                        const nextFrame = (currentFrame + 1) % frames.length;
-                        inactiveImg.style.backgroundImage = `url('${frames[nextFrame]}')`;
-                        
-                        // Swap active/inactive for next frame
-                        [activeImg, inactiveImg] = [inactiveImg, activeImg];
-                        
-                        // Advance to next frame
-                        currentFrame = nextFrame;
+                        movieElement.style.backgroundImage = `url('${frames[currentFrame]}')`;
+                        currentFrame = (currentFrame + 1) % frames.length;
                     }
                     
-                    // Start with first frame visible
-                    activeImg.style.backgroundImage = `url('${frames[0]}')`;
-                    activeImg.style.opacity = '1';
+                    // Start with first frame
+                    playFrame();
                     
-                    // Use requestAnimationFrame for smoother playback
-                    let lastFrameTime = performance.now();
-                    const frameDuration = 1000 / 24; // 24 FPS
+                    // Use simple interval for consistent frame rate
+                    movieInterval = setInterval(playFrame, 125); // 8 FPS (125ms per frame)
                     
-                    function animate(currentTime) {
-                        if (currentTime - lastFrameTime >= frameDuration) {
-                            playFrame();
-                            lastFrameTime = currentTime;
-                        }
-                        if (!document.hidden) {
-                            requestAnimationFrame(animate);
-                        }
-                    }
-                    
-                    requestAnimationFrame(animate);
-                    
-                    // Pause when page not visible
-                    document.addEventListener('visibilitychange', function() {
-                        if (document.hidden) {
+                    // Clear interval when tab not visible
+                    let wasHidden = false;
+                    const handleVisibilityChange = function() {
+                        if (document.hidden && !wasHidden) {
+                            clearInterval(movieInterval);
+                            wasHidden = true;
                             log('⏸️ Movie paused (tab hidden)');
-                        } else {
+                        } else if (!document.hidden && wasHidden) {
+                            movieInterval = setInterval(playFrame, 125);
+                            wasHidden = false;
                             log('▶️ Movie resumed (tab visible)');
-                            lastFrameTime = performance.now();
-                            requestAnimationFrame(animate);
                         }
-                    });
+                    };
                     
-                    log('✨ Hero movie is playing with seamless looping!');
+                    document.removeEventListener('visibilitychange', handleVisibilityChange);
+                    document.addEventListener('visibilitychange', handleVisibilityChange);
+                    
+                    log('✨ Hero movie is playing with seamless looping at 8 FPS!');
                 }
             }
             
