@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Fear City Cycles - Fresh Vercel Deployment",
   "scripts": {
-    "build": "mkdir -p dist && cp -r assets bikes gear cart contact culture.html index.html main.html about.html offline.html robots.txt sitemap.xml sw.js *.html dist/ 2>/dev/null || true",
+    "build": "mkdir -p dist && cp -r assets bikes gear cart contact culture.html index.html main.html about.html offline.html robots.txt sitemap.xml sw.js styles.css *.html dist/ 2>/dev/null || true",
     "postinstall": "echo 'Static deployment'"
   },
   "dependencies": {
