@@ -74,7 +74,7 @@
             font-family: 'Bebas Neue', cursive;
             font-size: 5.5rem;
             font-weight: 400;
-            margin-bottom: 16px;
+            margin-bottom: 60px;
             color: #ffffff;
             letter-spacing: 6px;
             text-transform: uppercase;
@@ -90,18 +90,6 @@
                 6px 6px 0px #8B0000;
         }
         
-        .gateway-tagline {
-            font-size: 1.0rem;
-            margin-bottom: 60px;
-            color: #666666;
-            font-weight: 300;
-            letter-spacing: 12px;
-            text-transform: uppercase;
-            position: relative;
-            z-index: 1;
-            animation: slideUp 1.5s ease-out 0.6s both;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-        }
         
         .enter-btn {
             background: linear-gradient(135deg, rgba(139, 0, 0, 0.1) 0%, transparent 50%);
@@ -116,7 +104,7 @@
             font-family: 'Oswald', sans-serif;
             position: relative;
             z-index: 1;
-            animation: slideUp 1.5s ease-out 0.8s both;
+            animation: slideUp 1.5s ease-out 0.6s both;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             overflow: hidden;
             backdrop-filter: blur(5px);
@@ -200,14 +188,12 @@
         /* Mobile responsiveness */
         @media (max-width: 768px) {
             .gateway-logo img { max-width: 320px; }
-            .gateway-title { font-size: 4.2rem; letter-spacing: 4px; }
-            .gateway-tagline { font-size: 0.9rem; letter-spacing: 8px; margin-bottom: 50px; }
+            .gateway-title { font-size: 4.2rem; letter-spacing: 4px; margin-bottom: 50px; }
             .enter-btn { padding: 18px 40px; font-size: 1.0rem; letter-spacing: 3px; }
         }
         
         @media (max-width: 480px) {
-            .gateway-title { font-size: 3.5rem; letter-spacing: 3px; }
-            .gateway-tagline { font-size: 0.8rem; letter-spacing: 6px; }
+            .gateway-title { font-size: 3.5rem; letter-spacing: 3px; margin-bottom: 40px; }
             .enter-btn { padding: 16px 35px; font-size: 0.95rem; letter-spacing: 2px; }
         }
     </style>
@@ -231,7 +217,6 @@
         <img src="assets/images/fear-city-logo-inverted.svg" alt="Fear City Cycles">
     </div>
     <h1 class="gateway-title">Fear City Cycles</h1>
-    <p class="gateway-tagline">Lean Mean Built in Queens</p>
     <a href="main.html" class="enter-btn">Enter the City</a>
     <script src="script.js"></script>
 </body>
