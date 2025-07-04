@@ -17,7 +17,7 @@
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <link rel="stylesheet" href="assets/css/gateway.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
         
         /* Premium Gateway Styles */
         * {
@@ -27,20 +27,20 @@
         }
         
         .gateway-body {
-            background-color: #0a0a0a;
-            color: #fff;
+            background: #000000;
+            color: #ffffff;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: 'Oswald', sans-serif;
+            font-family: 'Inter', sans-serif;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
         
-        /* Background texture effect */
+        /* Subtle background texture */
         .gateway-body::before {
             content: '';
             position: absolute;
@@ -49,107 +49,95 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(139, 0, 0, 0.1) 0%, transparent 70%);
+                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
             z-index: 0;
         }
         
         .gateway-logo {
             position: relative;
             z-index: 1;
-            animation: fadeIn 1s ease-out;
+            margin-bottom: 60px;
+            animation: fadeIn 1.2s ease-out;
         }
         
         .gateway-logo img {
-            max-width: 400px;
-            width: 90%;
+            max-width: 320px;
+            width: 85%;
             height: auto;
-            margin-bottom: 40px;
-            filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.5));
+            opacity: 0.95;
         }
         
         .gateway-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 5em;
-            margin-bottom: 10px;
-            background: linear-gradient(180deg, #fff 0%, #8B0000 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase;
-            letter-spacing: 5px;
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #ffffff;
+            letter-spacing: -1px;
             position: relative;
             z-index: 1;
-            animation: slideIn 1s ease-out 0.3s both;
+            animation: slideUp 1.2s ease-out 0.3s both;
         }
         
         .gateway-tagline {
-            font-size: 1.8em;
-            margin-bottom: 50px;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 80px;
+            color: #888888;
             font-weight: 300;
+            letter-spacing: 8px;
+            text-transform: uppercase;
             position: relative;
             z-index: 1;
-            animation: slideIn 1s ease-out 0.5s both;
+            animation: slideUp 1.2s ease-out 0.5s both;
         }
         
         .enter-btn {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            color: white;
-            padding: 20px 60px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            padding: 18px 48px;
             text-decoration: none;
-            font-size: 1.3em;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            border: 2px solid #8B0000;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 1;
-            animation: slideIn 1s ease-out 0.7s both;
-        }
-        
-        .enter-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #8B0000 0%, #cc0000 100%);
-            transition: left 0.4s ease;
-            z-index: -1;
+            animation: slideUp 1.2s ease-out 0.7s both;
         }
         
         .enter-btn:hover {
-            border-color: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.5);
-        }
-        
-        .enter-btn:hover::before {
-            left: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.8); }
+            from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
         
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(24px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
         /* Mobile responsiveness */
         @media (max-width: 768px) {
-            .gateway-logo img { max-width: 300px; }
-            .gateway-title { font-size: 3.5em; letter-spacing: 3px; }
-            .gateway-tagline { font-size: 1.2em; letter-spacing: 5px; }
-            .enter-btn { padding: 15px 40px; font-size: 1.1em; }
+            .gateway-logo img { max-width: 280px; }
+            .gateway-title { font-size: 3.2rem; }
+            .gateway-tagline { font-size: 0.9rem; letter-spacing: 4px; margin-bottom: 60px; }
+            .enter-btn { padding: 16px 40px; font-size: 0.9rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .gateway-title { font-size: 2.8rem; }
+            .gateway-tagline { font-size: 0.8rem; letter-spacing: 3px; }
+            .enter-btn { padding: 14px 32px; font-size: 0.85rem; }
         }
     </style>
     <!-- Google tag (gtag.js) -->
