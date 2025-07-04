@@ -1,18 +1,15 @@
 {
   "version": 2,
-  "name": "fear-city-cycles-fresh",
   "functions": {
     "api/**/*.js": {
       "runtime": "@vercel/node"
     }
   },
-  "routes": [
-    {
-      "src": "/api/products/([^/]+)",
-      "dest": "/api/products/[slug].js?slug=$1"
-    }
-  ],
   "rewrites": [
+    {
+      "source": "/api/products/([^/]+)",
+      "destination": "/api/products/[slug].js?slug=$1"
+    },
     {
       "source": "/culture",
       "destination": "/culture.html"
