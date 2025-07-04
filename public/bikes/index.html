@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Bikes - Fear City Cycles</title>
+    <meta name="description" content="Custom motorcycle builds from Fear City Cycles. Street fighters, bobbers, and choppers built for NYC streets.">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6S25C1TTY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-P6S25C1TTY');
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="../main.html"><img src="https://qmjauzmtznndsysnaxzo.supabase.co/storage/v1/object/public/fear-city-assets/logo/fear-city-logo-small.jpg" alt="Fear City Cycles"></a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="../bikes/" class="nav-link active">BIKES</a>
+                <a href="../gear/" class="nav-link">GEAR</a>
+                <a href="../culture/" class="nav-link">CULTURE</a>
+                <a href="../garage/" class="nav-link">GARAGE</a>
+                <a href="../contact/" class="nav-link">CONTACT</a>
+            </div>
+            <div class="nav-actions">
+                <input type="text" id="product-search" placeholder="Search bikes..." style="padding: 5px; background: #222; color: white; border: 1px solid #666; border-radius: 3px; margin-right: 15px;">
+                <a href="../account/" class="account-link">ACCOUNT</a>
+                <a href="../cart/" class="cart-link">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cart-count">0</span>
+                </a>
+            </div>
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>CUSTOM BUILDS</h1>
+            <p>We don't build pretty bikes for pretty people. We build machines for riders who know the difference between style and substance.</p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="bike-filters">
+        <div class="container">
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">ALL BUILDS</button>
+                <button class="filter-btn" data-filter="street-fighter">STREET FIGHTERS</button>
+                <button class="filter-btn" data-filter="bobber">BOBBERS</button>
+                <button class="filter-btn" data-filter="chopper">CHOPPERS</button>
+                <button class="filter-btn" data-filter="cafe-racer">CAFÉ RACERS</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bikes Grid -->
+    <section class="bikes-grid">
+        <div class="container">
+            <div class="product-grid">
+                <!-- Products will be loaded dynamically from API -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Custom Build CTA -->
+    <section class="custom-build-cta">
+        <div class="container">
+            <h2>BUILD YOUR MACHINE</h2>
+            <p>Every rider is different. Every build should be too. Start your custom build consultation and create the perfect machine for your streets.</p>
+            <a href="../garage/" class="btn btn-primary">START CONSULTATION</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>FEAR CITY CYCLES</h4>
+                    <p>Queens, NYC - Ride or Die</p>
+                    <p>Authentic motorcycle culture since the streets demanded it.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>SHOP</h4>
+                    <a href="../bikes/">Custom Builds</a>
+                    <a href="../gear/">Apparel</a>
+                    <a href="../gear/">Protective Gear</a>
+                    <a href="../garage/">Services</a>
+                </div>
+                <div class="footer-section">
+                    <h4>CULTURE</h4>
+                    <a href="../culture/">Blog</a>
+                    <a href="../culture/">Community</a>
+                    <a href="../culture/">Events</a>
+                    <a href="../culture/">History</a>
+                </div>
+                <div class="footer-section">
+                    <h4>CONNECT</h4>
+                    <a href="#" target="_blank">Instagram</a>
+                    <a href="#" target="_blank">YouTube</a>
+                    <a href="../contact/">Contact</a>
+                    <a href="../contact/">Press</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Fear City Cycles. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script type="module" src="../assets/js/bikes.js"></script>
+    <script src="../assets/js/mobile-enhancements.js"></script>
+    <script src="../assets/js/performance-optimizer.js"></script>
+</body>
+</html>

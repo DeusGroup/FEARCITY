@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fear City Cycles - Born in Queens, Built for Battle">
+    <title>About - Fear City Cycles</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Keep about page styling while allowing navbar */
+        .about-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .about-header {
+            text-align: center;
+            margin: 40px 0;
+            border-bottom: 2px solid #ff0000;
+            padding-bottom: 20px;
+        }
+        
+        .about-header h1 {
+            color: #ff0000;
+            font-size: 48px;
+            margin: 0;
+            letter-spacing: 4px;
+        }
+        
+        .section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+        
+        .section h2 {
+            color: #ff0000;
+            font-size: 24px;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+        }
+        
+        .section p {
+            margin: 0 0 15px 0;
+        }
+        
+        .section p:last-child {
+            margin: 0;
+        }
+        
+        .contact-info {
+            font-size: 14px;
+            line-height: 2;
+        }
+        
+        .back-link {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .back-link a {
+            color: #ff0000;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        
+        @media (max-width: 600px) {
+            .about-header h1 {
+                font-size: 32px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .section h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo.svg" alt="Fear City Cycles">
+                <span class="logo-text">Fear City Cycles</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="main.html#bikes">Bikes</a></li>
+                <li><a href="main.html#gear">Gear</a></li>
+                <li><a href="culture.html">Culture</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="main.html#contact">Contact</a></li>
+                <li><a href="cart/" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="about-container">
+        <div class="about-header">
+            <h1>ABOUT</h1>
+        </div>
+        
+        <div class="section">
+            <h2>WHO WE ARE</h2>
+            <p>Fear City Cycles. Queens, NYC.</p>
+            <p>Building custom motorcycles since the streets were dangerous and the city was broke.</p>
+            <p>We don't do pretty. We do real.</p>
+        </div>
+        
+        <div class="section">
+            <h2>WHAT WE BUILD</h2>
+            <p>Street fighters. Stripped down. Built up.</p>
+            <p>No chrome. No bullshit. Just raw power and Queens attitude.</p>
+            <p>Every bike tells a story. Every build earns its scars.</p>
+        </div>
+        
+        <div class="section">
+            <h2>WHERE WE COME FROM</h2>
+            <p>1975. NYC hit rock bottom. They called it "Fear City."</p>
+            <p>While others ran, we stayed. Built our bikes. Made our own rules.</p>
+            <p>Still here. Still building.</p>
+        </div>
+        
+        <div class="section">
+            <h2>FIND US</h2>
+            <div class="contact-info">
+                QUEENS, NEW YORK<br>
+                APPOINTMENT ONLY<br>
+                <br>
+                EMAIL: INFO@FEARCITYCYCLES.COM<br>
+                PHONE: CALL IF YOU KNOW
+            </div>
+        </div>
+        
+        <div class="back-link">
+            <a href="main.html">← BACK TO SHOP</a>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (mobileMenuToggle && navMenu) {
+            mobileMenuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+        }
+        
+        // Close mobile menu when clicking on nav links
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (navMenu && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    if (mobileMenuToggle) mobileMenuToggle.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

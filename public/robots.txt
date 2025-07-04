@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://fearcitycycles.com/sitemap.xml
+
+# Optimize crawling
+Crawl-delay: 1
+
+# Block access to specific directories if needed
+# Disallow: /admin/
+# Disallow: /private/
+
+# Allow important pages
+Allow: /bikes/
+Allow: /gear/
+Allow: /culture.html
+Allow: /contact/
+Allow: /cart/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.svg
+Allow: /*.jpg
+Allow: /*.png

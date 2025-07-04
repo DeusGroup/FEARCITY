@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Fear City Cycles</title>
+    <meta name="description" content="Contact Fear City Cycles for custom builds, gear inquiries, and press. Queens, NYC motorcycle culture.">
+    <meta property="og:title" content="Contact Fear City Cycles">
+    <meta property="og:description" content="Get in touch for custom builds, gear inquiries, and press. Queens, NYC motorcycle culture.">
+    <meta property="og:url" content="https://fearcitycycles.com/contact/">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+    <!-- EmailJS Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS with your public key
+        emailjs.init('YOUR_EMAILJS_PUBLIC_KEY'); // Replace with actual key
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-P6S25C1TTY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-P6S25C1TTY');
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="../main.html" class="nav-logo">
+                <img src="../assets/images/fear-city-logo-small.jpg" alt="Fear City Cycles" class="nav-logo-img">
+                <span class="logo-text">Fear City Cycles</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="../bikes/">Bikes</a></li>
+                <li><a href="../gear/">Gear</a></li>
+                <li><a href="../culture/">Culture</a></li>
+                <li><a href="../contact/" class="active">Contact</a></li>
+                <li>
+                    <input type="text" id="product-search" placeholder="Search..." class="nav-search">
+                </li>
+                <li><a href="../cart/" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
+            </ul>
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>CONTACT</h1>
+            <p>Got questions? Ready to build? We're here for real riders with serious inquiries.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>FEAR CITY CYCLES</h2>
+                    <div class="info-item">
+                        <h3>LOCATION</h3>
+                        <p>Queens, NYC<br>
+                        Exact address provided to serious inquiries</p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>HOURS</h3>
+                        <p>By appointment only<br>
+                        We build when inspiration strikes</p>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>FOLLOW THE CULTURE</h3>
+                        <div class="social-links">
+                            <a href="#" target="_blank">INSTAGRAM</a>
+                            <a href="#" target="_blank">YOUTUBE</a>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <h3>THE CREED</h3>
+                        <p>"We don't build pretty bikes for pretty people. We build machines for riders who know the difference between style and substance."</p>
+                    </div>
+                </div>
+
+                <div class="contact-forms">
+                    <!-- Inquiry Type Selection -->
+                    <div class="inquiry-selector">
+                        <h3>WHAT'S YOUR INQUIRY?</h3>
+                        <div class="inquiry-buttons">
+                            <button class="inquiry-btn active" data-form="custom">CUSTOM BUILD</button>
+                            <button class="inquiry-btn" data-form="gear">APPAREL/GEAR</button>
+                            <button class="inquiry-btn" data-form="press">PRESS</button>
+                            <button class="inquiry-btn" data-form="general">GENERAL</button>
+                        </div>
+                    </div>
+
+                    <!-- Custom Build Form -->
+                    <form class="contact-form active" id="custom-form" name="custom-build" method="POST">
+                        <input type="hidden" name="form-name" value="custom-build">
+                        <h3>CUSTOM BUILD CONSULTATION</h3>
+                        <div class="form-group">
+                            <label for="custom-name">Name *</label>
+                            <input type="text" id="custom-name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="custom-email">Email *</label>
+                            <input type="email" id="custom-email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="custom-phone">Phone</label>
+                            <input type="tel" id="custom-phone" name="phone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="build-type">Build Type *</label>
+                            <select id="build-type" name="build-type" required>
+                                <option value="">Select Build Type</option>
+                                <option value="street-fighter">Street Fighter</option>
+                                <option value="bobber">Bobber</option>
+                                <option value="chopper">Chopper</option>
+                                <option value="cafe-racer">Café Racer</option>
+                                <option value="custom">Something Unique</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="budget">Budget Range</label>
+                            <select id="budget" name="budget">
+                                <option value="">Select Budget</option>
+                                <option value="20-25k">$20,000 - $25,000</option>
+                                <option value="25-30k">$25,000 - $30,000</option>
+                                <option value="30-35k">$30,000 - $35,000</option>
+                                <option value="35k+">$35,000+</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="custom-message">Tell us your vision *</label>
+                            <textarea id="custom-message" name="message" rows="5" required placeholder="Describe your dream machine. What makes you tick? What's your riding style? What's your story?"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">SUBMIT CONSULTATION</button>
+                    </form>
+
+                    <!-- Gear Form -->
+                    <form class="contact-form" id="gear-form" name="gear-inquiry" method="POST">
+                        <input type="hidden" name="form-name" value="gear-inquiry">
+                        <h3>APPAREL & GEAR INQUIRY</h3>
+                        <div class="form-group">
+                            <label for="gear-name">Name *</label>
+                            <input type="text" id="gear-name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gear-email">Email *</label>
+                            <input type="email" id="gear-email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gear-type">Inquiry Type</label>
+                            <select id="gear-type" name="gear-type">
+                                <option value="">Select Type</option>
+                                <option value="sizing">Sizing Question</option>
+                                <option value="custom">Custom Gear</option>
+                                <option value="wholesale">Wholesale</option>
+                                <option value="return">Return/Exchange</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gear-message">Message *</label>
+                            <textarea id="gear-message" name="message" rows="5" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">SEND MESSAGE</button>
+                    </form>
+
+                    <!-- Press Form -->
+                    <form class="contact-form" id="press-form" name="press-inquiry" method="POST">
+                        <input type="hidden" name="form-name" value="press-inquiry">
+                        <h3>PRESS INQUIRY</h3>
+                        <div class="form-group">
+                            <label for="press-name">Name *</label>
+                            <input type="text" id="press-name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="press-email">Email *</label>
+                            <input type="email" id="press-email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="press-outlet">Publication/Outlet</label>
+                            <input type="text" id="press-outlet" name="outlet">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="press-deadline">Deadline</label>
+                            <input type="date" id="press-deadline" name="deadline">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="press-message">Story Details *</label>
+                            <textarea id="press-message" name="message" rows="5" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">SUBMIT REQUEST</button>
+                    </form>
+
+                    <!-- General Form -->
+                    <form class="contact-form" id="general-form" name="general-inquiry" method="POST">
+                        <input type="hidden" name="form-name" value="general-inquiry">
+                        <h3>GENERAL INQUIRY</h3>
+                        <div class="form-group">
+                            <label for="general-name">Name *</label>
+                            <input type="text" id="general-name" name="name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="general-email">Email *</label>
+                            <input type="email" id="general-email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="general-subject">Subject</label>
+                            <input type="text" id="general-subject" name="subject">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="general-message">Message *</label>
+                            <textarea id="general-message" name="message" rows="5" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">SEND MESSAGE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>FEAR CITY CYCLES</h4>
+                    <p>Lean Mean Built in Queens</p>
+                    <p>Authentic motorcycle culture since the streets demanded it.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>SHOP</h4>
+                    <a href="../bikes/">Custom Builds</a>
+                    <a href="../gear/">Apparel</a>
+                    <a href="../gear/">Protective Gear</a>
+                    <a href="../garage/">Services</a>
+                </div>
+                <div class="footer-section">
+                    <h4>CULTURE</h4>
+                    <a href="../culture/">Blog</a>
+                    <a href="../culture/">Community</a>
+                    <a href="../culture/">Events</a>
+                    <a href="../culture/">History</a>
+                </div>
+                <div class="footer-section">
+                    <h4>CONNECT</h4>
+                    <a href="#" target="_blank">Instagram</a>
+                    <a href="#" target="_blank">YouTube</a>
+                    <a href="../contact/">Contact</a>
+                    <a href="../contact/">Press</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Fear City Cycles. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+    <script type="module" src="../assets/js/contact.js"></script>
+</body>
+</html>
