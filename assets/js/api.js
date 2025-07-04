@@ -96,142 +96,156 @@ class FearCityAPI {
 
     // Mock API responses for testing
     async mockRequest(endpoint, options = {}) {
-        console.log('MOCK API:', endpoint, options.method || 'GET');
+        console.log('MOCK API REQUEST:', endpoint, options.method || 'GET');
         
         // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 300));
 
-        if (endpoint === '/api/products') {
-            return {
-                products: [
-                    // Bikes
-                    {
-                        id: 'street-reaper',
-                        slug: 'street-reaper',
-                        name: 'Street Reaper',
-                        price: 24500,
-                        images: ['/assets/images/bike-street-reaper.jpg'],
-                        description: 'Pure aggression on two wheels. Built for riders who know the streets.',
-                        category: { name: 'Motorcycles', slug: 'motorcycles' }
-                    },
-                    {
-                        id: 'queens-crusher',
-                        slug: 'queens-crusher',
-                        name: 'Queens Crusher',
-                        price: 26750,
-                        images: ['/assets/images/bike-queens-crusher.jpg'],
-                        description: 'Born in Queens, built for battle. This machine dominates city streets.',
-                        category: { name: 'Motorcycles', slug: 'motorcycles' }
-                    },
-                    {
-                        id: 'death-rider',
-                        slug: 'death-rider',
-                        name: 'Death Rider',
-                        price: 29500,
-                        images: ['/assets/images/bike-death-rider.jpg'],
-                        description: 'When subtlety is not an option. Raw power and intimidation.',
-                        category: { name: 'Motorcycles', slug: 'motorcycles' }
-                    },
-                    {
-                        id: 'midnight-racer',
-                        slug: 'midnight-racer',
-                        name: 'Midnight Racer',
-                        price: 31200,
-                        images: ['/assets/images/bike-midnight-racer.jpg'],
-                        description: 'Built for the night. Speed demons only.',
-                        category: { name: 'Motorcycles', slug: 'motorcycles' }
-                    },
-                    {
-                        id: 'borough-bruiser',
-                        slug: 'borough-bruiser',
-                        name: 'Borough Bruiser',
-                        price: 28900,
-                        images: ['/assets/images/bike-borough-bruiser.jpg'],
-                        description: 'Heavy metal justice on two wheels.',
-                        category: { name: 'Motorcycles', slug: 'motorcycles' }
-                    },
-                    {
-                        id: 'fear-fighter',
-                        slug: 'fear-fighter',
-                        name: 'Fear Fighter',
-                        price: 27400,
-                        images: ['/assets/images/bike-fear-fighter.jpg'],
-                        description: 'Engineered to conquer fear and concrete.',
-                        category: { name: 'Motorcycles', slug: 'motorcycles' }
-                    },
-                    // Gear
-                    {
-                        id: 'reaper-gloves',
-                        slug: 'reaper-riding-gloves',
-                        name: 'Reaper Riding Gloves',
-                        price: 89,
-                        images: ['/assets/images/gloves-reaper-riding.jpg'],
-                        description: 'Professional-grade riding gloves with superior grip.',
-                        category: { name: 'Gear', slug: 'gear' }
-                    },
-                    {
-                        id: 'fear-city-jacket',
-                        slug: 'fear-city-jacket',
-                        name: 'Fear City Leather Jacket',
-                        price: 395,
-                        images: ['/assets/images/jacket-fear-city.jpg'],
-                        description: 'Premium leather jacket with authentic Fear City branding.',
-                        category: { name: 'Gear', slug: 'gear' }
-                    },
-                    {
-                        id: 'queens-skull-tee',
-                        slug: 'queens-skull-tee',
-                        name: 'Queens Skull Tee',
-                        price: 35,
-                        images: ['/assets/images/tee-queens-skull.jpg'],
-                        description: 'Rep Queens with this hardcore skull design.',
-                        category: { name: 'Gear', slug: 'gear' }
-                    },
-                    {
-                        id: 'prospect-vest',
-                        slug: 'prospect-vest',
-                        name: 'Prospect Vest',
-                        price: 125,
-                        images: ['/assets/images/vest-prospect.jpg'],
-                        description: 'Classic cut vest for the streets.',
-                        category: { name: 'Gear', slug: 'gear' }
-                    },
-                    {
-                        id: 'skull-keychain',
-                        slug: 'skull-keychain',
-                        name: 'Skull Keychain',
-                        price: 15,
-                        images: ['/assets/images/keychain-skull.jpg'],
-                        description: 'Solid metal skull keychain.',
-                        category: { name: 'Gear', slug: 'gear' }
-                    },
-                    {
-                        id: 'fear-city-patch',
-                        slug: 'fear-city-patch',
-                        name: 'Fear City Patch',
-                        price: 12,
-                        images: ['/assets/images/patch-fear-city.jpg'],
-                        description: 'Iron-on patch with Fear City logo.',
-                        category: { name: 'Gear', slug: 'gear' }
-                    }
-                ]
-            };
-        }
+        // Define all products
+        const allProducts = [
+            // Bikes
+            {
+                id: 'street-reaper',
+                slug: 'street-reaper',
+                name: 'Street Reaper',
+                price: 24500,
+                images: ['/assets/images/bike-street-reaper.jpg'],
+                description: 'Pure aggression on two wheels. Built for riders who know the streets.',
+                category: { name: 'Motorcycles', slug: 'motorcycles' }
+            },
+            {
+                id: 'queens-crusher',
+                slug: 'queens-crusher',
+                name: 'Queens Crusher',
+                price: 26750,
+                images: ['/assets/images/bike-queens-crusher.jpg'],
+                description: 'Born in Queens, built for battle. This machine dominates city streets.',
+                category: { name: 'Motorcycles', slug: 'motorcycles' }
+            },
+            {
+                id: 'death-rider',
+                slug: 'death-rider',
+                name: 'Death Rider',
+                price: 29500,
+                images: ['/assets/images/bike-death-rider.jpg'],
+                description: 'When subtlety is not an option. Raw power and intimidation.',
+                category: { name: 'Motorcycles', slug: 'motorcycles' }
+            },
+            {
+                id: 'midnight-racer',
+                slug: 'midnight-racer',
+                name: 'Midnight Racer',
+                price: 31200,
+                images: ['/assets/images/bike-midnight-racer.jpg'],
+                description: 'Built for the night. Speed demons only.',
+                category: { name: 'Motorcycles', slug: 'motorcycles' }
+            },
+            {
+                id: 'borough-bruiser',
+                slug: 'borough-bruiser',
+                name: 'Borough Bruiser',
+                price: 28900,
+                images: ['/assets/images/bike-borough-bruiser.jpg'],
+                description: 'Heavy metal justice on two wheels.',
+                category: { name: 'Motorcycles', slug: 'motorcycles' }
+            },
+            {
+                id: 'fear-fighter',
+                slug: 'fear-fighter',
+                name: 'Fear Fighter',
+                price: 27400,
+                images: ['/assets/images/bike-fear-fighter.jpg'],
+                description: 'Engineered to conquer fear and concrete.',
+                category: { name: 'Motorcycles', slug: 'motorcycles' }
+            },
+            // Gear
+            {
+                id: 'reaper-gloves',
+                slug: 'reaper-riding-gloves',
+                name: 'Reaper Riding Gloves',
+                price: 89,
+                images: ['/assets/images/gloves-reaper-riding.jpg'],
+                description: 'Professional-grade riding gloves with superior grip.',
+                category: { name: 'Gear', slug: 'gear' }
+            },
+            {
+                id: 'fear-city-jacket',
+                slug: 'fear-city-jacket',
+                name: 'Fear City Leather Jacket',
+                price: 395,
+                images: ['/assets/images/jacket-fear-city.jpg'],
+                description: 'Premium leather jacket with authentic Fear City branding.',
+                category: { name: 'Gear', slug: 'gear' }
+            },
+            {
+                id: 'queens-skull-tee',
+                slug: 'queens-skull-tee',
+                name: 'Queens Skull Tee',
+                price: 35,
+                images: ['/assets/images/tee-queens-skull.jpg'],
+                description: 'Rep Queens with this hardcore skull design.',
+                category: { name: 'Gear', slug: 'gear' }
+            },
+            {
+                id: 'prospect-vest',
+                slug: 'prospect-vest',
+                name: 'Prospect Vest',
+                price: 125,
+                images: ['/assets/images/vest-prospect.jpg'],
+                description: 'Classic cut vest for the streets.',
+                category: { name: 'Gear', slug: 'gear' }
+            },
+            {
+                id: 'skull-keychain',
+                slug: 'skull-keychain',
+                name: 'Skull Keychain',
+                price: 15,
+                images: ['/assets/images/keychain-skull.jpg'],
+                description: 'Solid metal skull keychain.',
+                category: { name: 'Gear', slug: 'gear' }
+            },
+            {
+                id: 'fear-city-patch',
+                slug: 'fear-city-patch',
+                name: 'Fear City Patch',
+                price: 12,
+                images: ['/assets/images/patch-fear-city.jpg'],
+                description: 'Iron-on patch with Fear City logo.',
+                category: { name: 'Gear', slug: 'gear' }
+            }
+        ];
 
+        // Handle individual product requests
         if (endpoint.includes('/api/products/')) {
             const slug = endpoint.split('/').pop();
-            return {
-                product: {
-                    id: slug,
-                    slug: slug,
-                    name: slug.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()),
-                    price: 24500,
-                    images: [`/assets/images/bike-${slug}.jpg`],
-                    description: 'Custom build from Fear City Cycles.',
-                    category: { name: 'Motorcycles', slug: 'motorcycles' }
-                }
-            };
+            const product = allProducts.find(p => p.slug === slug);
+            console.log('MOCK: Looking for product with slug:', slug, 'Found:', !!product);
+            return { product: product || allProducts[0] };
         }
+
+        // Handle products list with filtering
+        if (endpoint.startsWith('/api/products')) {
+            try {
+                const url = new URL(`http://example.com${endpoint}`);
+                const category = url.searchParams.get('category');
+                console.log('MOCK: Category filter:', category);
+                
+                let filteredProducts = allProducts;
+                if (category) {
+                    filteredProducts = allProducts.filter(product => 
+                        product.category.slug === category || 
+                        product.category.name.toLowerCase() === category.toLowerCase()
+                    );
+                    console.log('MOCK: Filtered products count:', filteredProducts.length);
+                }
+                
+                return { products: filteredProducts };
+            } catch (e) {
+                console.log('MOCK: URL parsing error, returning all products');
+                return { products: allProducts };
+            }
+        }
+
 
         if (endpoint === '/api/contact') {
             return {
