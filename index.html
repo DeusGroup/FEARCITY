@@ -112,6 +112,13 @@
                 0 0 5px rgba(139, 0, 0, 0.4),
                 0 0 10px rgba(139, 0, 0, 0.2),
                 inset 0 0 5px rgba(139, 0, 0, 0.1);
+            pointer-events: none;
+            cursor: default;
+        }
+        
+        .enter-btn.animation-complete {
+            pointer-events: auto;
+            cursor: pointer;
         }
         
         .enter-btn::before {
@@ -252,22 +259,19 @@
     <h1 class="gateway-title">Fear City Cycles</h1>
     <a href="main.html" class="enter-btn" id="enterBtn">Enter the City</a>
     <script>
-        // Disable button until animation completes
+        // Disable button until its animation completes
         const enterBtn = document.getElementById('enterBtn');
         
-        // Disable initially
-        enterBtn.style.pointerEvents = 'none';
-        enterBtn.style.cursor = 'default';
+        // Listen for animation completion
+        enterBtn.addEventListener('animationend', (e) => {
+            if (e.animationName === 'slowButtonReveal') {
+                enterBtn.classList.add('animation-complete');
+            }
+        });
         
-        // Enable after animation completes (1.2s delay + 2.5s animation = 3.7s)
-        setTimeout(() => {
-            enterBtn.style.pointerEvents = 'auto';
-            enterBtn.style.cursor = 'pointer';
-        }, 3700);
-        
-        // Add visual feedback when disabled
+        // Prevent clicks until animation is complete
         enterBtn.addEventListener('click', (e) => {
-            if (enterBtn.style.pointerEvents === 'none') {
+            if (!enterBtn.classList.contains('animation-complete')) {
                 e.preventDefault();
                 return false;
             }
