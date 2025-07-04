@@ -1,13 +1,19 @@
-// Next.js API Route: /api/contact
-import { PrismaClient } from '@prisma/client';
+// Vercel Serverless Function - Contact Form
+const { PrismaClient } = require('@prisma/client');
 
-const prisma = new PrismaClient();
+let prisma;
 
-export default async function handler(req, res) {
-  // Enable CORS
+// Initialize Prisma with connection pooling for serverless
+if (!global.prisma) {
+  global.prisma = new PrismaClient();
+}
+prisma = global.prisma;
+
+module.exports = async (req, res) => {
+  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -69,10 +75,11 @@ export default async function handler(req, res) {
       console.error('Error submitting contact form:', error);
       res.status(500).json({
         error: 'Internal Server Error',
-        message: 'Failed to submit contact form'
+        message: 'Failed to submit contact form',
+        details: error.message
       });
     }
   } else {
     res.status(405).json({ error: 'Method not allowed' });
   }
-}
+};
