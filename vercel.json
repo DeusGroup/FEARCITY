@@ -1,31 +1,18 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "**/*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "@vercel/node@18.x"
     }
-  ],
-  "routes": [
+  },
+  "rewrites": [
     {
-      "src": "/api/products/([^/]+)",
-      "dest": "/api/products/[slug].js?slug=$1"
+      "source": "/api/products/([^/]+)",
+      "destination": "/api/products/[slug].js?slug=$1"
     },
     {
-      "src": "/culture",
-      "dest": "/culture.html"
-    },
-    {
-      "src": "/culture/",
-      "dest": "/culture.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/culture",
+      "destination": "/culture.html"
     }
   ]
 }
