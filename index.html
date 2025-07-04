@@ -121,6 +121,57 @@
             cursor: pointer;
         }
         
+        .enter-btn.loading {
+            pointer-events: none;
+            animation: buttonLoading 2s ease-in-out infinite;
+        }
+        
+        .gateway-body.exiting {
+            animation: exitToCity 1.5s ease-in both;
+        }
+        
+        @keyframes buttonLoading {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 5px rgba(139, 0, 0, 0.4),
+                    0 0 10px rgba(139, 0, 0, 0.2),
+                    inset 0 0 5px rgba(139, 0, 0, 0.1);
+                border-color: #8B0000;
+            }
+            50% { 
+                box-shadow: 
+                    0 0 15px rgba(204, 0, 0, 0.8),
+                    0 0 30px rgba(204, 0, 0, 0.4),
+                    0 0 45px rgba(139, 0, 0, 0.2),
+                    inset 0 0 15px rgba(204, 0, 0, 0.3);
+                border-color: #cc0000;
+                transform: scale(1.02);
+            }
+        }
+        
+        @keyframes exitToCity {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0px);
+            }
+            30% {
+                opacity: 0.8;
+                transform: scale(1.05);
+                filter: blur(1px);
+            }
+            70% {
+                opacity: 0.3;
+                transform: scale(1.1);
+                filter: blur(3px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.2);
+                filter: blur(8px);
+            }
+        }
+        
         .enter-btn::before {
             content: '';
             position: absolute;
@@ -261,6 +312,8 @@
     <script>
         // Disable button until its animation completes
         const enterBtn = document.getElementById('enterBtn');
+        const gatewayBody = document.querySelector('.gateway-body');
+        let isLoading = false;
         
         // Listen for animation completion
         enterBtn.addEventListener('animationend', (e) => {
@@ -269,12 +322,29 @@
             }
         });
         
-        // Prevent clicks until animation is complete
+        // Handle button click with loading effect
         enterBtn.addEventListener('click', (e) => {
-            if (!enterBtn.classList.contains('animation-complete')) {
-                e.preventDefault();
+            e.preventDefault();
+            
+            // Prevent clicks until initial animation is complete
+            if (!enterBtn.classList.contains('animation-complete') || isLoading) {
                 return false;
             }
+            
+            // Start loading state
+            isLoading = true;
+            enterBtn.classList.add('loading');
+            
+            // After button loading animation plays for a bit, start exit transition
+            setTimeout(() => {
+                gatewayBody.classList.add('exiting');
+                
+                // Redirect after exit animation completes
+                setTimeout(() => {
+                    window.location.href = 'main.html';
+                }, 1500); // Match exitToCity animation duration
+                
+            }, 1000); // Let button pulse for 1 second first
         });
     </script>
 </body>
