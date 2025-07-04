@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Test Page</h1>
+    <button onclick="testAPI()">Test API</button>
+    <div id="results"></div>
+
+    <script src="assets/js/api.js"></script>
+    <script>
+        async function testAPI() {
+            console.log('Testing API...');
+            const results = document.getElementById('results');
+            results.innerHTML = 'Testing...';
+            
+            try {
+                const api = new FearCityAPI();
+                console.log('API initialized:', api);
+                console.log('Base URL:', api.baseURL);
+                
+                // Test all products
+                const allProducts = await api.fetchProducts();
+                console.log('All products:', allProducts);
+                
+                // Test motorcycles
+                const motorcycles = await api.fetchProducts({ category: 'motorcycles' });
+                console.log('Motorcycles:', motorcycles);
+                
+                // Test gear
+                const gear = await api.fetchProducts({ category: 'gear' });
+                console.log('Gear:', gear);
+                
+                results.innerHTML = `
+                    <h3>API Test Results:</h3>
+                    <p>Base URL: ${api.baseURL}</p>
+                    <p>All products: ${allProducts?.products?.length || 0}</p>
+                    <p>Motorcycles: ${motorcycles?.products?.length || 0}</p>
+                    <p>Gear: ${gear?.products?.length || 0}</p>
+                    <pre>${JSON.stringify(motorcycles, null, 2)}</pre>
+                `;
+                
+            } catch (error) {
+                console.error('API test error:', error);
+                results.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
