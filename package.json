@@ -1,16 +1,8 @@
 {
-  "name": "fear-city-cycles-fresh",
+  "name": "fear-city-cycles",
   "version": "1.0.0",
-  "description": "Fear City Cycles - Fresh Vercel Deployment",
+  "description": "Fear City Cycles Website",
   "scripts": {
-    "build": "mkdir -p dist && cp -r assets bikes gear cart contact culture.html index.html main.html about.html offline.html robots.txt sitemap.xml sw.js styles.css *.html dist/ 2>/dev/null || true",
-    "postinstall": "echo 'Static deployment'"
-  },
-  "dependencies": {
-    "@prisma/client": "^5.1.1",
-    "prisma": "^5.1.1"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "build": "echo 'Static HTML site - no build required'"
   }
 }
