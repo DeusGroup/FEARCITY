@@ -606,17 +606,28 @@
             });
         }
         
-        // Close mobile menu when clicking on nav links (only when mobile menu is actually open)
+        // Close mobile menu when clicking on nav links (only for anchor links, not external pages)
         const navLinks = document.querySelectorAll('.nav-menu a');
         navLinks.forEach(link => {
             link.addEventListener('click', function(e) {
-                // Only close mobile menu if it's currently open, don't interfere with normal navigation
-                setTimeout(() => {
+                // Only handle mobile menu closing for internal anchor links (#bikes, #gear)
+                // Don't interfere with external pages (contact.html, culture.html, etc.)
+                const href = this.getAttribute('href');
+                
+                if (href && href.startsWith('#')) {
+                    // This is an anchor link - safe to handle mobile menu closing
                     if (navMenu && navMenu.classList.contains('active')) {
                         navMenu.classList.remove('active');
                         if (mobileMenuToggle) mobileMenuToggle.classList.remove('active');
                     }
-                }, 10); // Small delay to ensure navigation happens first
+                } else {
+                    // This is an external link - only close menu if mobile menu is open, but don't delay
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        if (mobileMenuToggle) mobileMenuToggle.classList.remove('active');
+                    }
+                    // Let the browser handle navigation immediately
+                }
             });
         });
         
