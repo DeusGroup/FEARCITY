@@ -214,6 +214,8 @@
                 0 0 6px rgba(139, 0, 0, 0.15), /* Softer glow */
                 0 4px 15px rgba(0, 0, 0, 0.3); /* Keep depth shadow */
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            /* Desktop positioning - normal flow */
+            position: relative;
         }
         
         .cta-btn:hover {
@@ -268,7 +270,7 @@
                 letter-spacing: 3px; /* Entrance page mobile spacing */
                 /* Position button higher so it's fully visible */
                 position: absolute;
-                bottom: 15vh; /* More spacing from bottom to ensure full visibility */
+                bottom: 20vh; /* Increased spacing to ensure "View Our Rides" is fully visible */
                 left: 50%;
                 transform: translateX(-50%); /* Center horizontally */
                 margin-top: 0; /* Remove margin since using absolute positioning */
@@ -279,10 +281,10 @@
             }
         }
         
-        /* iPhone specific adjustments */
+        /* Small mobile adjustments */
         @media (max-width: 430px) {
             .hero {
-                min-height: 100vh; /* Full screen height on iPhone */
+                min-height: 100vh; /* Full screen height on small mobile */
                 height: 100vh;
                 /* Adjust gradient for better text contrast on smaller screens */
                 background: linear-gradient(rgba(0,0,0,0.7), rgba(139,0,0,0.4)), url('assets/images/hero-bg.jpg') center/cover;
@@ -310,13 +312,13 @@
             }
             
             .cta-btn {
-                padding: 16px 35px; /* Exact entrance page iPhone size */
-                font-size: 0.95rem; /* Exact entrance page iPhone size */
+                padding: 16px 35px; /* Small mobile size */
+                font-size: 0.95rem; /* Small mobile size */
                 font-weight: 500; /* Match entrance page weight */
-                letter-spacing: 2px; /* Exact entrance page iPhone spacing */
+                letter-spacing: 2px; /* Small mobile spacing */
                 /* Absolute position at bottom of hero section */
                 position: absolute;
-                bottom: 15vh; /* Increased spacing to match mobile rule for full visibility */
+                bottom: 20vh; /* Consistent spacing to ensure full visibility on all mobile */
                 left: 50%;
                 transform: translateX(-50%); /* Perfect center */
                 margin-top: 0; /* Remove margin */
