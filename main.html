@@ -159,6 +159,10 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            background-attachment: fixed;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
         
         .hero-content {
@@ -201,6 +205,15 @@
         }
         
         @media (max-width: 768px) {
+            .hero {
+                background-attachment: scroll; /* Better performance on mobile */
+                background-position: center center;
+                min-height: 50vh; /* Slightly shorter on mobile */
+                background-size: cover;
+                /* Ensure the focal point of the image is visible */
+                background-position: 50% 50%;
+            }
+            
             .hero-content h1 {
                 font-size: 2.5rem;
                 line-height: 1.1;
@@ -208,6 +221,23 @@
             
             .hero-content p {
                 font-size: 1.1rem;
+            }
+        }
+        
+        /* iPhone specific adjustments */
+        @media (max-width: 430px) {
+            .hero {
+                min-height: 45vh;
+                /* Adjust gradient for better text contrast on smaller screens */
+                background: linear-gradient(rgba(0,0,0,0.7), rgba(139,0,0,0.4)), url('assets/images/hero-bg.jpg') center/cover;
+            }
+            
+            .hero-content {
+                padding: 0 15px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
             }
         }
         
