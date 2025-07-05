@@ -15,7 +15,7 @@
         #bikes, #gear {
             scroll-margin-top: 100px; /* Increased offset for better visibility */
             padding-top: 80px;
-            margin-top: -80px;
+            margin-top: 0; /* Remove negative margin that was causing overlap */
         }
         
         /* Ensure heading is visible */
@@ -72,8 +72,10 @@
         
         /* Product Grid Styles */
         .products {
-            padding: 20px 20px 60px 20px; /* Reduced top padding since we added padding-top above */
+            padding: 80px 20px 60px 20px; /* Restored full top padding to prevent overlap */
             background: #111;
+            position: relative;
+            z-index: 1;
         }
         
         .products h2 {
@@ -227,7 +229,8 @@
         /* iPhone specific adjustments */
         @media (max-width: 430px) {
             .hero {
-                min-height: 45vh;
+                min-height: 100vh; /* Full screen height on iPhone */
+                height: 100vh;
                 /* Adjust gradient for better text contrast on smaller screens */
                 background: linear-gradient(rgba(0,0,0,0.7), rgba(139,0,0,0.4)), url('assets/images/hero-bg.jpg') center/cover;
             }
