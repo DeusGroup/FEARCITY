@@ -510,21 +510,116 @@
         })(); // End of IIFE
     </script>
     
-    <!-- Skip external scripts due to cache conflicts - implement hero movie inline -->
+    <!-- Restore API functionality with cache busting -->
+    <script src="assets/js/api.js?v=recovery-20250705" defer></script>
     
     <!-- Inline Hero Movie and Product Loading -->
     <script>
         
-        // Simple cart functionality for hardcoded products
+        // Enhanced cart functionality with API integration
         function addToCart(id, name, price) {
             if (window.fearCityCart) {
                 window.fearCityCart.addItem({ id, name, price });
             }
         }
         
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Page loaded with hardcoded products');
-            // Products are now hardcoded in HTML, no dynamic loading needed
+        // Progressive enhancement: API loading with hardcoded fallback
+        async function loadProductsWithAPI() {
+            console.log('🚀 Starting progressive product loading...');
+            
+            try {
+                // Wait for API to be available
+                if (typeof window.fearCityAPI === 'undefined') {
+                    console.log('⚠️ API not available, using hardcoded fallback');
+                    return false;
+                }
+                
+                console.log('✅ API available, loading dynamic products');
+                
+                // Load motorcycles
+                const bikesResponse = await window.fearCityAPI.fetchProducts({ category: 'motorcycles' });
+                if (bikesResponse && bikesResponse.products && bikesResponse.products.length > 0) {
+                    console.log(`🏍️ Loaded ${bikesResponse.products.length} motorcycles from API`);
+                    renderApiProducts('bikes', bikesResponse.products);
+                } else {
+                    console.log('⚠️ No motorcycles from API, keeping hardcoded');
+                }
+                
+                // Load gear
+                const gearResponse = await window.fearCityAPI.fetchProducts({ category: 'gear' });
+                if (gearResponse && gearResponse.products && gearResponse.products.length > 0) {
+                    console.log(`🧥 Loaded ${gearResponse.products.length} gear items from API`);
+                    renderApiProducts('gear', gearResponse.products);
+                } else {
+                    console.log('⚠️ No gear from API, keeping hardcoded');
+                }
+                
+                console.log('✨ API product loading complete');
+                return true;
+                
+            } catch (error) {
+                console.log('❌ API loading failed, using hardcoded fallback:', error.message);
+                return false;
+            }
+        }
+        
+        // Render products from API data
+        function renderApiProducts(category, products) {
+            const grid = document.querySelector(`#${category} .product-grid`);
+            if (!grid) {
+                console.log(`❌ Grid not found for category: ${category}`);
+                return;
+            }
+            
+            // Clear existing hardcoded content
+            grid.innerHTML = '';
+            
+            // Render API products
+            products.forEach(product => {
+                const card = createApiProductCard(product);
+                grid.appendChild(card);
+            });
+            
+            console.log(`✅ Rendered ${products.length} products in ${category} section`);
+        }
+        
+        // Create product card from API data
+        function createApiProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            
+            // Use API data structure
+            const image = product.images && product.images[0] ? product.images[0] : 'assets/images/placeholder.jpg';
+            const price = typeof product.price === 'number' ? product.price : 0;
+            
+            card.innerHTML = `
+                <img src="${image}" alt="${product.name}" loading="lazy">
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <div class="price">$${price.toLocaleString()}</div>
+                    <button onclick="addToCart('${product.id}', '${product.name}', ${price})">
+                        Add to Cart
+                    </button>
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        // Initialize with progressive enhancement
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 Page loaded - starting progressive enhancement');
+            
+            // Try API loading after a short delay to ensure scripts are loaded
+            setTimeout(async () => {
+                const apiLoaded = await loadProductsWithAPI();
+                if (apiLoaded) {
+                    console.log('✨ Site running with full API functionality');
+                } else {
+                    console.log('🛡️ Site running with hardcoded fallback (still fully functional)');
+                }
+            }, 500);
         });
         
         
