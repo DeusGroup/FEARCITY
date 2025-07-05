@@ -169,6 +169,8 @@
         .hero-content {
             position: absolute;
             right: 25%; /* Position at 3/4 to the right (25% from right edge) */
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%); /* Perfect vertical centering */
             color: white;
             max-width: 800px;
             padding: 0 20px;
@@ -206,7 +208,7 @@
             border-radius: 4px; /* Smaller radius */
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Entrance page timing */
             font-size: 1rem; /* Smaller font */
-            margin-top: 25px;
+            margin-top: 80px; /* 4cm lower (approximately 80px) */
             box-shadow: 
                 0 0 5px rgba(139, 0, 0, 0.4),
                 0 0 10px rgba(139, 0, 0, 0.2),
@@ -252,10 +254,10 @@
             }
             
             .cta-btn {
-                padding: 15px 30px; /* Smaller mobile size */
-                font-size: 0.95rem;
-                margin-top: 20px;
-                letter-spacing: 2px; /* Reduced for mobile */
+                padding: 18px 40px; /* Entrance page mobile size */
+                font-size: 1.0rem;
+                margin-top: 50px; /* More space on mobile */
+                letter-spacing: 3px; /* Entrance page mobile spacing */
                 box-shadow: 
                     0 0 4px rgba(139, 0, 0, 0.4),
                     0 0 8px rgba(139, 0, 0, 0.2),
@@ -275,16 +277,13 @@
             .hero-content {
                 padding: 0 20px;
                 max-width: 90%;
-                /* Position text in the lower third for better composition */
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: flex-start; /* Left align content within container */
-                height: 100%;
-                padding-bottom: 15vh; /* Push content up slightly from center */
-                text-align: left; /* Left align text */
-                right: 10%; /* Even closer to center on iPhone for readability */
+                /* Position in lower section like entrance page */
                 position: absolute;
+                right: 50%; /* Center horizontally on iPhone */
+                top: 65%; /* Position in lower third like entrance page */
+                transform: translate(50%, -50%); /* Center the content block */
+                text-align: center; /* Center align on iPhone like entrance page */
+                width: 90%;
             }
             
             .hero-content h1 {
@@ -297,11 +296,11 @@
             }
             
             .cta-btn {
-                padding: 16px 35px; /* iPhone entrance page size */
-                font-size: 0.95rem;
-                font-weight: 600;
-                letter-spacing: 2px;
-                margin-top: 30px;
+                padding: 16px 35px; /* Exact entrance page iPhone size */
+                font-size: 0.95rem; /* Exact entrance page iPhone size */
+                font-weight: 500; /* Match entrance page weight */
+                letter-spacing: 2px; /* Exact entrance page iPhone spacing */
+                margin-top: 40px; /* More space like entrance page layout */
                 box-shadow: 
                     0 0 5px rgba(139, 0, 0, 0.4),
                     0 0 10px rgba(139, 0, 0, 0.2),
