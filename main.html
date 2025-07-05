@@ -266,12 +266,12 @@
                 padding: 18px 40px; /* Entrance page mobile size */
                 font-size: 1.0rem;
                 letter-spacing: 3px; /* Entrance page mobile spacing */
-                /* Position button independently at bottom center */
-                position: fixed;
-                bottom: 8vh; /* Spacing above bottom */
+                /* Position button independently at bottom of hero */
+                position: absolute;
+                bottom: 8vh; /* Spacing above bottom of hero */
                 left: 50%;
                 transform: translateX(-50%); /* Center horizontally */
-                margin-top: 0; /* Remove margin since using fixed positioning */
+                margin-top: 0; /* Remove margin since using absolute positioning */
                 box-shadow: 
                     0 0 2px rgba(139, 0, 0, 0.2), /* Lighter glow */
                     0 0 4px rgba(139, 0, 0, 0.1), /* Softer glow */
@@ -314,8 +314,8 @@
                 font-size: 0.95rem; /* Exact entrance page iPhone size */
                 font-weight: 500; /* Match entrance page weight */
                 letter-spacing: 2px; /* Exact entrance page iPhone spacing */
-                /* Fixed position at bottom center like entrance page */
-                position: fixed;
+                /* Absolute position at bottom of hero section */
+                position: absolute;
                 bottom: 6vh; /* A bit closer to bottom on iPhone */
                 left: 50%;
                 transform: translateX(-50%); /* Perfect center */
@@ -357,8 +357,8 @@
     <section class="hero">
         <div class="hero-content">
             <h1>Lean Mean<br>Built in Queens</h1>
-            <a href="#bikes" class="cta-btn">View Our Rides</a>
         </div>
+        <a href="#bikes" class="cta-btn">View Our Rides</a>
     </section>
 
     <section class="products" id="bikes">
