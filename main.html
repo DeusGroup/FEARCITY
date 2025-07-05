@@ -193,31 +193,39 @@
         
         .cta-btn {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
-            backdrop-filter: blur(10px); /* Glass blur effect */
-            -webkit-backdrop-filter: blur(10px); /* Safari support */
+            background: rgba(255, 255, 255, 0.1); /* More transparent */
+            backdrop-filter: blur(8px); /* Less blur for subtlety */
+            -webkit-backdrop-filter: blur(8px); /* Safari support */
             color: white;
-            padding: 20px 50px; /* Larger padding for better proportion */
+            padding: 16px 35px; /* Smaller padding */
             text-decoration: none;
-            font-weight: 700; /* Bolder weight */
+            font-weight: 600; /* Slightly less bold */
             text-transform: uppercase;
-            letter-spacing: 2px; /* Increased letter spacing */
-            border: 2px solid rgba(255, 255, 255, 0.3); /* Transparent border */
-            border-radius: 8px; /* Rounded corners for modern look */
-            transition: all 0.3s ease;
-            font-size: 1.1rem; /* Slightly larger font */
-            margin-top: 25px; /* More space from heading */
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Subtle shadow */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Ensure text readability */
+            letter-spacing: 3px; /* Entrance page style */
+            border: 2px solid #8B0000; /* Neon red border like entrance */
+            border-radius: 4px; /* Smaller radius */
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Entrance page timing */
+            font-size: 1rem; /* Smaller font */
+            margin-top: 25px;
+            box-shadow: 
+                0 0 5px rgba(139, 0, 0, 0.4),
+                0 0 10px rgba(139, 0, 0, 0.2),
+                0 4px 15px rgba(0, 0, 0, 0.3); /* Neon glow effect */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
         }
         
         .cta-btn:hover {
-            background: rgba(139, 0, 0, 0.25); /* Subtle red tint on hover */
-            border-color: rgba(255, 255, 255, 0.5); /* Brighter border */
-            transform: translateY(-3px); /* Slightly more lift */
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Enhanced shadow */
-            backdrop-filter: blur(15px); /* More blur on hover */
-            -webkit-backdrop-filter: blur(15px);
+            color: #ffffff;
+            transform: translateY(-3px);
+            border-color: #cc0000; /* Brighter red border on hover */
+            background: rgba(139, 0, 0, 0.2); /* Subtle red background */
+            box-shadow: 
+                0 0 8px rgba(204, 0, 0, 0.6),
+                0 0 16px rgba(204, 0, 0, 0.3),
+                0 0 24px rgba(139, 0, 0, 0.2),
+                0 8px 25px rgba(139, 0, 0, 0.4); /* Entrance page neon glow */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
         
         @media (max-width: 768px) {
@@ -244,11 +252,14 @@
             }
             
             .cta-btn {
-                padding: 18px 40px; /* Proportional to mobile text size */
-                font-size: 1rem;
+                padding: 15px 30px; /* Smaller mobile size */
+                font-size: 0.95rem;
                 margin-top: 20px;
-                border-radius: 6px; /* Slightly smaller radius on mobile */
-                box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3); /* Adjusted shadow */
+                letter-spacing: 2px; /* Reduced for mobile */
+                box-shadow: 
+                    0 0 4px rgba(139, 0, 0, 0.4),
+                    0 0 8px rgba(139, 0, 0, 0.2),
+                    0 3px 12px rgba(0, 0, 0, 0.3);
             }
         }
         
@@ -286,15 +297,17 @@
             }
             
             .cta-btn {
-                padding: 22px 45px; /* Proportional to larger iPhone text */
-                font-size: 1.1rem;
-                font-weight: 700;
+                padding: 16px 35px; /* iPhone entrance page size */
+                font-size: 0.95rem;
+                font-weight: 600;
                 letter-spacing: 2px;
-                margin-top: 30px; /* More space for full-screen layout */
-                border-radius: 8px; /* Full radius on iPhone for modern look */
-                box-shadow: 0 10px 36px rgba(0, 0, 0, 0.35); /* Enhanced shadow for full-screen */
-                backdrop-filter: blur(12px); /* Slightly more blur on iPhone */
-                -webkit-backdrop-filter: blur(12px);
+                margin-top: 30px;
+                box-shadow: 
+                    0 0 5px rgba(139, 0, 0, 0.4),
+                    0 0 10px rgba(139, 0, 0, 0.2),
+                    0 5px 20px rgba(0, 0, 0, 0.35);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
             }
         }
         
