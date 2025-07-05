@@ -193,22 +193,31 @@
         
         .cta-btn {
             display: inline-block;
-            background: #8B0000;
+            background: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
+            backdrop-filter: blur(10px); /* Glass blur effect */
+            -webkit-backdrop-filter: blur(10px); /* Safari support */
             color: white;
             padding: 20px 50px; /* Larger padding for better proportion */
             text-decoration: none;
             font-weight: 700; /* Bolder weight */
             text-transform: uppercase;
             letter-spacing: 2px; /* Increased letter spacing */
-            border: 2px solid #8B0000;
+            border: 2px solid rgba(255, 255, 255, 0.3); /* Transparent border */
+            border-radius: 8px; /* Rounded corners for modern look */
             transition: all 0.3s ease;
             font-size: 1.1rem; /* Slightly larger font */
             margin-top: 25px; /* More space from heading */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Ensure text readability */
         }
         
         .cta-btn:hover {
-            background: #cc0000;
-            transform: translateY(-2px);
+            background: rgba(139, 0, 0, 0.25); /* Subtle red tint on hover */
+            border-color: rgba(255, 255, 255, 0.5); /* Brighter border */
+            transform: translateY(-3px); /* Slightly more lift */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* Enhanced shadow */
+            backdrop-filter: blur(15px); /* More blur on hover */
+            -webkit-backdrop-filter: blur(15px);
         }
         
         @media (max-width: 768px) {
@@ -238,6 +247,8 @@
                 padding: 18px 40px; /* Proportional to mobile text size */
                 font-size: 1rem;
                 margin-top: 20px;
+                border-radius: 6px; /* Slightly smaller radius on mobile */
+                box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3); /* Adjusted shadow */
             }
         }
         
@@ -280,6 +291,10 @@
                 font-weight: 700;
                 letter-spacing: 2px;
                 margin-top: 30px; /* More space for full-screen layout */
+                border-radius: 8px; /* Full radius on iPhone for modern look */
+                box-shadow: 0 10px 36px rgba(0, 0, 0, 0.35); /* Enhanced shadow for full-screen */
+                backdrop-filter: blur(12px); /* Slightly more blur on iPhone */
+                -webkit-backdrop-filter: blur(12px);
             }
         }
         
