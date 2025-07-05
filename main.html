@@ -208,14 +208,16 @@
             border-radius: 4px; /* Smaller radius */
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Entrance page timing */
             font-size: 1rem; /* Smaller font */
-            margin-top: 80px; /* 4cm lower (approximately 80px) */
             box-shadow: 
                 0 0 3px rgba(139, 0, 0, 0.25), /* Lighter glow */
                 0 0 6px rgba(139, 0, 0, 0.15), /* Softer glow */
                 0 4px 15px rgba(0, 0, 0, 0.3); /* Keep depth shadow */
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-            /* Desktop positioning - normal flow */
-            position: relative;
+            /* Universal positioning - bottom of hero, 3/4 to the right */
+            position: absolute;
+            bottom: 8vh; /* At bottom of hero section with some spacing */
+            right: 25%; /* 3/4 to the right (25% from right edge) */
+            transform: none; /* No centering transforms */
         }
         
         .cta-btn:hover {
@@ -235,7 +237,7 @@
         /* Mobile hover adjustments */
         @media (max-width: 768px) {
             .cta-btn:hover {
-                transform: translateX(-50%) translateY(-2px); /* Maintain centering + lift */
+                transform: translateY(-2px); /* Simple lift on hover */
             }
         }
         
@@ -265,19 +267,10 @@
             }
             
             .cta-btn {
-                padding: 18px 40px; /* Entrance page mobile size */
-                font-size: 1.0rem;
-                letter-spacing: 3px; /* Entrance page mobile spacing */
-                /* Position button higher so it's fully visible */
-                position: absolute;
-                bottom: 20vh; /* Increased spacing to ensure "View Our Rides" is fully visible */
-                left: 50%;
-                transform: translateX(-50%); /* Center horizontally */
-                margin-top: 0; /* Remove margin since using absolute positioning */
-                box-shadow: 
-                    0 0 2px rgba(139, 0, 0, 0.2), /* Lighter glow */
-                    0 0 4px rgba(139, 0, 0, 0.1), /* Softer glow */
-                    0 3px 12px rgba(0, 0, 0, 0.3);
+                padding: 14px 30px; /* Smaller padding for mobile */
+                font-size: 0.9rem; /* Smaller font for mobile */
+                letter-spacing: 2px; /* Adjusted spacing for mobile */
+                /* Keep same positioning as desktop - no overrides needed */
             }
         }
         
@@ -312,22 +305,10 @@
             }
             
             .cta-btn {
-                padding: 16px 35px; /* Small mobile size */
-                font-size: 0.95rem; /* Small mobile size */
-                font-weight: 500; /* Match entrance page weight */
-                letter-spacing: 2px; /* Small mobile spacing */
-                /* Absolute position at bottom of hero section */
-                position: absolute;
-                bottom: 20vh; /* Consistent spacing to ensure full visibility on all mobile */
-                left: 50%;
-                transform: translateX(-50%); /* Perfect center */
-                margin-top: 0; /* Remove margin */
-                box-shadow: 
-                    0 0 2px rgba(139, 0, 0, 0.2), /* Lighter glow */
-                    0 0 4px rgba(139, 0, 0, 0.12), /* Softer glow */
-                    0 5px 20px rgba(0, 0, 0, 0.35);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
+                padding: 12px 25px; /* Even smaller for small mobile */
+                font-size: 0.85rem; /* Smaller font for small mobile */
+                letter-spacing: 1px; /* Tighter spacing for small mobile */
+                /* Keep same positioning as desktop - no overrides needed */
             }
         }
         
