@@ -210,9 +210,9 @@
             font-size: 1rem; /* Smaller font */
             margin-top: 80px; /* 4cm lower (approximately 80px) */
             box-shadow: 
-                0 0 5px rgba(139, 0, 0, 0.4),
-                0 0 10px rgba(139, 0, 0, 0.2),
-                0 4px 15px rgba(0, 0, 0, 0.3); /* Neon glow effect */
+                0 0 3px rgba(139, 0, 0, 0.25), /* Lighter glow */
+                0 0 6px rgba(139, 0, 0, 0.15), /* Softer glow */
+                0 4px 15px rgba(0, 0, 0, 0.3); /* Keep depth shadow */
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
         }
         
@@ -222,12 +222,19 @@
             border-color: #cc0000; /* Brighter red border on hover */
             background: rgba(139, 0, 0, 0.2); /* Subtle red background */
             box-shadow: 
-                0 0 8px rgba(204, 0, 0, 0.6),
-                0 0 16px rgba(204, 0, 0, 0.3),
-                0 0 24px rgba(139, 0, 0, 0.2),
-                0 8px 25px rgba(139, 0, 0, 0.4); /* Entrance page neon glow */
+                0 0 4px rgba(204, 0, 0, 0.3), /* Lighter hover glow */
+                0 0 8px rgba(204, 0, 0, 0.2), /* Softer hover glow */
+                0 0 12px rgba(139, 0, 0, 0.15), /* Subtle outer glow */
+                0 8px 25px rgba(139, 0, 0, 0.3); /* Reduced depth shadow */
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+        }
+        
+        /* Mobile hover adjustments */
+        @media (max-width: 768px) {
+            .cta-btn:hover {
+                transform: translateX(-50%) translateY(-2px); /* Maintain centering + lift */
+            }
         }
         
         @media (max-width: 768px) {
@@ -258,11 +265,16 @@
             .cta-btn {
                 padding: 18px 40px; /* Entrance page mobile size */
                 font-size: 1.0rem;
-                margin-top: 50px; /* More space on mobile */
                 letter-spacing: 3px; /* Entrance page mobile spacing */
+                /* Position button independently at bottom center */
+                position: fixed;
+                bottom: 8vh; /* Spacing above bottom */
+                left: 50%;
+                transform: translateX(-50%); /* Center horizontally */
+                margin-top: 0; /* Remove margin since using fixed positioning */
                 box-shadow: 
-                    0 0 4px rgba(139, 0, 0, 0.4),
-                    0 0 8px rgba(139, 0, 0, 0.2),
+                    0 0 2px rgba(139, 0, 0, 0.2), /* Lighter glow */
+                    0 0 4px rgba(139, 0, 0, 0.1), /* Softer glow */
                     0 3px 12px rgba(0, 0, 0, 0.3);
             }
         }
@@ -302,10 +314,15 @@
                 font-size: 0.95rem; /* Exact entrance page iPhone size */
                 font-weight: 500; /* Match entrance page weight */
                 letter-spacing: 2px; /* Exact entrance page iPhone spacing */
-                margin-top: 40px; /* More space like entrance page layout */
+                /* Fixed position at bottom center like entrance page */
+                position: fixed;
+                bottom: 6vh; /* A bit closer to bottom on iPhone */
+                left: 50%;
+                transform: translateX(-50%); /* Perfect center */
+                margin-top: 0; /* Remove margin */
                 box-shadow: 
-                    0 0 5px rgba(139, 0, 0, 0.4),
-                    0 0 10px rgba(139, 0, 0, 0.2),
+                    0 0 2px rgba(139, 0, 0, 0.2), /* Lighter glow */
+                    0 0 4px rgba(139, 0, 0, 0.12), /* Softer glow */
                     0 5px 20px rgba(0, 0, 0, 0.35);
                 backdrop-filter: blur(10px);
                 -webkit-backdrop-filter: blur(10px);
