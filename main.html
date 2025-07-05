@@ -159,8 +159,7 @@
             min-height: 60vh;
             display: flex;
             align-items: center;
-            justify-content: flex-end; /* Position content on right side */
-            padding-right: 40px; /* Add right padding for desktop */
+            position: relative;
             background-attachment: fixed;
             background-position: center center;
             background-repeat: no-repeat;
@@ -168,11 +167,14 @@
         }
         
         .hero-content {
+            position: absolute;
+            right: 25%; /* Position at 3/4 to the right (25% from right edge) */
             color: white;
             max-width: 800px;
             padding: 0 20px;
             text-align: left; /* Left align text on all devices */
         }
+        
         
         .hero-content h1 {
             font-size: 3.5rem;
@@ -215,8 +217,10 @@
                 background-size: cover;
                 /* Ensure the focal point of the image is visible */
                 background-position: 50% 50%;
-                padding-right: 20px; /* Reduced padding for mobile */
-                padding-left: 0; /* Remove left padding */
+            }
+            
+            .hero-content {
+                right: 15%; /* Closer to center on mobile for better readability */
             }
             
             .hero-content h1 {
@@ -249,6 +253,8 @@
                 height: 100%;
                 padding-bottom: 15vh; /* Push content up slightly from center */
                 text-align: left; /* Left align text */
+                right: 10%; /* Even closer to center on iPhone for readability */
+                position: absolute;
             }
             
             .hero-content h1 {
