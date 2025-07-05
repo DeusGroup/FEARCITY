@@ -591,14 +591,17 @@
             });
         }
         
-        // Close mobile menu when clicking on nav links
+        // Close mobile menu when clicking on nav links (only when mobile menu is actually open)
         const navLinks = document.querySelectorAll('.nav-menu a');
         navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (navMenu && navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    if (mobileMenuToggle) mobileMenuToggle.classList.remove('active');
-                }
+            link.addEventListener('click', function(e) {
+                // Only close mobile menu if it's currently open, don't interfere with normal navigation
+                setTimeout(() => {
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        navMenu.classList.remove('active');
+                        if (mobileMenuToggle) mobileMenuToggle.classList.remove('active');
+                    }
+                }, 10); // Small delay to ensure navigation happens first
             });
         });
         
