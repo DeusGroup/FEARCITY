@@ -236,11 +236,31 @@
             }
             
             .hero-content {
-                padding: 0 15px;
+                padding: 0 20px;
+                max-width: 90%;
+                /* Position text in the lower third for better composition */
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                padding-bottom: 15vh; /* Push content up slightly from center */
             }
             
             .hero-content h1 {
-                font-size: 2.2rem;
+                font-size: 3rem; /* Larger for full screen impact */
+                line-height: 1.1;
+                margin-bottom: 30px;
+                font-weight: 800;
+                letter-spacing: 2px;
+            }
+            
+            .cta-btn {
+                padding: 18px 40px; /* Larger button for full screen */
+                font-size: 1rem;
+                font-weight: 700;
+                letter-spacing: 2px;
+                margin-top: 10px;
             }
         }
         
