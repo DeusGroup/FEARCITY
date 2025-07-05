@@ -156,20 +156,25 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="index.html" class="brand-logo">
-                <span>Fear City Cycles</span>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/images/fear-city-logo-small.jpg" alt="Fear City Cycles">
+                <span class="logo-text">Fear City Cycles</span>
             </a>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
-            <div class="nav-menu" id="navMenu">
-                <a href="main.html">Home</a>
-                <a href="bikes/">Bikes</a>
-                <a href="gear/">Gear</a>
-                <a href="culture.html">Culture</a>
-                <a href="about.html">About</a>
-                <a href="contact.html" class="active">Contact</a>
-                <a href="cart/" class="cart-link">Cart (<span id="cartCount">0</span>)</a>
+            <ul class="nav-menu">
+                <li><a href="main.html">Home</a></li>
+                <li><a href="bikes/">Bikes</a></li>
+                <li><a href="gear/">Gear</a></li>
+                <li><a href="culture.html">Culture</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="cart/" class="cart-link">Cart (<span id="cart-count">0</span>)</a></li>
+            </ul>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
@@ -254,16 +259,21 @@
 
     <script>
         // Mobile menu functionality
-        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
-            document.getElementById('navMenu').classList.toggle('active');
-            this.classList.toggle('active');
-        });
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (mobileMenuToggle && navMenu) {
+            mobileMenuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+        }
 
         // Update cart count
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('fearCityCart')) || [];
             const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-            document.getElementById('cartCount').textContent = count;
+            document.getElementById('cart-count').textContent = count;
         }
 
         // Initialize
