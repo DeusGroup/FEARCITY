@@ -281,11 +281,11 @@
                 max-width: 90%;
                 /* Position text higher, button lower for better spacing */
                 position: absolute;
-                right: 50%; /* Center horizontally on iPhone */
+                right: 10%; /* Keep closer to right edge like before */
                 top: 40%; /* Move text higher (quarter page up from center) */
-                transform: translate(50%, -50%); /* Center the content block */
-                text-align: center; /* Center align on iPhone like entrance page */
-                width: 90%;
+                transform: translateY(-50%); /* Only vertical centering */
+                text-align: left; /* Restore left alignment for L and B */
+                width: auto; /* Let content determine width */
             }
             
             .hero-content h1 {
