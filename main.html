@@ -215,13 +215,13 @@
                 0 4px 15px rgba(0, 0, 0, 0.3) !important;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7) !important;
             
-            /* NUCLEAR POSITIONING - Bottom of hero section, 3/4 right */
+            /* NUCLEAR POSITIONING - Centered under "Built in Queens" */
             position: absolute !important;
             bottom: 8vh !important;
-            right: 25% !important;
-            left: auto !important;
+            left: 50% !important;
+            right: auto !important;
             top: auto !important;
-            transform: none !important;
+            transform: translateX(-50%) !important;
             margin: 0 !important;
             z-index: 10 !important;
         }
@@ -241,7 +241,8 @@
             /* Maintain nuclear positioning on hover */
             position: absolute !important;
             bottom: 8vh !important;
-            right: 25% !important;
+            left: 50% !important;
+            transform: translateX(-50%) translateY(-3px) !important;
         }
         
         /* NUCLEAR MOBILE RULES - Only adjust sizing, not positioning */
