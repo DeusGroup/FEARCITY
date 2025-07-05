@@ -193,57 +193,6 @@
             margin-bottom: 30px;
         }
         
-        .cta-btn {
-            /* NUCLEAR RESET - Override everything */
-            display: block !important;
-            background: rgba(255, 255, 255, 0.1) !important;
-            backdrop-filter: blur(8px) !important;
-            -webkit-backdrop-filter: blur(8px) !important;
-            color: white !important;
-            padding: 16px 35px !important;
-            text-decoration: none !important;
-            font-weight: 600 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 3px !important;
-            border: 2px solid #8B0000 !important;
-            border-radius: 4px !important;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
-            font-size: 1rem !important;
-            box-shadow: 
-                0 0 3px rgba(139, 0, 0, 0.25), 
-                0 0 6px rgba(139, 0, 0, 0.15), 
-                0 4px 15px rgba(0, 0, 0, 0.3) !important;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7) !important;
-            
-            /* NUCLEAR POSITIONING - Aligned under "Built in Queens" text */
-            position: absolute !important;
-            bottom: 8vh !important;
-            right: 25% !important;
-            left: auto !important;
-            top: auto !important;
-            transform: none !important;
-            margin: 0 !important;
-            z-index: 10 !important;
-        }
-        
-        .cta-btn:hover {
-            color: #ffffff !important;
-            transform: translateY(-3px) !important;
-            border-color: #cc0000 !important;
-            background: rgba(139, 0, 0, 0.2) !important;
-            box-shadow: 
-                0 0 4px rgba(204, 0, 0, 0.3), 
-                0 0 8px rgba(204, 0, 0, 0.2), 
-                0 0 12px rgba(139, 0, 0, 0.15), 
-                0 8px 25px rgba(139, 0, 0, 0.3) !important;
-            backdrop-filter: blur(12px) !important;
-            -webkit-backdrop-filter: blur(12px) !important;
-            /* Maintain nuclear positioning on hover */
-            position: absolute !important;
-            bottom: 8vh !important;
-            right: 25% !important;
-            transform: translateY(-3px) !important;
-        }
         
         /* NUCLEAR MOBILE RULES - Only adjust sizing, not positioning */
         @media (max-width: 768px) {
@@ -270,13 +219,6 @@
                 font-size: 1.1rem;
             }
             
-            /* NUCLEAR BUTTON OVERRIDE - Only size changes */
-            .cta-btn {
-                padding: 14px 30px !important;
-                font-size: 0.9rem !important;
-                letter-spacing: 2px !important;
-                /* Position stays fixed from main rule */
-            }
         }
         
         @media (max-width: 430px) {
@@ -306,13 +248,6 @@
                 white-space: nowrap;
             }
             
-            /* NUCLEAR BUTTON OVERRIDE - Only size changes */
-            .cta-btn {
-                padding: 12px 25px !important;
-                font-size: 0.85rem !important;
-                letter-spacing: 1px !important;
-                /* Position stays fixed from main rule */
-            }
         }
         
     </style>
@@ -344,7 +279,6 @@
         <div class="hero-content">
             <h1>Lean Mean<br>Built in Queens</h1>
         </div>
-        <a href="#bikes" class="cta-btn">View Our Rides</a>
     </section>
 
     <section class="products" id="bikes">
