@@ -194,67 +194,70 @@
         }
         
         .cta-btn {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.1); /* More transparent */
-            backdrop-filter: blur(8px); /* Less blur for subtlety */
-            -webkit-backdrop-filter: blur(8px); /* Safari support */
-            color: white;
-            padding: 16px 35px; /* Smaller padding */
-            text-decoration: none;
-            font-weight: 600; /* Slightly less bold */
-            text-transform: uppercase;
-            letter-spacing: 3px; /* Entrance page style */
-            border: 2px solid #8B0000; /* Neon red border like entrance */
-            border-radius: 4px; /* Smaller radius */
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Entrance page timing */
-            font-size: 1rem; /* Smaller font */
+            /* NUCLEAR RESET - Override everything */
+            display: block !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            color: white !important;
+            padding: 16px 35px !important;
+            text-decoration: none !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 3px !important;
+            border: 2px solid #8B0000 !important;
+            border-radius: 4px !important;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+            font-size: 1rem !important;
             box-shadow: 
-                0 0 3px rgba(139, 0, 0, 0.25), /* Lighter glow */
-                0 0 6px rgba(139, 0, 0, 0.15), /* Softer glow */
-                0 4px 15px rgba(0, 0, 0, 0.3); /* Keep depth shadow */
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-            /* Universal positioning - bottom of hero, 3/4 to the right */
-            position: absolute;
-            bottom: 8vh; /* At bottom of hero section with some spacing */
-            right: 25%; /* 3/4 to the right (25% from right edge) */
-            transform: none; /* No centering transforms */
+                0 0 3px rgba(139, 0, 0, 0.25), 
+                0 0 6px rgba(139, 0, 0, 0.15), 
+                0 4px 15px rgba(0, 0, 0, 0.3) !important;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7) !important;
+            
+            /* NUCLEAR POSITIONING - Bottom of hero, 3/4 right */
+            position: fixed !important;
+            bottom: 10vh !important;
+            right: 25% !important;
+            left: auto !important;
+            top: auto !important;
+            transform: none !important;
+            margin: 0 !important;
+            z-index: 1000 !important;
         }
         
         .cta-btn:hover {
-            color: #ffffff;
-            transform: translateY(-3px);
-            border-color: #cc0000; /* Brighter red border on hover */
-            background: rgba(139, 0, 0, 0.2); /* Subtle red background */
+            color: #ffffff !important;
+            transform: translateY(-3px) !important;
+            border-color: #cc0000 !important;
+            background: rgba(139, 0, 0, 0.2) !important;
             box-shadow: 
-                0 0 4px rgba(204, 0, 0, 0.3), /* Lighter hover glow */
-                0 0 8px rgba(204, 0, 0, 0.2), /* Softer hover glow */
-                0 0 12px rgba(139, 0, 0, 0.15), /* Subtle outer glow */
-                0 8px 25px rgba(139, 0, 0, 0.3); /* Reduced depth shadow */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+                0 0 4px rgba(204, 0, 0, 0.3), 
+                0 0 8px rgba(204, 0, 0, 0.2), 
+                0 0 12px rgba(139, 0, 0, 0.15), 
+                0 8px 25px rgba(139, 0, 0, 0.3) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            /* Maintain nuclear positioning on hover */
+            position: fixed !important;
+            bottom: 10vh !important;
+            right: 25% !important;
         }
         
-        /* Mobile hover adjustments */
-        @media (max-width: 768px) {
-            .cta-btn:hover {
-                transform: translateY(-2px); /* Simple lift on hover */
-            }
-        }
-        
+        /* NUCLEAR MOBILE RULES - Only adjust sizing, not positioning */
         @media (max-width: 768px) {
             .hero {
-                background-attachment: scroll; /* Better performance on mobile */
+                background-attachment: scroll;
                 background-position: center center;
-                min-height: 50vh; /* Slightly shorter on mobile */
+                min-height: 50vh;
                 background-size: cover;
-                /* Ensure the focal point of the image is visible */
                 background-position: 50% 50%;
             }
             
             .hero-content {
-                right: 15%; /* Closer to center on mobile for better readability */
-                top: 45%; /* Move text higher on mobile too */
-                transform: translateY(-50%); /* Maintain vertical centering */
+                right: 15%;
+                top: 45%;
+                transform: translateY(-50%);
             }
             
             .hero-content h1 {
@@ -266,49 +269,48 @@
                 font-size: 1.1rem;
             }
             
+            /* NUCLEAR BUTTON OVERRIDE - Only size changes */
             .cta-btn {
-                padding: 14px 30px; /* Smaller padding for mobile */
-                font-size: 0.9rem; /* Smaller font for mobile */
-                letter-spacing: 2px; /* Adjusted spacing for mobile */
-                /* Keep same positioning as desktop - no overrides needed */
+                padding: 14px 30px !important;
+                font-size: 0.9rem !important;
+                letter-spacing: 2px !important;
+                /* Position stays fixed from main rule */
             }
         }
         
-        /* Small mobile adjustments */
         @media (max-width: 430px) {
             .hero {
-                min-height: 100vh; /* Full screen height on small mobile */
+                min-height: 100vh;
                 height: 100vh;
-                /* Adjust gradient for better text contrast on smaller screens */
                 background: linear-gradient(rgba(0,0,0,0.7), rgba(139,0,0,0.4)), url('assets/images/hero-bg.jpg') center/cover;
             }
             
             .hero-content {
                 padding: 0 20px;
                 max-width: 90%;
-                /* Position text higher, button lower for better spacing */
                 position: absolute;
-                right: 10%; /* Keep closer to right edge like before */
-                top: 40%; /* Move text higher (quarter page up from center) */
-                transform: translateY(-50%); /* Only vertical centering */
-                text-align: left; /* Restore left alignment for L and B */
-                width: auto; /* Let content determine width */
+                right: 10%;
+                top: 40%;
+                transform: translateY(-50%);
+                text-align: left;
+                width: auto;
             }
             
             .hero-content h1 {
-                font-size: 2.8rem; /* Slightly smaller to ensure "Built in Queens" fits */
+                font-size: 2.8rem;
                 line-height: 1.1;
                 margin-bottom: 30px;
                 font-weight: 800;
-                letter-spacing: 1px; /* Reduced letter spacing for better fit */
-                white-space: nowrap; /* Prevent text wrapping */
+                letter-spacing: 1px;
+                white-space: nowrap;
             }
             
+            /* NUCLEAR BUTTON OVERRIDE - Only size changes */
             .cta-btn {
-                padding: 12px 25px; /* Even smaller for small mobile */
-                font-size: 0.85rem; /* Smaller font for small mobile */
-                letter-spacing: 1px; /* Tighter spacing for small mobile */
-                /* Keep same positioning as desktop - no overrides needed */
+                padding: 12px 25px !important;
+                font-size: 0.85rem !important;
+                letter-spacing: 1px !important;
+                /* Position stays fixed from main rule */
             }
         }
         
